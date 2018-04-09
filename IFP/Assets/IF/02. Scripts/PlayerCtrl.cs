@@ -1,0 +1,158 @@
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+using UnityEngine.UI;
+
+namespace IF
+{
+    [RequireComponent(typeof(AudioSource))]
+    public class PlayerCtrl : MonoBehaviour
+    {
+        /// <summary>
+        /// 20180403 SangBin : Singletone Pattern
+        /// </summary>
+        public static PlayerCtrl PlayerInstance = null;
+
+        /// <summary>
+        /// 20180403 SangBin : Projectile Style Bullet Prefabs
+        /// </summary>
+        public GameObject bulletPref;
+
+        /// <summary>
+        /// 20180403 SangBin : Muzzle of Player's Gun
+        /// </summary>
+        private Transform gunPointTr;
+
+        /// <summary>
+        /// 20180403 SangBin : Fire Sound File
+        /// </summary>
+        public AudioClip fireSoundFile;
+
+        /// <summary>
+        /// 20180403 SangBin : Muzzleflash Renderer for Switching
+        /// </summary>
+        public MeshRenderer muzzleFlash;
+
+        /// <summary>
+        /// 20180403 SangBin : Player's Transform Syncronized With The Main First Person Camera
+        /// </summary>
+        private Transform playerTr;
+
+        /// <summary>
+        /// 20180403 SangBin : Player's Transform Property
+        /// </summary>
+        public Transform PlayerTr { get { return playerTr; } set { playerTr = value; } }
+
+        /// <summary>
+        /// 20180403 SangBin : Shooting Ray Max Distance
+        /// </summary>
+        private float rayMaxDistance = 10.0f;
+
+        /// <summary>
+        /// 20180403 SangBin : Player's Striking Power
+        /// </summary>
+        private double PlayerStrikingPower = 100.0d;
+
+        /// <summary>
+        /// 20180403 SangBin : Player's Max Health Power
+        /// </summary>
+        private double playerMaxHP;
+
+        /// <summary>
+        /// 20180403 SangBin : Player's Max Health Power Property
+        /// </summary>
+        public double PlayerMaxHP { get { return playerMaxHP; } set { playerMaxHP = value; } }
+
+        /// <summary>
+        /// 20180403 SangBin : Player's Current Health Power
+        /// </summary>
+        private double playerHP = 100.0d;
+
+        /// <summary>
+        /// 20180403 SangBin : Player's Current Health Power Property
+        /// </summary>
+        public double PlayerHP { get { return playerHP; } set { playerHP = value; } }
+
+        //-----------------------------------------------------------------------------------------------------------------------------
+
+        private void Awake()
+        {
+            PlayerInstance = this;
+            playerTr = GameObject.Find("First Person Camera").GetComponent<Transform>();
+            muzzleFlash.enabled = false;
+            playerMaxHP = playerHP;
+
+        }
+
+        void Update() {
+            this.gameObject.transform.SetPositionAndRotation(playerTr.position, playerTr.rotation);
+
+            Touch touch;
+            if ((touch = Input.GetTouch(0)).phase == TouchPhase.Began)
+            {
+                Fire();
+
+                RaycastHit hitinfo;
+
+                //if (Physics.Raycast(cameraTr.position, transform.worldToLocalMatrix.MultiplyVector(cameraTr.forward), out hitinfo, 100.0f))
+                if (Physics.Raycast(playerTr.position, playerTr.forward, out hitinfo, rayMaxDistance))                
+                {
+                    if (hitinfo.collider.tag == "ENEMY_TYPE01")
+                    {
+                        object[] parameters = new object[2]; 
+                        parameters[0] = hitinfo.point;
+                        parameters[1] = PlayerStrikingPower;
+                        hitinfo.collider.gameObject.SendMessage("OnDamaged", parameters, SendMessageOptions.DontRequireReceiver);
+                    }
+                }
+            }
+        }
+
+        private void OnTriggerEnter(Collider collision)
+        {
+            if (collision.gameObject.tag == "ENEMY_TYPE01_BULLET")
+            {
+                playerHP -= 2.0d; // test
+                //collision.gameObject.SendMessage("DeactivateBullet", SendMessageOptions.DontRequireReceiver);
+                collision.gameObject.GetComponent<TrailRenderer>().enabled = false;
+                collision.gameObject.SetActive(false);
+            }
+        }
+
+        /// <summary>
+        /// 20180403 SangBin : Player's Shooting
+        /// </summary>
+        void Fire()
+        {
+            //CreateProjectileBullet();
+            StartCoroutine(this.ShowMuzzleFlash());
+            GameLogicManagement.GM_Instance.SoundEffect(playerTr.position, fireSoundFile);
+        }
+
+        /// <summary>
+        /// 20180403 SangBin : Create project style bullet
+        /// </summary>
+        void CreateProjectileBullet()
+        {
+            GameObject bullet = (GameObject)Instantiate(bulletPref, gunPointTr.position, gunPointTr.rotation);
+        }
+
+        /// <summary>
+        /// 20180403 SangBin : Coroutine function for muzzleflash
+        /// </summary>
+        IEnumerator ShowMuzzleFlash()
+        {
+
+            float scale = Random.Range(0.3f, 0.5f);
+            muzzleFlash.transform.localScale = Vector3.one * scale;
+
+            Quaternion rotate = Quaternion.Euler(0, 0, Random.Range(0, 360));
+            muzzleFlash.transform.localRotation = rotate;
+
+            muzzleFlash.enabled = true;
+            yield return new WaitForSeconds(Random.Range(0.05f, 0.3f));
+            muzzleFlash.enabled = false;
+        }
+    }
+}
