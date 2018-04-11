@@ -83,7 +83,7 @@ ExportedObj/
 
  
 
- 
+*.apk 
 
  
 
@@ -132,10 +132,6 @@ Thumbs.db
  
 
 GraphicsSettings.asset
-
- 
-
-ProjectSettings.asset
 
  
 
