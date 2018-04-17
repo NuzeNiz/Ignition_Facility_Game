@@ -11,9 +11,12 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/IF/01. Scenes/GameScene A.unity
     guid: 32a3a95873a36ac4bb02176f6bcf99ca
-  - enabled: 1
+  - enabled: 0
     path: Assets/IF/01. Scenes/GameScene B.unity
     guid: bce4f1b05f4bc474fbd7261d398c4f90
+  - enabled: 1
+    path: Assets/IF/01. Scenes/GameScene B02.unity
+    guid: c9dc7a02d2bf5da4c858d1dbdcae6c0f
   - enabled: 1
     path: Assets/IF/01. Scenes/GameScene C.unity
     guid: 807c5ef7a2924d94b8815c148b88ca4a
