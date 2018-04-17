@@ -198,7 +198,9 @@ namespace GoogleARCore.IF
                     //defenseStation_Tr = defenseStation.transform;
                     defenseStation_Anchor_Tr = defenseStation_Anchor.transform;
 
-                    SceneManager.LoadScene("GameScene B",LoadSceneMode.Additive);
+                    //For Thread Test
+                    //SceneManager.LoadScene("GameScene B",LoadSceneMode.Additive);
+                    SceneManager.LoadScene("GameScene B02", LoadSceneMode.Additive);
                 }
             }
         }

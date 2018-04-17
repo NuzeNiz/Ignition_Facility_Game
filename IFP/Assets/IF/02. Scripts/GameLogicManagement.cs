@@ -7,6 +7,9 @@ using UnityEngine.SceneManagement;
 
 namespace IF
 {
+    /// <summary>
+    /// 20180416 SeongJun : change private to protected
+    /// </summary>
     public class GameLogicManagement : MonoBehaviour
     {
         /// <summary>
@@ -17,7 +20,7 @@ namespace IF
         /// <summary>
         /// 20180403 SangBin : Arbitrary Sound Volume
         /// </summary>
-        private float soundVolume = 1.0f;
+        protected float soundVolume = 1.0f;
 
         /// <summary>
         /// 20180403 SangBin : Sound Manager Mute
@@ -27,7 +30,7 @@ namespace IF
         /// <summary>
         /// 20180403 SangBin : Temporary Respawn Points
         /// </summary>
-        private Transform[] TempSpawnpoints;
+        protected Transform[] TempSpawnpoints;
 
         /// <summary>
         /// 20180403 SangBin : Enemy Prefabs
@@ -37,32 +40,32 @@ namespace IF
         /// <summary>
         /// 20180403 SangBin : Enemy Object Pool List
         /// </summary>
-        private List<GameObject> enemyObjectPool = new List<GameObject>();
+        protected List<GameObject> enemyObjectPool = new List<GameObject>();
 
         /// <summary>
         /// 20180403 SangBin : Enemy Generation period
         /// </summary>
-        private float enemyGenerationPeriod = 2.0f;
+        protected float enemyGenerationPeriod = 2.0f;
 
         /// <summary>
         /// 20180403 SangBin : Contraints of the number of Enemy
         /// </summary>
-        private int maxEnemy = 3;
+        protected int maxEnemy = 3;
 
         /// <summary>
         /// 20180403 SangBin : This Level Cleared or not
         /// </summary>
-        private bool thisLevelState = true;
+        protected bool thisLevelState = true;
 
         //-----------------------------------------------------------------------------------------------------------------------------
 
-        void Awake()
+        protected void Awake()
         {
             GM_Instance = this;
             GameObject.Find("TempFloor").transform.parent = GoogleARCore.IF.TowerBuildController.TBController.DefenseStation_Anchor_Tr;
         }
 
-        private void Start()
+        protected void Start()
         {
             CreateEnemyObjectPool();
 
@@ -74,7 +77,7 @@ namespace IF
             }
         }
 
-        private void Update()
+        protected void Update()
         {
             if(PlayerCtrl.PlayerInstance.PlayerHP <= 0.0d)
             {
@@ -85,7 +88,7 @@ namespace IF
         /// <summary>
         /// 20180403 SangBin : Create enemy OP
         /// </summary>
-        void CreateEnemyObjectPool()
+        protected void CreateEnemyObjectPool()
         {
             for (int i = 0; i < maxEnemy; i++)
             {
@@ -158,7 +161,7 @@ namespace IF
             }
         }
 
-        void GameOver()
+        protected void GameOver()
         {
             SceneManager.LoadScene("GameScene C");
         }

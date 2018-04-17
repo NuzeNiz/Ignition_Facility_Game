@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using UnityEngine;
 
-public class Controller : MonoBehaviour {
+public class CLICtrl : MonoBehaviour {
 
     private void OnEnable()
     {
@@ -12,12 +12,24 @@ public class Controller : MonoBehaviour {
         const string welcomeMessage = "Hello, IFG!";
         var cli = CLI.Bridge.TryInstall(port, welcomeMessage: welcomeMessage);
 
-        cli.Executer = new CLI.Executer().Bind(typeof(DLadar));
+        cli.Executer = new CLI.Executer()
+            .Bind(typeof(DLadar))
+            .Bind(typeof(DSet))
+            .Bind(typeof(DEnemies));
 
         // bind class
         //cli.Executer = new CLI.Executer()
         //    .Bind(typeof(Binding1))
         //    .Bind(typeof(Binding2));
+    }
+}
+
+public static class DSet
+{
+    [CLI.Bind]
+    public static CLI.Result stage(int i)
+    {
+        return CLI.Result.Success("Move stage : " + i);
     }
 }
 
@@ -46,5 +58,16 @@ public static class DLadar
     public static CLI.Result DotsCount()
     {
         return CLI.Result.Success("Dots Count: " + GetLadar.dotsCount);
+    }
+}
+
+public static class DEnemies
+{
+    [CLI.Bind]
+    public static CLI.Result SetSpeed(string i)
+    {
+        var speed = float.Parse(i, CultureInfo.InvariantCulture.NumberFormat);
+        IF.EnemyCtrlLight.speed = speed;
+        return CLI.Result.Success("Enemies Speed Set: " + i);
     }
 }

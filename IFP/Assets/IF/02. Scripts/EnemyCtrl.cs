@@ -16,37 +16,37 @@ namespace IF
         /// <summary>
         /// 20180403 SangBin : Enemy Current Health Power
         /// </summary>
-        private double EnemyHP = 100.0d;
+        protected double EnemyHP = 100.0d;
 
         /// <summary>
         /// 20180403 SangBin : Enemy Died or not
         /// </summary>
-        private bool isDie = false;
+        protected bool isDie = false;
 
         /// <summary>
         /// 20180403 SangBin : Enemy's Transfrom
         /// </summary>
-        private Transform EnemyTr;
+        protected Transform EnemyTr;
 
         /// <summary>
         /// 20180403 SangBin : Unity AI Baked Navigation Agent
         /// </summary>
-        private NavMeshAgent nvAgent;
+        protected NavMeshAgent nvAgent;
 
         /// <summary>
         /// 20180403 SangBin : Unity AI Baked Navigation / Enemy's Enable Tracing Distance
         /// </summary>
-        private float traceDist = 10.0f;
+        protected float traceDist = 10.0f;
 
         /// <summary>
         /// 20180403 SangBin : Unity AI Baked Navigation / Enemy's Enable attack Distance
         /// </summary>
-        private float attackDist = 2.0f;
+        protected float attackDist = 2.0f;
 
         /// <summary>
         /// 20180403 SangBin : Vector From Player To This Enemy 
         /// </summary>
-        private Vector3 directionVector;
+        protected Vector3 directionVector;
 
         /// <summary>
         /// 20180403 SangBin : Distance Vector Property
@@ -56,17 +56,17 @@ namespace IF
         /// <summary>
         /// 20180403 SangBin : Maximum Closing Distance Vector Between Player and This Enemy 
         /// </summary>
-        private Vector3 maximumCloseVector;
+        protected Vector3 maximumCloseVector;
 
         /// <summary>
         /// 20180403 SangBin : Enemy Action State
         /// </summary>
-        private enum EnemyState { idle, trace, attack, die };
+        protected enum EnemyState { idle, trace, attack, die };
 
         /// <summary>
         /// 20180403 SangBin : Enemy Present Action State
         /// </summary>
-        private EnemyState myEnemyState = EnemyState.idle;
+        protected EnemyState myEnemyState = EnemyState.idle;
 
         /// <summary>
         /// 20180403 SangBin : Enemy Bullet Prefab
@@ -76,23 +76,23 @@ namespace IF
         /// <summary>
         /// 20180403 SangBin : Contraints of the number of Enemy Bullet
         /// </summary>
-        private int MaxBullet = 5;
+        protected int MaxBullet = 5;
 
         /// <summary>
         /// 20180403 SangBin : Bullet Object Pool List
         /// </summary>
-        private List<GameObject> BulletObjectPool = new List<GameObject>();
+        protected List<GameObject> BulletObjectPool = new List<GameObject>();
 
         //------------------------------------------------------------------------------------------------------------------------
 
-        private void Awake()
+        protected void Awake()
         {
             EnemyTr = this.gameObject.GetComponent<Transform>();
             nvAgent = this.gameObject.GetComponent<NavMeshAgent>();
             CreateBulletObjectPool();
         }
 
-        private void OnEnable()
+        protected void OnEnable()
         {
             StartCoroutine(this.TracingAction()); //Finite State Machine (or Finite Automaton)
             StartCoroutine(this.CheckEnemyState());
@@ -101,7 +101,7 @@ namespace IF
         /// <summary>
         /// 20180403 SangBin : Damage to enemy (Message Driven Method)
         /// </summary>
-        void OnDamaged(object[] parameters)
+        protected void OnDamaged(object[] parameters)
         {
             EnemyHP -= (double)parameters[1];
 
@@ -197,13 +197,12 @@ namespace IF
             myEnemyState = EnemyState.idle;
             gameObject.GetComponent<BoxCollider>().enabled = true;
             gameObject.SetActive(false);
-
         }
 
         /// <summary>
         /// 20180403 SangBin : Create bullet OP
         /// </summary>
-        void CreateBulletObjectPool()
+        protected void CreateBulletObjectPool()
         {
             for (int i = 0; i < MaxBullet; i++)
             {
@@ -217,7 +216,7 @@ namespace IF
         /// <summary>
         /// 20180403 SangBin : Fall down broken enemy without conflict
         /// </summary>
-        void EnemyKilled()
+        protected void EnemyKilled()
         {
 
             gameObject.tag = "Untagged";
