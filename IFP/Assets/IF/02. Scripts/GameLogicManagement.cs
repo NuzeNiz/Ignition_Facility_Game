@@ -4,6 +4,7 @@ using UnityEngine;
 
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using System.Threading;
 
 namespace IF
 {
@@ -54,12 +55,31 @@ namespace IF
         /// </summary>
         private bool thisLevelState = true;
 
+        /// <summary>
+        /// 20180418 SangBin : Item Object Pool List
+        /// </summary>
+        private List<GameObject> ItemObjectPool = new List<GameObject>();
+
+        /// <summary>
+        /// 20180418 SangBin : Item Prefabs
+        /// </summary>
+        public GameObject itemPrefab_type01;
+
+        /// <summary>
+        /// 20180418 SangBin : Item Prefabs
+        /// </summary>
+        public GameObject itemPrefab_type02;
+
+        /// <summary>
+        /// 20180418 SangBin : Item Prefabs
+        /// </summary>
+        public GameObject itemPrefab_type03;
+
         //-----------------------------------------------------------------------------------------------------------------------------
 
         void Awake()
         {
             GM_Instance = this;
-            GameObject.Find("TempFloor").transform.parent = GoogleARCore.IF.TowerBuildController.TBController.DefenseStation_Anchor_Tr;
         }
 
         private void Start()
@@ -158,9 +178,43 @@ namespace IF
             }
         }
 
+        /// <summary>
+        /// 20180403 SangBin : GameOver
+        /// </summary>
         void GameOver()
         {
             SceneManager.LoadScene("GameScene C");
+        }
+
+        /// <summary>
+        /// 20180403 SangBin : Create enemy OP
+        /// </summary>
+        void CreateItemObjectPool()
+        {
+            for (int i = 0; i < 3; i++)
+            {
+                GameObject Item_type01 = (GameObject)Instantiate(itemPrefab_type01);
+                Item_type01.name = "Item_type01_" + i.ToString();
+                //Item_type01.GetComponent<ItemCtrl>().ItemType = 1;
+                Item_type01.tag = "ITEM";
+                Item_type01.SetActive(false);
+
+                GameObject Item_type02 = (GameObject)Instantiate(itemPrefab_type02);
+                Item_type02.name = "Item_type02_" + i.ToString();
+                //Item_type02.GetComponent<ItemCtrl>().ItemType = 2;
+                Item_type02.tag = "ITEM";
+                Item_type02.SetActive(false);
+
+                GameObject Item_type03 = (GameObject)Instantiate(itemPrefab_type03);
+                Item_type03.name = "Item_type03_" + i.ToString();
+                //Item_type03.GetComponent<ItemCtrl>().ItemType = 3;
+                Item_type03.tag = "ITEM";
+                Item_type03.SetActive(false);
+
+                ItemObjectPool.Add(Item_type01);
+                ItemObjectPool.Add(Item_type02);
+                ItemObjectPool.Add(Item_type03);
+            }
         }
     }
 }

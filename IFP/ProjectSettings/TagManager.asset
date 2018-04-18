@@ -6,6 +6,7 @@ TagManager:
   tags:
   - ENEMY_TYPE01
   - ENEMY_TYPE01_BULLET
+  - ITEM
   layers:
   - Default
   - TransparentFX

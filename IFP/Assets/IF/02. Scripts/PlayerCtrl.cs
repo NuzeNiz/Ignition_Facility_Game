@@ -93,8 +93,12 @@ namespace IF
             {
                 Fire();
 
-                RaycastHit hitinfo;
 
+                /// <summary>
+                /// 20180403 SangBin : Player's RayCast Shoot to Enemy
+                /// 20180418 SangBin : + to Item
+                /// </summary>
+                RaycastHit hitinfo;
                 //if (Physics.Raycast(cameraTr.position, transform.worldToLocalMatrix.MultiplyVector(cameraTr.forward), out hitinfo, 100.0f))
                 if (Physics.Raycast(playerTr.position, playerTr.forward, out hitinfo, rayMaxDistance))                
                 {
@@ -104,6 +108,10 @@ namespace IF
                         parameters[0] = hitinfo.point;
                         parameters[1] = PlayerStrikingPower;
                         hitinfo.collider.gameObject.SendMessage("OnDamaged", parameters, SendMessageOptions.DontRequireReceiver);
+                    }
+                    else if (hitinfo.collider.tag == "ITEM")
+                    {
+                        hitinfo.collider.gameObject.SendMessage("OnHit", SendMessageOptions.DontRequireReceiver);
                     }
                 }
             }

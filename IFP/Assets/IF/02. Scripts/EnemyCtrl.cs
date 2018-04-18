@@ -30,33 +30,61 @@ namespace IF
 
         /// <summary>
         /// 20180403 SangBin : Unity AI Baked Navigation Agent
+        /// 20180418 SangBin : Unity AI Baked Navigation --> Thread & RigidBody.Addforce
         /// </summary>
-        private NavMeshAgent nvAgent;
+        //private NavMeshAgent nvAgent;
 
         /// <summary>
         /// 20180403 SangBin : Unity AI Baked Navigation / Enemy's Enable Tracing Distance
+        /// 20180418 SangBin : Unity AI Baked Navigation --> Thread & RigidBody.Addforce
         /// </summary>
         private float traceDist = 10.0f;
 
         /// <summary>
         /// 20180403 SangBin : Unity AI Baked Navigation / Enemy's Enable attack Distance
+        /// 20180418 SangBin : Unity AI Baked Navigation --> Thread & RigidBody.Addforce
         /// </summary>
         private float attackDist = 2.0f;
 
         /// <summary>
-        /// 20180403 SangBin : Vector From Player To This Enemy 
+        /// 20180403 SangBin : Vector From This Enemy To Player 
         /// </summary>
         private Vector3 directionVector;
 
         /// <summary>
-        /// 20180403 SangBin : Distance Vector Property
+        /// 20180403 SangBin : Direction Vector Property
         /// </summary>
         public Vector3 DirectionVector { get { return directionVector; } set { directionVector = value; } }
+
+        /// <summary>
+        /// 20180418 SangBin : Distance between This Enemy and Player
+        /// </summary>
+        private float distance;
+
+        /// <summary>
+        /// 20180418 SangBin : Distance Property
+        /// </summary>
+        public float Distance { get { return distance; } set { distance = value; } }
+
+        /// <summary>
+        /// 20180418 SangBin : Normalized Vector From This Enemy To Player 
+        /// </summary>
+        private Vector3 directionVector_Normalized;
+
+        /// <summary>
+        /// 20180418 SangBin : Normalized Direction Vector Property
+        /// </summary>
+        public Vector3 DirectionVector_Normalized { get { return directionVector_Normalized; } set { directionVector_Normalized = value; } }
 
         /// <summary>
         /// 20180403 SangBin : Maximum Closing Distance Vector Between Player and This Enemy 
         /// </summary>
         private Vector3 maximumCloseVector;
+
+        /// <summary>
+        /// 20180418 SangBin : Enemy Moving Speed
+        /// </summary>
+        private float MovingSpeed = 5.0f;
 
         /// <summary>
         /// 20180403 SangBin : Enemy Action State
@@ -88,7 +116,6 @@ namespace IF
         private void Awake()
         {
             EnemyTr = this.gameObject.GetComponent<Transform>();
-            nvAgent = this.gameObject.GetComponent<NavMeshAgent>();
             CreateBulletObjectPool();
         }
 
@@ -119,16 +146,14 @@ namespace IF
             while (!isDie)
             {
                 yield return new WaitForSeconds(0.2f);
-                directionVector = EnemyTr.position - PlayerCtrl.PlayerInstance.PlayerTr.position;
-                float dist = directionVector.magnitude;
 
-                maximumCloseVector = (Vector3.Normalize(directionVector) * 0.7f);
+                Cal_Direction();
 
-                if (dist <= attackDist)
+                if (Distance <= attackDist)
                 {
                     myEnemyState = EnemyState.attack;
                 }
-                else if (dist <= traceDist)
+                else if (Distance <= traceDist)
                 {
                     myEnemyState = EnemyState.trace;
                 }
@@ -149,28 +174,28 @@ namespace IF
                 switch (myEnemyState)
                 {
                     case EnemyState.idle:
-                        //nvAgent.Stop(); //legacy function
-                        nvAgent.isStopped = true;
+                        GetComponent<Rigidbody>().velocity = Vector3.zero;
+                        GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
                         //animator.SetBool("IsTrace", false); // later
                         break;
 
                     case EnemyState.trace:
-                        nvAgent.destination = (PlayerCtrl.PlayerInstance.PlayerTr.position + maximumCloseVector);
-                        //nvAgent.destination = DefenseStationCtrl.DS_Instance.DefenseStationTR.position;
-                        //nvAgent.Resume(); //legacy function
-                        nvAgent.isStopped = false;
+                        transform.LookAt(PlayerCtrl.PlayerInstance.PlayerTr);
+                        GetComponent<Rigidbody>().AddForce(directionVector_Normalized * MovingSpeed, ForceMode.Force);
                         //animator.SetBool("IsAttack", false); // later
                         //animator.SetBool("IsTrace", true); // later
                         break;
 
                     case EnemyState.attack:
-                        nvAgent.isStopped = true;
+                        transform.LookAt(PlayerCtrl.PlayerInstance.PlayerTr);
+                        GetComponent<Rigidbody>().velocity = Vector3.zero;
+                        GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
                         //animator.SetBool("IsAttack", true); // later
-                        foreach(GameObject bulletObj in BulletObjectPool)
+                        foreach (GameObject bulletObj in BulletObjectPool)
                         {
                             if (!bulletObj.activeSelf)
                             {
-                                bulletObj.GetComponent<EnemyBulletCtrl>().DirectionVetor = (-directionVector);
+                                bulletObj.GetComponent<EnemyBulletCtrl>().DirectionVetor = directionVector;
                                 bulletObj.transform.SetPositionAndRotation(this.gameObject.transform.position, this.gameObject.transform.rotation);
                                 yield return new WaitForSeconds(0.3f);
                                 bulletObj.SetActive(true);
@@ -193,9 +218,9 @@ namespace IF
             yield return null;
             isDie = false;
             EnemyHP = 100.0d;
-            gameObject.tag = "ENEMY_TYPE01";
+            this.gameObject.tag = "ENEMY_TYPE01";
             myEnemyState = EnemyState.idle;
-            gameObject.GetComponent<BoxCollider>().enabled = true;
+            GetComponent<BoxCollider>().enabled = true;
             gameObject.SetActive(false);
 
         }
@@ -207,7 +232,7 @@ namespace IF
         {
             for (int i = 0; i < MaxBullet; i++)
             {
-                GameObject bulletObj = Instantiate(bulletPrefab, this.gameObject.transform.position, this.gameObject.transform.rotation, EnemyTr);
+                GameObject bulletObj = Instantiate(bulletPrefab, this.gameObject.transform.position, this.gameObject.transform.rotation, transform);
                 bulletObj.name = this.gameObject.name + " bulletObj " + i.ToString();
                 bulletObj.SetActive(false);
                 BulletObjectPool.Add(bulletObj);
@@ -220,18 +245,27 @@ namespace IF
         void EnemyKilled()
         {
 
-            gameObject.tag = "Untagged";
+            this.gameObject.tag = "Untagged";
             GameObject explosion = (GameObject)Instantiate(expEffectPrefab, this.gameObject.transform.position, Quaternion.identity);
 
             StopAllCoroutines();
             isDie = true;
             myEnemyState = EnemyState.die;
-            nvAgent.isStopped = true;
-            this.GetComponent<BoxCollider>().enabled = false;
+            GetComponent<BoxCollider>().enabled = false;
             GameUIManagement.GameUIManagerInstance.DisplayScore(50);
 
             StartCoroutine(this.PushObjectPool());
             Destroy(explosion, 2.0f);
+        }
+
+        /// <summary>
+        /// 20180418 SangBin : Calculation Direction Vector
+        /// </summary>
+        void Cal_Direction()
+        {
+            directionVector = PlayerCtrl.PlayerInstance.PlayerTr.position - transform.position;
+            distance = directionVector.magnitude;
+            directionVector_Normalized = Vector3.Normalize(directionVector);
         }
     }
 }
