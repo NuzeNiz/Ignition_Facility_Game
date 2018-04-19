@@ -75,6 +75,16 @@ namespace IF
         /// </summary>
         public GameObject itemPrefab_type03;
 
+        /// <summary>
+        /// 20180418 SangBin : Butterfly Object Pool List
+        /// </summary>
+        private List<GameObject> butterFlyObjectPool = new List<GameObject>();
+
+        /// <summary>
+        /// 20180418 SangBin : Butterfly Prefabs
+        /// </summary>
+        public GameObject butterFlyPrefab_type01;
+
         //-----------------------------------------------------------------------------------------------------------------------------
 
         void Awake()
@@ -92,6 +102,9 @@ namespace IF
             {
                 StartCoroutine(this.GenerateEnemy());
             }
+
+            CreateButterFlyObjectPool();
+            StartCoroutine(GenerateButterFly());
         }
 
         private void Update()
@@ -215,6 +228,31 @@ namespace IF
                 ItemObjectPool.Add(Item_type02);
                 ItemObjectPool.Add(Item_type03);
             }
+        }
+
+        void CreateButterFlyObjectPool()
+        {
+            for (int i = 0; i < 1; i++)
+            {
+                GameObject butterFly = (GameObject)Instantiate(butterFlyPrefab_type01);
+                butterFly.name = "Butterfly_" + i.ToString();
+                butterFly.SetActive(false);
+                butterFlyObjectPool.Add(butterFly);
+            }
+        }
+
+        IEnumerator GenerateButterFly()
+        {
+            foreach(GameObject butterFly in butterFlyObjectPool)
+            {
+                if (!butterFly.activeSelf)
+                {
+                    butterFly.transform.position = GoogleARCore.IF.TowerBuildController.TBController.DefenseStation_Tr.position + (Vector3.right * 2) + (Vector3.up * 2);
+                    butterFly.transform.parent = GoogleARCore.IF.TowerBuildController.TBController.DefenseStation_Anchor_Tr;
+                    butterFly.SetActive(true);
+                }
+            }
+            yield return new WaitForSeconds(5.0f);
         }
     }
 }

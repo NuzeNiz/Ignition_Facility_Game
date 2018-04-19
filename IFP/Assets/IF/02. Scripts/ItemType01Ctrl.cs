@@ -49,6 +49,7 @@ namespace IF
         private void Start()
         {
             StartCoroutine(TrackingPlayer());
+            
         }
 
 
@@ -99,7 +100,7 @@ namespace IF
                 // Add some codes this item should be enter in UI slot 
 
                 // Add some initialization in objectpool with deactive
-
+                
                 gameObject.SetActive(false);
             }
         }

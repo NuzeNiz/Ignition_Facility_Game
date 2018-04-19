@@ -96,6 +96,16 @@ namespace GoogleARCore.IF
         /// </summary>
         public Transform DefenseStation_Anchor_Tr { get { return defenseStation_Anchor_Tr; } set { defenseStation_Anchor_Tr = value; } }
 
+        /// <summary>
+        /// 20180418 SangBin : Defense Station Transform
+        /// </summary>
+        private Transform defenseStation_Tr;
+
+        /// <summary>
+        /// 20180403 SangBin : Defense Station Transform Property
+        /// </summary>
+        public Transform DefenseStation_Tr { get { return defenseStation_Tr; } }
+
         //---------------------------------------------------------------------------------------------
 
         void Awake()
@@ -195,7 +205,7 @@ namespace GoogleARCore.IF
                     defenseStation.transform.parent = defenseStation_Anchor.transform;
 
                     myTowerBaseTrackingState = TowerBaseTrackingState.built;
-                    //defenseStation_Tr = defenseStation.transform;
+                    defenseStation_Tr = defenseStation.transform;
                     defenseStation_Anchor_Tr = defenseStation_Anchor.transform;
 
                     SceneManager.LoadScene("GameScene B",LoadSceneMode.Additive);

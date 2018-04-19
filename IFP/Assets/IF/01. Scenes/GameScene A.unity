@@ -267,12 +267,9 @@ MonoBehaviour:
   FirstPersonCamera: {fileID: 896679035}
   TrackedPlanePrefab: {fileID: 1654175882956584, guid: 6a35c744e5010405c847fad90282d2be,
     type: 2}
-  defenseStation_Prefab: {fileID: 1199590128211638, guid: 4831d62e842d3714faaed5e634593bd1,
+  defenseStation_Prefab: {fileID: 1262427346044128, guid: b7f15dd65bb50934cba57ea5b56e961e,
     type: 2}
   SearchingForPlaneUI: {fileID: 1133631540}
-  myTowerBaseTrackingState: 0
-  defenseStation_Tr: {fileID: 0}
-  defenseStation_Anchor_Tr: {fileID: 0}
 --- !u!20 &896679035 stripped
 Camera:
   m_PrefabParentObject: {fileID: 20155940112608238, guid: c10877f7cd5764de18d46d7b777d1faa,

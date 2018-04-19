@@ -195,7 +195,7 @@ namespace IF
                         {
                             if (!bulletObj.activeSelf)
                             {
-                                bulletObj.GetComponent<EnemyBulletCtrl>().DirectionVetor = directionVector_Normalized;
+                                bulletObj.GetComponent<EnemyBulletCtrl>().DirectionVetor = directionVector;
                                 bulletObj.transform.SetPositionAndRotation(this.gameObject.transform.position, this.gameObject.transform.rotation);
                                 yield return new WaitForSeconds(0.3f);
                                 bulletObj.SetActive(true);
