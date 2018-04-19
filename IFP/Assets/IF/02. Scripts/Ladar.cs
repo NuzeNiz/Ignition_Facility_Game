@@ -25,7 +25,7 @@ public class Ladar : MonoBehaviour {
 
     void Update()
     {
-        var enemies = GameObject.FindGameObjectsWithTag("ENEMY_TYPE01").Select(a => { return a.transform; }).ToList();
+        var enemies = GameObject.FindGameObjectsWithTag("ENEMY_TYPE01").Where(a => { return a.activeSelf; }).Select(a => { return a.transform; }).ToList();
         var gap = dots.Count - enemies.Count;
         if (gap < 0)
         {
