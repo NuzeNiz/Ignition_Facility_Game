@@ -22,11 +22,15 @@ namespace IF
         /// </summary>
         protected GameObject itemHitEffectPrefab;
 
-
         /// <summary>
         /// 20180403 SangBin : Item Hit Sound File
         /// </summary>
         protected AudioClip itemHitSoundFile;
+
+        /// <summary>
+        /// 20180418 SangBin : Item Collision Effect Prefab
+        /// </summary>
+        protected GameObject itemCollEffectPrefab;
 
         //-----------------------------------------------------------------------------------------------------------------
 

@@ -117,7 +117,10 @@ namespace IF
             }
         }
 
-        private void OnTriggerEnter(Collider collision)
+        /// <summary>
+        /// 20180403 SangBin : Collision event between player and enemy bullet
+        /// </summary>
+        private void OnCollisionEnter(Collision collision)
         {
             if (collision.gameObject.tag == "ENEMY_TYPE01_BULLET")
             {
