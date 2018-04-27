@@ -19,7 +19,7 @@ namespace IF
         /// <summary>
         /// 20180403 SangBin : Defense Station's Transform Property
         /// </summary>
-        public Transform DefenseStationTR { get { return defenseStationTR; } set { defenseStationTR = value; } }
+        public Transform DefenseStationTR { get { return defenseStationTR; } }
 
         //-----------------------------------------------------------------------------------------------------------------------------
 

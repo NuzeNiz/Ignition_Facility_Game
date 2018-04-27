@@ -2,10 +2,19 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CirclingEnemyCtrl : MonoBehaviour
+namespace IF
 {
-    private void Update()
+    public class CirclingEnemyCtrl : MonoBehaviour
     {
-        transform.RotateAround(GoogleARCore.IF.TowerBuildController.TBController.DefenseStation_Tr.position, Vector3.up, 20.0f * Time.deltaTime);
+        private void Update()
+        {
+            transform.RotateAround(IF.DefenseStationCtrl.DS_Instance.DefenseStationTR.position, Vector3.up, 40.0f * Time.deltaTime);
+        }
+
+        void OnHit()
+        {
+            GameLogicManagement.GLM_Instance.GenerateItem(transform);
+            gameObject.SetActive(false);
+        }
     }
 }

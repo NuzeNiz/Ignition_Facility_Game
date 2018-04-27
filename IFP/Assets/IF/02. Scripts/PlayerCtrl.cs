@@ -20,11 +20,6 @@ namespace IF
         public GameObject bulletPref;
 
         /// <summary>
-        /// 20180403 SangBin : Muzzle of Player's Gun
-        /// </summary>
-        private Transform gunPointTr;
-
-        /// <summary>
         /// 20180403 SangBin : Fire Sound File
         /// </summary>
         public AudioClip fireSoundFile;
@@ -102,7 +97,7 @@ namespace IF
                 //if (Physics.Raycast(cameraTr.position, transform.worldToLocalMatrix.MultiplyVector(cameraTr.forward), out hitinfo, 100.0f))
                 if (Physics.Raycast(playerTr.position, playerTr.forward, out hitinfo, rayMaxDistance))                
                 {
-                    if (hitinfo.collider.tag == "ENEMY_TYPE01")
+                    if (hitinfo.collider.tag == "ENEMY_BEE")
                     {
                         object[] parameters = new object[2]; 
                         parameters[0] = hitinfo.point;
@@ -110,6 +105,10 @@ namespace IF
                         hitinfo.collider.gameObject.SendMessage("OnDamaged", parameters, SendMessageOptions.DontRequireReceiver);
                     }
                     else if (hitinfo.collider.tag == "ITEM")
+                    {
+                        hitinfo.collider.gameObject.SendMessage("OnHit", SendMessageOptions.DontRequireReceiver);
+                    }
+                    else if (hitinfo.collider.tag == "ENEMY_BUTTERFLY")
                     {
                         hitinfo.collider.gameObject.SendMessage("OnHit", SendMessageOptions.DontRequireReceiver);
                     }
@@ -122,7 +121,7 @@ namespace IF
         /// </summary>
         private void OnCollisionEnter(Collision collision)
         {
-            if (collision.gameObject.tag == "ENEMY_TYPE01_BULLET")
+            if (collision.gameObject.tag == "ENEMY_BEE_STINGER")
             {
                 playerHP -= 2.0d; // test
                 //collision.gameObject.SendMessage("DeactivateBullet", SendMessageOptions.DontRequireReceiver);
@@ -136,17 +135,8 @@ namespace IF
         /// </summary>
         void Fire()
         {
-            //CreateProjectileBullet();
             StartCoroutine(this.ShowMuzzleFlash());
-            GameLogicManagement.GM_Instance.SoundEffect(playerTr.position, fireSoundFile);
-        }
-
-        /// <summary>
-        /// 20180403 SangBin : Create project style bullet
-        /// </summary>
-        void CreateProjectileBullet()
-        {
-            GameObject bullet = (GameObject)Instantiate(bulletPref, gunPointTr.position, gunPointTr.rotation);
+            GameLogicManagement.GLM_Instance.SoundEffect(playerTr.position, fireSoundFile);
         }
 
         /// <summary>

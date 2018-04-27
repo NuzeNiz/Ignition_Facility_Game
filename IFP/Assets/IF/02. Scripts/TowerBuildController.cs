@@ -94,7 +94,7 @@ namespace GoogleARCore.IF
         /// <summary>
         /// 20180403 SangBin : Defense Station Anchor Transform Property
         /// </summary>
-        public Transform DefenseStation_Anchor_Tr { get { return defenseStation_Anchor_Tr; } set { defenseStation_Anchor_Tr = value; } }
+        public Transform DefenseStation_Anchor_Tr { get { return defenseStation_Anchor_Tr; } }
 
         /// <summary>
         /// 20180418 SangBin : Defense Station Transform
@@ -104,7 +104,7 @@ namespace GoogleARCore.IF
         /// <summary>
         /// 20180403 SangBin : Defense Station Transform Property
         /// </summary>
-        public Transform DefenseStation_Tr { get { return defenseStation_Tr; } }
+        //public Transform DefenseStation_Tr { get { return defenseStation_Tr; } }
 
         //---------------------------------------------------------------------------------------------
 

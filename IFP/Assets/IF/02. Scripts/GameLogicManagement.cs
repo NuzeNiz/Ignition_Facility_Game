@@ -13,7 +13,7 @@ namespace IF
         /// <summary>
         /// 20180403 SangBin : Singletone Pattern
         /// </summary>
-        public static GameLogicManagement GM_Instance = null;
+        public static GameLogicManagement GLM_Instance = null;
 
         /// <summary>
         /// 20180403 SangBin : Arbitrary Sound Volume
@@ -23,6 +23,7 @@ namespace IF
         /// <summary>
         /// 20180403 SangBin : Sound Manager Mute
         /// </summary>
+        [HideInInspector]
         public bool isSoundEffectMute = false;
 
         /// <summary>
@@ -33,7 +34,8 @@ namespace IF
         /// <summary>
         /// 20180403 SangBin : Enemy Prefabs
         /// </summary>
-        public GameObject enemyPrefabs_type01;
+        [SerializeField]
+        private GameObject enemyPrefabs_type01;
 
         /// <summary>
         /// 20180403 SangBin : Enemy Object Pool List
@@ -63,17 +65,20 @@ namespace IF
         /// <summary>
         /// 20180418 SangBin : Item Prefabs
         /// </summary>
-        public GameObject itemPrefab_type01;
+        [SerializeField]
+        private GameObject itemPrefab_type01;
 
         /// <summary>
         /// 20180418 SangBin : Item Prefabs
         /// </summary>
-        public GameObject itemPrefab_type02;
+        [SerializeField]
+        private GameObject itemPrefab_type02;
 
         /// <summary>
         /// 20180418 SangBin : Item Prefabs
         /// </summary>
-        public GameObject itemPrefab_type03;
+        [SerializeField]
+        private GameObject itemPrefab_type03;
 
         /// <summary>
         /// 20180418 SangBin : Butterfly Object Pool List
@@ -83,13 +88,30 @@ namespace IF
         /// <summary>
         /// 20180418 SangBin : Butterfly Prefabs
         /// </summary>
-        public GameObject butterFlyPrefab_type01;
+        [SerializeField]
+        private GameObject butterFlyPrefab_type01;
+
+        /// <summary>
+        /// 20180427 SangBin : Contraints of the number of Each Item
+        /// </summary>
+        private int maxEachItem = 3;
+
+        /// <summary>
+        /// 20180427 SangBin : The number of Items
+        /// </summary>
+        private int itemSort = 3;
+
+        /// <summary>
+        /// 20180427 SangBin : Contraints of the number of Each Item
+        /// </summary>
+        private int maxItem;
 
         //-----------------------------------------------------------------------------------------------------------------------------
 
         void Awake()
         {
-            GM_Instance = this;
+            GLM_Instance = this;
+            maxItem = maxEachItem * itemSort;
         }
 
         private void Start()
@@ -104,6 +126,7 @@ namespace IF
             }
 
             CreateButterFlyObjectPool();
+            CreateItemObjectPool();
             StartCoroutine(GenerateButterFly());
         }
 
@@ -123,7 +146,7 @@ namespace IF
             for (int i = 0; i < maxEnemy; i++)
             {
                 GameObject EnemyObj_test = (GameObject)Instantiate(enemyPrefabs_type01);
-                EnemyObj_test.name = "ENEMY_TYPE01_" + i.ToString();
+                EnemyObj_test.name = "Enemy_Bee_" + i.ToString();
                 EnemyObj_test.SetActive(false);
                 enemyObjectPool.Add(EnemyObj_test);
             }
@@ -204,22 +227,22 @@ namespace IF
         /// </summary>
         void CreateItemObjectPool()
         {
-            for (int i = 0; i < 3; i++)
+            for (int i = 0; i < maxEachItem; i++)
             {
                 GameObject Item_type01 = (GameObject)Instantiate(itemPrefab_type01);
-                Item_type01.name = "Item_type01_" + i.ToString();
+                Item_type01.name = "Item_Cinnamon_" + i.ToString();
                 //Item_type01.GetComponent<ItemCtrl>().ItemType = 1;
                 Item_type01.tag = "ITEM";
                 Item_type01.SetActive(false);
 
                 GameObject Item_type02 = (GameObject)Instantiate(itemPrefab_type02);
-                Item_type02.name = "Item_type02_" + i.ToString();
+                Item_type02.name = "Item_Type02_" + i.ToString();
                 //Item_type02.GetComponent<ItemCtrl>().ItemType = 2;
                 Item_type02.tag = "ITEM";
                 Item_type02.SetActive(false);
 
                 GameObject Item_type03 = (GameObject)Instantiate(itemPrefab_type03);
-                Item_type03.name = "Item_type03_" + i.ToString();
+                Item_type03.name = "Item_Type03_" + i.ToString();
                 //Item_type03.GetComponent<ItemCtrl>().ItemType = 3;
                 Item_type03.tag = "ITEM";
                 Item_type03.SetActive(false);
@@ -230,12 +253,27 @@ namespace IF
             }
         }
 
+        public void GenerateItem(Transform butterflyTransform)
+        {
+            for (int i = 0; i < maxItem; i++)
+            {
+                int randIdex = Random.Range(0, maxItem);
+                if (!ItemObjectPool[randIdex].activeSelf)
+                {
+                    ItemObjectPool[randIdex].transform.position = butterflyTransform.position;
+                    ItemObjectPool[randIdex].SetActive(true);
+                    ItemObjectPool[randIdex].GetComponent<ItemType01Ctrl>().StartTrackingPlayer();
+                    break;
+                }
+            }
+        }
+
         void CreateButterFlyObjectPool()
         {
             for (int i = 0; i < 1; i++)
             {
                 GameObject butterFly = (GameObject)Instantiate(butterFlyPrefab_type01);
-                butterFly.name = "Butterfly_" + i.ToString();
+                butterFly.name = "Enemy_Butterfly_" + i.ToString();
                 butterFly.SetActive(false);
                 butterFlyObjectPool.Add(butterFly);
             }
@@ -247,7 +285,7 @@ namespace IF
             {
                 if (!butterFly.activeSelf)
                 {
-                    butterFly.transform.position = GoogleARCore.IF.TowerBuildController.TBController.DefenseStation_Tr.position + (Vector3.right * 2) + (Vector3.up * 2);
+                    butterFly.transform.position = IF.DefenseStationCtrl.DS_Instance.DefenseStationTR.position + (Vector3.right * 3) + (Vector3.up * 2);
                     butterFly.transform.parent = GoogleARCore.IF.TowerBuildController.TBController.DefenseStation_Anchor_Tr;
                     butterFly.SetActive(true);
                 }

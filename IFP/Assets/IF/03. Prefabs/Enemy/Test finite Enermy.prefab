@@ -124,8 +124,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 00cecf04e5696f041857b5b8c0165a7a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  explosionEffect: {fileID: 100010, guid: 031d08f52af1daa4f929b85221519426, type: 2}
-  EnermyHP: 100
+  expEffectPrefab: {fileID: 0}
+  bulletPrefab: {fileID: 0}
 --- !u!135 &135742947773002000
 SphereCollider:
   m_ObjectHideFlags: 1

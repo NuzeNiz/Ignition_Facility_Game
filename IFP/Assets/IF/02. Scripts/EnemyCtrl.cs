@@ -11,7 +11,8 @@ namespace IF
         /// <summary>
         /// 20180403 SangBin : Broken Enemy Explosion Effect Prefab;
         /// </summary>
-        public GameObject expEffectPrefab;
+        [SerializeField]
+        private GameObject expEffectPrefab;
 
         /// <summary>
         /// 20180403 SangBin : Enemy Current Health Power
@@ -99,7 +100,8 @@ namespace IF
         /// <summary>
         /// 20180403 SangBin : Enemy Bullet Prefab
         /// </summary>
-        public GameObject bulletPrefab;
+        [SerializeField]
+        private GameObject bulletPrefab;
 
         /// <summary>
         /// 20180403 SangBin : Contraints of the number of Enemy Bullet
@@ -218,7 +220,7 @@ namespace IF
             yield return null;
             isDie = false;
             EnemyHP = 100.0d;
-            this.gameObject.tag = "ENEMY_TYPE01";
+            this.gameObject.tag = "ENEMY_BEE";
             myEnemyState = EnemyState.idle;
             GetComponent<BoxCollider>().enabled = true;
             gameObject.SetActive(false);
@@ -233,7 +235,7 @@ namespace IF
             for (int i = 0; i < MaxBullet; i++)
             {
                 GameObject bulletObj = Instantiate(bulletPrefab, this.gameObject.transform.position, this.gameObject.transform.rotation, transform);
-                bulletObj.name = this.gameObject.name + " bulletObj " + i.ToString();
+                bulletObj.name = this.gameObject.name + "Bee_Stinger_" + i.ToString();
                 bulletObj.SetActive(false);
                 BulletObjectPool.Add(bulletObj);
             }
@@ -244,7 +246,7 @@ namespace IF
         /// </summary>
         void EnemyKilled()
         {
-
+            //Because expecting to Enemy's Falling Animation by graphic designer, I did not make Enemy deactivated at once   
             this.gameObject.tag = "Untagged";
             GameObject explosion = (GameObject)Instantiate(expEffectPrefab, this.gameObject.transform.position, Quaternion.identity);
 

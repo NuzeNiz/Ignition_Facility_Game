@@ -9,7 +9,7 @@ namespace IF
         /// <summary>
         /// 20180403 SangBin : Bullet Damage
         /// </summary>
-        public int bulletDamage = 10;
+        //private int bulletDamage = 10;
 
         /// <summary>
         /// 20180403 SangBin : Bullet Speed
@@ -19,7 +19,8 @@ namespace IF
         /// <summary>
         /// 20180403 SangBin : Bullet Flare Effect
         /// </summary>
-        public GameObject FlareEffect;
+        [SerializeField]
+        private GameObject FlareEffect;
 
         /// <summary>
         /// 20180403 SangBin : Vector From Parent Enemy Of This To Player

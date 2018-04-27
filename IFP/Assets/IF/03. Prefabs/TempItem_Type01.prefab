@@ -25,7 +25,7 @@ GameObject:
   - component: {fileID: 114935115625493686}
   - component: {fileID: 135952864281671308}
   - component: {fileID: 82106974127908878}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: TempItem_Type01
   m_TagString: ITEM
   m_Icon: {fileID: 0}
@@ -192,12 +192,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f50827d0a6451f04a93cb0cfc12e52bb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemHitEffectPrefab_type01: {fileID: 123640, guid: 9242b15a276bc5a4babd09239e5fa709,
-    type: 2}
-  itemHitSoundFile_type01: {fileID: 8300000, guid: ee7c248c9008a8e4fa33a713ceb357c8,
-    type: 3}
-  itemCollEffectPrefabe_type01: {fileID: 123640, guid: 9242b15a276bc5a4babd09239e5fa709,
-    type: 2}
+  collSoundFile: {fileID: 8300000, guid: ee7c248c9008a8e4fa33a713ceb357c8, type: 3}
+  collEffectPrefab: {fileID: 153390, guid: 3c2d41265118fc14f8065fbfc45391d0, type: 2}
 --- !u!135 &135952864281671308
 SphereCollider:
   m_ObjectHideFlags: 1
