@@ -324,6 +324,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   expEffectPrefab: {fileID: 100010, guid: 031d08f52af1daa4f929b85221519426, type: 2}
-  bulletPrefab: {fileID: 1638296122159508, guid: c31f49f5f614a924aa84f8d78fdaf820,
+  StingerPrefab: {fileID: 1638296122159508, guid: c31f49f5f614a924aa84f8d78fdaf820,
     type: 2}
   stingerSoundFile: {fileID: 8300000, guid: ab7d630fd6976fc40a53f604cad328d9, type: 3}

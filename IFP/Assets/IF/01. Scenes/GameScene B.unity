@@ -2173,6 +2173,7 @@ MonoBehaviour:
   bulletPref: {fileID: 1638296122159508, guid: c31f49f5f614a924aa84f8d78fdaf820, type: 2}
   fireSoundFile: {fileID: 8300000, guid: d2fe66ad874f9a34aaf74eef10f7fd9c, type: 3}
   muzzleFlash: {fileID: 1570942215}
+  FlareEffect: {fileID: 100006, guid: 0438351a6e6422d43a09930e9be00ee9, type: 2}
 --- !u!82 &1572325329
 AudioSource:
   m_ObjectHideFlags: 0

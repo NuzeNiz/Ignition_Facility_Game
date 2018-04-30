@@ -22,7 +22,7 @@ namespace IF
 
         private void Update()
         {
-            transform.RotateAround(IF.DefenseStationCtrl.DS_Instance.DefenseStationTR.position, Vector3.up, 40.0f * Time.deltaTime);
+            transform.RotateAround(DefenseStationCtrl.DS_Instance.DefenseStationTR.position, Vector3.up, 40.0f * Time.deltaTime);
         }
 
         /// <summary>

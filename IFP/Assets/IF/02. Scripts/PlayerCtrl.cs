@@ -47,7 +47,7 @@ namespace IF
         /// <summary>
         /// 20180403 SangBin : Player's Striking Power
         /// </summary>
-        private double PlayerStrikingPower = 100.0d;
+        private double PlayerStrikingPower = 50.0d;
 
         /// <summary>
         /// 20180403 SangBin : Player's Max Health Power
@@ -68,6 +68,12 @@ namespace IF
         /// 20180403 SangBin : Player's Current Health Power Property
         /// </summary>
         public double PlayerHP { get { return playerHP; } set { playerHP = value; } }
+
+        /// <summary>
+        /// 20180430 SangBin : Player Bullet Flare Effect
+        /// </summary>
+        [SerializeField]
+        private GameObject FlareEffect;
 
         //-----------------------------------------------------------------------------------------------------------------------------
 
@@ -102,7 +108,9 @@ namespace IF
                         object[] parameters = new object[2]; 
                         parameters[0] = hitinfo.point;
                         parameters[1] = PlayerStrikingPower;
+                        GameObject flare = (GameObject)Instantiate(FlareEffect, hitinfo.collider.gameObject.transform.position, Quaternion.identity);
                         hitinfo.collider.gameObject.SendMessage("OnDamaged", parameters, SendMessageOptions.DontRequireReceiver);
+                        Destroy(flare, 3.0f);
                     }
                     else if (hitinfo.collider.tag == "ITEM")
                     {

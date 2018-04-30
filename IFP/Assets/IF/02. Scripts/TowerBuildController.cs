@@ -99,7 +99,7 @@ namespace GoogleARCore.IF
         /// <summary>
         /// 20180418 SangBin : Defense Station Transform
         /// </summary>
-        private Transform defenseStation_Tr;
+        //private Transform defenseStation_Tr;
 
         /// <summary>
         /// 20180403 SangBin : Defense Station Transform Property
@@ -205,7 +205,7 @@ namespace GoogleARCore.IF
                     defenseStation.transform.parent = defenseStation_Anchor.transform;
 
                     myTowerBaseTrackingState = TowerBaseTrackingState.built;
-                    defenseStation_Tr = defenseStation.transform;
+                    //defenseStation_Tr = defenseStation.transform;
                     defenseStation_Anchor_Tr = defenseStation_Anchor.transform;
 
                     SceneManager.LoadScene("GameScene B",LoadSceneMode.Additive);

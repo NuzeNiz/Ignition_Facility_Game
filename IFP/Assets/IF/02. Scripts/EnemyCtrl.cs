@@ -28,7 +28,7 @@ namespace IF
         /// <summary>
         /// 20180403 SangBin : Enemy's Transfrom
         /// </summary>
-        private Transform EnemyTr;
+        //private Transform EnemyTr;
 
         /// <summary>
         /// 20180403 SangBin : Unity AI Baked Navigation Agent
@@ -38,50 +38,30 @@ namespace IF
 
         /// <summary>
         /// 20180403 SangBin : Unity AI Baked Navigation / Enemy's Enable Tracing Distance
-        /// 20180418 SangBin : Unity AI Baked Navigation --> Thread & RigidBody.Addforce
+        /// 20180418 SangBin : Unity AI Baked Navigation --> Coroutine & RigidBody.Addforce
         /// </summary>
-        private float traceDist = 10.0f;
+        private float traceDistEtoP = 10.0f;
 
         /// <summary>
         /// 20180403 SangBin : Unity AI Baked Navigation / Enemy's Enable attack Distance
-        /// 20180418 SangBin : Unity AI Baked Navigation --> Thread & RigidBody.Addforce
+        /// 20180418 SangBin : Unity AI Baked Navigation --> Coroutine & RigidBody.Addforce
         /// </summary>
-        private float attackDist = 2.0f;
+        private float attackDistEtoP = 2.0f;
 
         /// <summary>
         /// 20180403 SangBin : Vector From This Enemy To Player 
         /// </summary>
-        private Vector3 directionVector;
-
-        /// <summary>
-        /// 20180403 SangBin : Direction Vector Property
-        /// </summary>
-        public Vector3 DirectionVector { get { return directionVector; } set { directionVector = value; } }
+        private Vector3 directionVectorEtoP;
 
         /// <summary>
         /// 20180418 SangBin : Distance between This Enemy and Player
         /// </summary>
-        private float distance;
-
-        /// <summary>
-        /// 20180418 SangBin : Distance Property
-        /// </summary>
-        public float Distance { get { return distance; } set { distance = value; } }
+        private float distanceEtoP;
 
         /// <summary>
         /// 20180418 SangBin : Normalized Vector From This Enemy To Player 
         /// </summary>
-        private Vector3 directionVector_Normalized;
-
-        /// <summary>
-        /// 20180418 SangBin : Normalized Direction Vector Property
-        /// </summary>
-        public Vector3 DirectionVector_Normalized { get { return directionVector_Normalized; } set { directionVector_Normalized = value; } }
-
-        /// <summary>
-        /// 20180403 SangBin : Maximum Closing Distance Vector Between Player and This Enemy 
-        /// </summary>
-        private Vector3 maximumCloseVector;
+        private Vector3 directionVector_NormalizedEtoP;
 
         /// <summary>
         /// 20180418 SangBin : Enemy Moving Speed
@@ -91,7 +71,7 @@ namespace IF
         /// <summary>
         /// 20180403 SangBin : Enemy Action State
         /// </summary>
-        private enum EnemyState { idle, trace, attack, die };
+        private enum EnemyState { idle, traceToDS, traceToPlayer, attackOnDS, attackOnPlayer, die };
 
         /// <summary>
         /// 20180403 SangBin : Enemy Present Action State
@@ -99,10 +79,10 @@ namespace IF
         private EnemyState myEnemyState = EnemyState.idle;
 
         /// <summary>
-        /// 20180403 SangBin : Enemy Bullet Prefab
+        /// 20180403 SangBin : Enemy Stinger Prefab
         /// </summary>
         [SerializeField]
-        private GameObject bulletPrefab;
+        private GameObject StingerPrefab;
 
         /// <summary>
         /// 20180403 SangBin : Contraints of the number of Enemy Bullet
@@ -110,9 +90,9 @@ namespace IF
         private int MaxBullet = 5;
 
         /// <summary>
-        /// 20180403 SangBin : Bullet Object Pool List
+        /// 20180403 SangBin : Stinger Object Pool List
         /// </summary>
-        private List<GameObject> BulletObjectPool = new List<GameObject>();
+        private List<GameObject> StingerObjectPool = new List<GameObject>();
 
         /// <summary>
         /// 20180430 SangBin : stinger shoot Sound File
@@ -120,11 +100,40 @@ namespace IF
        [SerializeField]
         private AudioClip stingerSoundFile;
 
+        /// <summary>
+        /// 20180430 SangBin : Vector From This Enemy To Defense Station 
+        /// </summary>
+        private Vector3 directionVectorEtoDS;
+
+        /// <summary>
+        /// 20180430 SangBin : Distance between This Enemy and Defense Station 
+        /// </summary>
+        private float distanceEtoDS;
+
+        /// <summary>
+        /// 20180430 SangBin : Normalized Vector From This Enemy To Defense Station  
+        /// </summary>
+        private Vector3 directionVector_NormalizedEtoDS;
+
+        /// <summary>
+        /// 20180430 SangBin : 
+        /// </summary>
+        private bool IsDamaged = false;
+
+        /// <summary>
+        /// 20180430 SangBin : 
+        /// </summary>
+        private float traceDistEtoDS = 10.0f;
+
+        /// <summary>
+        /// 20180430 SangBin : 
+        /// </summary>
+        private float attackDistEtoDS = 1.0f;
         //------------------------------------------------------------------------------------------------------------------------
 
         private void Awake()
         {
-            EnemyTr = this.gameObject.GetComponent<Transform>();
+            //EnemyTr = this.gameObject.GetComponent<Transform>();
             CreateBulletObjectPool();
         }
 
@@ -139,6 +148,7 @@ namespace IF
         /// </summary>
         void OnDamaged(object[] parameters)
         {
+            IsDamaged = true;
             EnemyHP -= (double)parameters[1];
 
             if (EnemyHP <= 0.0d)
@@ -149,6 +159,7 @@ namespace IF
 
         /// <summary>
         /// 20180403 SangBin : Check enemy action state by distance to target from enemy
+        /// 20180430 SangBin : + target(Defense Station) 
         /// </summary>
         IEnumerator CheckEnemyState()
         {
@@ -156,25 +167,46 @@ namespace IF
             {
                 yield return new WaitForSeconds(0.2f);
 
-                Cal_Direction();
+                if (IsDamaged)
+                {
+                    Cal_DirectionEtoP();
 
-                if (Distance <= attackDist)
-                {
-                    myEnemyState = EnemyState.attack;
-                }
-                else if (Distance <= traceDist)
-                {
-                    myEnemyState = EnemyState.trace;
+                    if (distanceEtoP <= attackDistEtoP)
+                    {
+                        myEnemyState = EnemyState.attackOnPlayer;
+                    }
+                    else if (distanceEtoP <= traceDistEtoP)
+                    {
+                        myEnemyState = EnemyState.traceToPlayer;
+                    }
+                    else
+                    {
+                        myEnemyState = EnemyState.idle;
+                    }
                 }
                 else
                 {
-                    myEnemyState = EnemyState.idle;
+                    Cal_DirectionEtoDS();
+
+                    if (distanceEtoDS <= attackDistEtoDS)
+                    {
+                        myEnemyState = EnemyState.attackOnDS;
+                    }
+                    else if (distanceEtoDS <= traceDistEtoDS)
+                    {
+                        myEnemyState = EnemyState.traceToDS;
+                    }
+                    else
+                    {
+                        myEnemyState = EnemyState.idle;
+                    }
                 }
             }
         }
 
         /// <summary>
-        /// 20180403 SangBin : Control enemy tracing
+        /// 20180403 SangBin : Control enemy tracing 
+        /// 20180430 SangBin : + Tracing Defense Station
         /// </summary>
         IEnumerator TracingAction()
         {
@@ -188,19 +220,35 @@ namespace IF
                         //animator.SetBool("IsTrace", false); // later
                         break;
 
-                    case EnemyState.trace:
+                    case EnemyState.traceToPlayer:
                         transform.LookAt(PlayerCtrl.PlayerInstance.PlayerTr);
-                        GetComponent<Rigidbody>().AddForce(directionVector_Normalized * MovingSpeed, ForceMode.Force);
+                        GetComponent<Rigidbody>().AddForce(directionVector_NormalizedEtoP * MovingSpeed, ForceMode.Force);
                         //animator.SetBool("IsAttack", false); // later
                         //animator.SetBool("IsTrace", true); // later
                         break;
 
-                    case EnemyState.attack:
+                    case EnemyState.attackOnPlayer:
                         transform.LookAt(PlayerCtrl.PlayerInstance.PlayerTr);
                         GetComponent<Rigidbody>().velocity = Vector3.zero;
                         GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
                         //animator.SetBool("IsAttack", true); // later
-                        StartCoroutine(StingerShooting());
+                        StartCoroutine(StingerShooting(directionVector_NormalizedEtoP));
+                        yield return new WaitForSeconds(2.0f);
+                        break;
+
+                    case EnemyState.traceToDS:
+                        transform.LookAt(DefenseStationCtrl.DS_Instance.DefenseStationTR);
+                        GetComponent<Rigidbody>().AddForce(directionVector_NormalizedEtoDS * MovingSpeed, ForceMode.Force);
+                        //animator.SetBool("IsAttack", false); // later
+                        //animator.SetBool("IsTrace", true); // later
+                        break;
+
+                    case EnemyState.attackOnDS:
+                        transform.LookAt(DefenseStationCtrl.DS_Instance.DefenseStationTR);
+                        GetComponent<Rigidbody>().velocity = Vector3.zero;
+                        GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
+                        //animator.SetBool("IsAttack", true); // later
+                        StartCoroutine(StingerShooting(directionVector_NormalizedEtoDS));
                         yield return new WaitForSeconds(2.0f);
                         break;
                 }
@@ -224,9 +272,9 @@ namespace IF
 
         }
 
-        IEnumerator StingerShooting()
+        IEnumerator StingerShooting(Vector3 directionVector_Normalized)
         {
-            foreach (GameObject bulletObj in BulletObjectPool)
+            foreach (GameObject bulletObj in StingerObjectPool)
             {
                 if (!bulletObj.activeSelf)
                 {
@@ -249,10 +297,10 @@ namespace IF
         {
             for (int i = 0; i < MaxBullet; i++)
             {
-                GameObject bulletObj = Instantiate(bulletPrefab, this.gameObject.transform.position, this.gameObject.transform.rotation, GoogleARCore.IF.TowerBuildController.TBController.DefenseStation_Anchor_Tr);
+                GameObject bulletObj = Instantiate(StingerPrefab, this.gameObject.transform.position, this.gameObject.transform.rotation, GoogleARCore.IF.TowerBuildController.TBController.DefenseStation_Anchor_Tr);
                 bulletObj.name = this.gameObject.name + "Bee_Stinger_" + i.ToString();
                 bulletObj.SetActive(false);
-                BulletObjectPool.Add(bulletObj);
+                StingerObjectPool.Add(bulletObj);
             }
         }
 
@@ -276,13 +324,23 @@ namespace IF
         }
 
         /// <summary>
-        /// 20180418 SangBin : Calculation Direction Vector
+        /// 20180418 SangBin : Calculation Direction Vector from Enemy to Player
         /// </summary>
-        void Cal_Direction()
+        void Cal_DirectionEtoP()
         {
-            directionVector = PlayerCtrl.PlayerInstance.PlayerTr.position - transform.position;
-            distance = directionVector.magnitude;
-            directionVector_Normalized = Vector3.Normalize(directionVector);
+            directionVectorEtoP = PlayerCtrl.PlayerInstance.PlayerTr.position - transform.position;
+            distanceEtoP = directionVectorEtoP.magnitude;
+            directionVector_NormalizedEtoP = Vector3.Normalize(directionVectorEtoP);
+        }
+
+        /// <summary>
+        /// 20180430 SangBin : Calculation Direction Vectorfrom Enemy to Defense Station
+        /// </summary>
+        void Cal_DirectionEtoDS()
+        {
+            directionVectorEtoDS = DefenseStationCtrl.DS_Instance.DefenseStationTR.position - transform.position;
+            distanceEtoDS = directionVectorEtoDS.magnitude;
+            directionVector_NormalizedEtoDS = Vector3.Normalize(directionVectorEtoDS);
         }
     }
 }

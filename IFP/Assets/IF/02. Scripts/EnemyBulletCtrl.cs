@@ -16,12 +16,6 @@ namespace IF
         /// </summary>
         private float bulletSpeed = 50.0f;
 
-        /// <summary>
-        /// 20180403 SangBin : Bullet Flare Effect
-        /// </summary>
-        [SerializeField]
-        private GameObject FlareEffect;
-
         //-----------------------------------------------------------------------------------------------------------------------------
 
         void OnEnable()
