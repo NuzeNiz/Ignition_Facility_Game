@@ -22,23 +22,13 @@ namespace IF
         [SerializeField]
         private GameObject FlareEffect;
 
-        /// <summary>
-        /// 20180403 SangBin : Vector From Parent Enemy Of This To Player
-        /// </summary>
-        private Vector3 directionVetor;
-
-        /// <summary>
-        /// 20180403 SangBin : Vector From Parent Enemy Of This To Player Property
-        /// </summary>
-        public Vector3 DirectionVetor { get { return directionVetor; } set { directionVetor = value; } }
-
         //-----------------------------------------------------------------------------------------------------------------------------
 
         void OnEnable()
         {
             GetComponent<Rigidbody>().isKinematic = false;
             StartCoroutine(this.CheckBulletState());
-            AddForceToBullet(directionVetor);
+            //AddForceToBullet(directionVetor);
         }
 
         private void OnDisable()

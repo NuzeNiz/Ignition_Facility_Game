@@ -19,14 +19,24 @@ namespace IF
         abstract public ItemTypeEnum ItemType { get; }
 
         /// <summary>
-        /// 20180403 SangBin : Item Collision Sound File
+        /// 20180403 SangBin : Sound File when item is collided
         /// </summary>
-        abstract protected AudioClip ItemCollSoundFile { get; }
+        abstract protected AudioClip CollsionSF { get; }
 
         /// <summary>
-        /// 20180418 SangBin : Item Collision Effect Prefab
+        /// 20180418 SangBin : Effect Prefab when item is collided
         /// </summary>
-        abstract protected GameObject ItemCollEffectPrefab { get; }
+        abstract protected GameObject CollEffectPrefab { get; }
+
+        /// <summary>
+        /// 20180430 SangBin : Sound File when item is collided
+        /// </summary>
+        abstract protected AudioClip ItemSoundFile { get; }
+
+        /// <summary>
+        /// 20180430 SangBin : Effect Prefab when item is collided
+        /// </summary>
+        abstract protected GameObject ItemEffectPrefab { get; }
 
         /// <summary>
         /// 20180418 SangBin : Normalized Vector From This Item To Player 
@@ -48,16 +58,16 @@ namespace IF
         /// <summary>
         /// 20180418 SangBin : Item function
         /// </summary>
-        abstract public void ItemFunction();
+        abstract public IEnumerator ItemFunction();
 
         /// <summary>
-        /// 20180418 SangBin : Item Hit By Player
+        /// 20180418 SangBin : Being Hit By Player
         /// </summary>
         protected void OnHit()
         {
             tag = "Untagged";
-            GameLogicManagement.GLM_Instance.SoundEffect(transform.position, ItemCollSoundFile);
-            GameObject itemHitEffect = (GameObject)Instantiate(ItemCollEffectPrefab, transform.position, Quaternion.identity);
+            GameLogicManagement.GLM_Instance.SoundEffect(transform.position, CollsionSF);
+            GameObject itemHitEffect = (GameObject)Instantiate(CollEffectPrefab, transform.position, Quaternion.identity);
             GetComponent<SphereCollider>().enabled = false;
             GetComponent<MeshRenderer>().enabled = false;
 
@@ -67,22 +77,26 @@ namespace IF
             ObtainingItem();
         }
 
+        /// <summary>
+        /// 20180427 SangBin : Collision & Obtaining Item
+        /// </summary>
         protected void OnCollisionEnter(Collision collision)
         {
             if (collision.gameObject.tag == "Player")
             {
-                GameLogicManagement.GLM_Instance.SoundEffect(transform.position, ItemCollSoundFile);
-                GameObject itemCollEffect = (GameObject)Instantiate(ItemCollEffectPrefab, transform.position, Quaternion.identity);
+                GameLogicManagement.GLM_Instance.SoundEffect(transform.position, CollsionSF);
+                GameObject itemCollEffect = (GameObject)Instantiate(CollEffectPrefab, transform.position, Quaternion.identity);
                 Destroy(itemCollEffect, 2.0f);
 
                 ObtainingItem();
-
-                // Add some initialization in objectpool with deactive
 
                 //gameObject.SetActive(false);
             }
         }
 
+        /// <summary>
+        /// 20180427 SangBin : Tracking Player
+        /// </summary>
         protected IEnumerator TrackingPlayer()
         {
             directionVector_Normalized = Vector3.Normalize(PlayerCtrl.PlayerInstance.PlayerTr.position - transform.position);
@@ -91,21 +105,27 @@ namespace IF
             yield return new WaitForSeconds(0.1f);
         }
 
+        /// <summary>
+        /// 20180427 SangBin : Tracking Player
+        /// </summary>
         protected void StartTrackingPlayer()
         {
             StartCoroutine(TrackingPlayer());
         }
 
+        /// <summary>
+        /// 20180427 SangBin : Obtaining Item
+        /// </summary>
         void ObtainingItem()
         {
-            //tag = "Untagged";
+            tag = "Untagged";
             StopCoroutine(TrackingPlayer());
-            //GetComponent<MeshRenderer>().enabled = false;
+            GetComponent<MeshRenderer>().enabled = false;
             GetComponent<SphereCollider>().enabled = false;
-            transform.parent = PlayerCtrl.PlayerInstance.PlayerTr;
-            transform.position = Vector3.zero + Vector3.forward;
+            //transform.parent = PlayerCtrl.PlayerInstance.PlayerTr;
+            transform.position = (Vector3.back * 5.0f);
 
-            // Add some codes this item should be enter in UI slot 
+            /// Add some codes, this item should be enter in UI slot ******************************************
         }
     }
 }

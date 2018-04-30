@@ -156,7 +156,7 @@ AudioSource:
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
-    m_RotationOrder: 4
+    m_RotationOrder: 0
   spreadCustomCurve:
     serializedVersion: 2
     m_Curve:
@@ -168,7 +168,7 @@ AudioSource:
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
-    m_RotationOrder: 4
+    m_RotationOrder: 0
   reverbZoneMixCustomCurve:
     serializedVersion: 2
     m_Curve:
@@ -180,7 +180,7 @@ AudioSource:
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
-    m_RotationOrder: 4
+    m_RotationOrder: 0
 --- !u!114 &114935115625493686
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -192,8 +192,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f50827d0a6451f04a93cb0cfc12e52bb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  collSoundFile: {fileID: 8300000, guid: ee7c248c9008a8e4fa33a713ceb357c8, type: 3}
+  collsionSF: {fileID: 8300000, guid: ee7c248c9008a8e4fa33a713ceb357c8, type: 3}
   collEffectPrefab: {fileID: 153390, guid: 3c2d41265118fc14f8065fbfc45391d0, type: 2}
+  itemSoundFile: {fileID: 8300000, guid: b7fb7d24de7781b46a6cbe583e6d7d1b, type: 3}
+  itemEffectPrefab: {fileID: 138338, guid: cd1ff9e92aad8ac4db78b6ffd5f1eab7, type: 2}
 --- !u!135 &135952864281671308
 SphereCollider:
   m_ObjectHideFlags: 1

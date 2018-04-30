@@ -6,6 +6,7 @@ using UnityEngine.AI;
 
 namespace IF
 {
+    [RequireComponent(typeof(AudioSource))]
     public class EnemyCtrl : MonoBehaviour
     {
         /// <summary>
@@ -113,6 +114,12 @@ namespace IF
         /// </summary>
         private List<GameObject> BulletObjectPool = new List<GameObject>();
 
+        /// <summary>
+        /// 20180430 SangBin : stinger shoot Sound File
+        /// </summary>
+       [SerializeField]
+        private AudioClip stingerSoundFile;
+
         //------------------------------------------------------------------------------------------------------------------------
 
         private void Awake()
@@ -193,18 +200,8 @@ namespace IF
                         GetComponent<Rigidbody>().velocity = Vector3.zero;
                         GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
                         //animator.SetBool("IsAttack", true); // later
-                        foreach (GameObject bulletObj in BulletObjectPool)
-                        {
-                            if (!bulletObj.activeSelf)
-                            {
-                                bulletObj.GetComponent<EnemyBulletCtrl>().DirectionVetor = directionVector;
-                                bulletObj.transform.SetPositionAndRotation(this.gameObject.transform.position, this.gameObject.transform.rotation);
-                                yield return new WaitForSeconds(0.3f);
-                                bulletObj.SetActive(true);
-                                break;
-                            }
-                        }
-                        yield return new WaitForSeconds(1.5f);
+                        StartCoroutine(StingerShooting());
+                        yield return new WaitForSeconds(2.0f);
                         break;
                 }
                 yield return null;
@@ -227,6 +224,24 @@ namespace IF
 
         }
 
+        IEnumerator StingerShooting()
+        {
+            foreach (GameObject bulletObj in BulletObjectPool)
+            {
+                if (!bulletObj.activeSelf)
+                {
+                    //bulletObj.GetComponent<EnemyBulletCtrl>().DirectionVetor = directionVector;
+                    bulletObj.transform.SetPositionAndRotation(this.gameObject.transform.position, this.gameObject.transform.rotation);
+                    //yield return new WaitForSeconds(0.3f);
+                    yield return null;
+                    GameLogicManagement.GLM_Instance.SoundEffect(transform.position, stingerSoundFile);
+                    bulletObj.SetActive(true);
+                    bulletObj.SendMessage("AddForceToBullet", directionVector_Normalized, SendMessageOptions.DontRequireReceiver);
+                    break;
+                }
+            }
+        }
+
         /// <summary>
         /// 20180403 SangBin : Create bullet OP
         /// </summary>
@@ -234,7 +249,7 @@ namespace IF
         {
             for (int i = 0; i < MaxBullet; i++)
             {
-                GameObject bulletObj = Instantiate(bulletPrefab, this.gameObject.transform.position, this.gameObject.transform.rotation, transform);
+                GameObject bulletObj = Instantiate(bulletPrefab, this.gameObject.transform.position, this.gameObject.transform.rotation, GoogleARCore.IF.TowerBuildController.TBController.DefenseStation_Anchor_Tr);
                 bulletObj.name = this.gameObject.name + "Bee_Stinger_" + i.ToString();
                 bulletObj.SetActive(false);
                 BulletObjectPool.Add(bulletObj);

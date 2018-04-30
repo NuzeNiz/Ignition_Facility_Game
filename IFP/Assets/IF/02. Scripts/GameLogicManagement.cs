@@ -55,7 +55,8 @@ namespace IF
         /// <summary>
         /// 20180403 SangBin : This Level Cleared or not
         /// </summary>
-        private bool thisLevelState = true;
+        [HideInInspector]
+        public bool thisLevelState = true;
 
         /// <summary>
         /// 20180418 SangBin : Item Object Pool List
@@ -122,12 +123,12 @@ namespace IF
 
             if (TempSpawnpoints.Length > 0)
             {
-                StartCoroutine(this.GenerateEnemy());
+                StartCoroutine(this.ActivateEnemy());
             }
 
             CreateButterFlyObjectPool();
             CreateItemObjectPool();
-            StartCoroutine(GenerateButterFly());
+            StartCoroutine(ActivateButterFly());
         }
 
         private void Update()
@@ -175,9 +176,9 @@ namespace IF
         }
 
         /// <summary>
-        /// 20180403 SangBin : Generate enemy with the object pool
+        /// 20180403 SangBin : Activate enemy with the object pool
         /// </summary>
-        IEnumerator GenerateEnemy()
+        IEnumerator ActivateEnemy()
         {
             while (thisLevelState)
             {
@@ -223,25 +224,28 @@ namespace IF
         }
 
         /// <summary>
-        /// 20180403 SangBin : Create enemy OP
+        /// 20180418 SangBin : Create Item OP
         /// </summary>
         void CreateItemObjectPool()
         {
             for (int i = 0; i < maxEachItem; i++)
             {
                 GameObject Item_type01 = (GameObject)Instantiate(itemPrefab_type01);
+                Item_type01.transform.parent = GoogleARCore.IF.TowerBuildController.TBController.DefenseStation_Anchor_Tr;
                 Item_type01.name = "Item_Cinnamon_" + i.ToString();
                 //Item_type01.GetComponent<ItemCtrl>().ItemType = 1;
                 Item_type01.tag = "ITEM";
                 Item_type01.SetActive(false);
 
                 GameObject Item_type02 = (GameObject)Instantiate(itemPrefab_type02);
+                Item_type02.transform.parent = GoogleARCore.IF.TowerBuildController.TBController.DefenseStation_Anchor_Tr;
                 Item_type02.name = "Item_Type02_" + i.ToString();
                 //Item_type02.GetComponent<ItemCtrl>().ItemType = 2;
                 Item_type02.tag = "ITEM";
                 Item_type02.SetActive(false);
 
                 GameObject Item_type03 = (GameObject)Instantiate(itemPrefab_type03);
+                Item_type03.transform.parent = GoogleARCore.IF.TowerBuildController.TBController.DefenseStation_Anchor_Tr;
                 Item_type03.name = "Item_Type03_" + i.ToString();
                 //Item_type03.GetComponent<ItemCtrl>().ItemType = 3;
                 Item_type03.tag = "ITEM";
@@ -253,7 +257,10 @@ namespace IF
             }
         }
 
-        public void GenerateItem(Transform butterflyTransform)
+        /// <summary>
+        /// 20180418 SangBin : Activate Item with the object pool
+        /// </summary>
+        public void ActivateItem(Transform butterflyTransform)
         {
             for (int i = 0; i < maxItem; i++)
             {
@@ -263,34 +270,45 @@ namespace IF
                     ItemObjectPool[randIdex].transform.position = butterflyTransform.position;
                     ItemObjectPool[randIdex].SetActive(true);
                     ItemObjectPool[randIdex].GetComponent<ItemType01Ctrl>().StartTrackingPlayer();
+                    //ItemObjectPool[randIdex].SendMessage("StartTrackingPlayer", SendMessageOptions.DontRequireReceiver);
                     break;
                 }
             }
         }
 
+        /// <summary>
+        /// 20180427 SangBin : Create ButterFly OP
+        /// </summary>
         void CreateButterFlyObjectPool()
         {
-            for (int i = 0; i < 1; i++)
+            for (int i = 0; i < 2; i++)
             {
                 GameObject butterFly = (GameObject)Instantiate(butterFlyPrefab_type01);
+                butterFly.transform.parent = GoogleARCore.IF.TowerBuildController.TBController.DefenseStation_Anchor_Tr;
                 butterFly.name = "Enemy_Butterfly_" + i.ToString();
                 butterFly.SetActive(false);
                 butterFlyObjectPool.Add(butterFly);
             }
         }
 
-        IEnumerator GenerateButterFly()
+        /// <summary>
+        /// 20180427 SangBin : Activate Butterfly with the object pool
+        /// </summary>
+        IEnumerator ActivateButterFly()
         {
-            foreach(GameObject butterFly in butterFlyObjectPool)
+            while (thisLevelState)
             {
-                if (!butterFly.activeSelf)
+                foreach (GameObject butterFly in butterFlyObjectPool)
                 {
-                    butterFly.transform.position = IF.DefenseStationCtrl.DS_Instance.DefenseStationTR.position + (Vector3.right * 3) + (Vector3.up * 2);
-                    butterFly.transform.parent = GoogleARCore.IF.TowerBuildController.TBController.DefenseStation_Anchor_Tr;
-                    butterFly.SetActive(true);
+                    if (!butterFly.activeSelf)
+                    {
+                        butterFly.transform.position = IF.DefenseStationCtrl.DS_Instance.DefenseStationTR.position + (Vector3.right * 3) + (Vector3.up * 2);
+                        butterFly.SetActive(true);
+                        break;
+                    }
                 }
+                yield return new WaitForSeconds(5.0f);
             }
-            yield return new WaitForSeconds(5.0f);
         }
     }
 }

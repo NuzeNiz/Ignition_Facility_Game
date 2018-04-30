@@ -9,6 +9,7 @@ TagManager:
   - ENEMY_BEE_STINGER
   - ENEMY_BUTTERFLY
   - ENEMY_TYPE01
+  - ENEMY_TYPE01_BULLET
   layers:
   - Default
   - TransparentFX
@@ -19,7 +20,7 @@ TagManager:
   - 
   - 
   - ENEMY
-  - ENEMY_BEE_STINGER
+  - 
   - ITEM
   - PLAYER
   - 

@@ -88,13 +88,13 @@ namespace IF
             {
                 Fire();
 
-
                 /// <summary>
                 /// 20180403 SangBin : Player's RayCast Shoot to Enemy
                 /// 20180418 SangBin : + to Item
+                /// 20180427 SangBin : + to Butterfly
                 /// </summary>
                 RaycastHit hitinfo;
-                //if (Physics.Raycast(cameraTr.position, transform.worldToLocalMatrix.MultiplyVector(cameraTr.forward), out hitinfo, 100.0f))
+
                 if (Physics.Raycast(playerTr.position, playerTr.forward, out hitinfo, rayMaxDistance))                
                 {
                     if (hitinfo.collider.tag == "ENEMY_BEE")

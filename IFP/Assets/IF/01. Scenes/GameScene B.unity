@@ -1528,6 +1528,7 @@ MonoBehaviour:
   isSoundEffectMute: 0
   enemyPrefabs_type01: {fileID: 1426588062150820, guid: 0c5137def5b7cd24cba031822e3ae5ca,
     type: 2}
+  thisLevelState: 1
   itemPrefab_type01: {fileID: 1185642529807098, guid: 217976abe42283549b7beb074f9e1b4c,
     type: 2}
   itemPrefab_type02: {fileID: 1185642529807098, guid: 217976abe42283549b7beb074f9e1b4c,
@@ -1899,7 +1900,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100000, guid: 9dc74f0ca5de04c43a429ede8bd29a42, type: 2}
+  - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -2420,6 +2421,18 @@ Prefab:
     - target: {fileID: 1638296122159508, guid: c31f49f5f614a924aa84f8d78fdaf820, type: 2}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4269600088345200, guid: c31f49f5f614a924aa84f8d78fdaf820, type: 2}
+      propertyPath: m_LocalScale.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4269600088345200, guid: c31f49f5f614a924aa84f8d78fdaf820, type: 2}
+      propertyPath: m_LocalScale.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4269600088345200, guid: c31f49f5f614a924aa84f8d78fdaf820, type: 2}
+      propertyPath: m_LocalScale.z
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: c31f49f5f614a924aa84f8d78fdaf820, type: 2}
