@@ -19,6 +19,19 @@ public class Controller : MonoBehaviour {
         //    .Bind(typeof(Binding1))
         //    .Bind(typeof(Binding2));
     }
+
+}
+
+public static class DItem
+{
+    [CLI.Bind]
+    public static CLI.Result AddItem()
+    {
+        var itemWin = GameObject.Find("Item_Window").GetComponent<ItemWindow>();
+        
+
+        return CLI.Result.Success("Add Item");
+    }
 }
 
 public static class DLadar
