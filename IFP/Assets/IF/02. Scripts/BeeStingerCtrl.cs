@@ -10,7 +10,7 @@ namespace IF
         /// 20180501 SangBin : Stinger Damage
         /// </summary>
         [HideInInspector]
-        public double stingerDamage = 5.0d;
+        public double stingerDamage = 2.0d;
 
         /// <summary>
         /// 20180403 SangBin : Stinger Speed

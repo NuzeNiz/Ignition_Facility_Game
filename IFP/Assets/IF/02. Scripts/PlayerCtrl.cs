@@ -112,10 +112,10 @@ namespace IF
                         hitinfo.collider.gameObject.SendMessage("OnDamaged", parameters, SendMessageOptions.DontRequireReceiver);
                         Destroy(flare, 3.0f);
                     }
-                    else if (hitinfo.collider.tag == "ITEM")
-                    {
-                        hitinfo.collider.gameObject.SendMessage("OnHit", SendMessageOptions.DontRequireReceiver);
-                    }
+                    //else if (hitinfo.collider.tag == "ITEM")
+                    //{
+                    //    hitinfo.collider.gameObject.SendMessage("OnHit", SendMessageOptions.DontRequireReceiver);
+                    //}
                     else if (hitinfo.collider.tag == "ENEMY_BUTTERFLY")
                     {
                         hitinfo.collider.gameObject.SendMessage("OnHit", SendMessageOptions.DontRequireReceiver);
