@@ -103,7 +103,8 @@ namespace IF
 
                 if (Physics.Raycast(playerTr.position, playerTr.forward, out hitinfo, rayMaxDistance))                
                 {
-                    if (hitinfo.collider.tag == "ENEMY_BEE")
+                    if(hitinfo.collider.gameObject.layer == 8)
+                    //if (hitinfo.collider.tag == "ENEMY_BEE")
                     {
                         object[] parameters = new object[2]; 
                         parameters[0] = hitinfo.point;
@@ -116,10 +117,10 @@ namespace IF
                     //{
                     //    hitinfo.collider.gameObject.SendMessage("OnHit", SendMessageOptions.DontRequireReceiver);
                     //}
-                    else if (hitinfo.collider.tag == "ENEMY_BUTTERFLY")
-                    {
-                        hitinfo.collider.gameObject.SendMessage("OnHit", SendMessageOptions.DontRequireReceiver);
-                    }
+                    //else if (hitinfo.collider.tag == "ENEMY_BUTTERFLY")
+                    //{
+                    //    hitinfo.collider.gameObject.SendMessage("OnHit", SendMessageOptions.DontRequireReceiver);
+                    //}
                 }
             }
         }

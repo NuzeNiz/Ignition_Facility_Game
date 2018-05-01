@@ -28,7 +28,7 @@ namespace IF
         /// <summary>
         /// 20180427 SangBin : Being Hit By Player
         /// </summary>
-        void OnHit()
+        void OnDamaged(object[] parameters)
         {
             GameObject explosion = (GameObject)Instantiate(expEffectPrefab, this.gameObject.transform.position, Quaternion.identity);
             GameLogicManagement.GLM_Instance.SoundEffect(transform.position, SoundFile);
