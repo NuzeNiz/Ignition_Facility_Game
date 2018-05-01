@@ -29560,7 +29560,7 @@ MonoBehaviour:
   isSoundEffectMute: 0
   enemyPrefab_type01: {fileID: 1091823405148940, guid: acb433471fa848842842683e0906d74f,
     type: 2}
-  enemyPrefab_type02: {fileID: 1091823405148940, guid: acb433471fa848842842683e0906d74f,
+  enemyPrefab_type02: {fileID: 1994958786981402, guid: e8a4a609408f04342871e5fd26a2b32b,
     type: 2}
   thisLevelState: 1
   itemPrefab_type01: {fileID: 1185642529807098, guid: 217976abe42283549b7beb074f9e1b4c,
@@ -41099,7 +41099,7 @@ AudioSource:
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
-    m_RotationOrder: 4
+    m_RotationOrder: 0
   reverbZoneMixCustomCurve:
     serializedVersion: 2
     m_Curve:
