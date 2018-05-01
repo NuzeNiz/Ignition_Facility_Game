@@ -32,10 +32,16 @@ namespace IF
         private Transform[] TempSpawnpoints;
 
         /// <summary>
-        /// 20180403 SangBin : Enemy Prefabs
+        /// 20180403 SangBin : Enemy Bee Prefabs
         /// </summary>
         [SerializeField]
-        private GameObject enemyPrefabs_type01;
+        private GameObject enemyPrefab_type01;
+
+        /// <summary>
+        /// 20180501 SangBin : Enemy Moth Prefabs
+        /// </summary>
+        [SerializeField]
+        private GameObject enemyPrefab_type02;
 
         /// <summary>
         /// 20180403 SangBin : Enemy Object Pool List
@@ -146,11 +152,20 @@ namespace IF
         {
             for (int i = 0; i < maxEnemy; i++)
             {
-                GameObject EnemyObj_test = (GameObject)Instantiate(enemyPrefabs_type01);
-                EnemyObj_test.name = "Enemy_Bee_" + i.ToString();
-                EnemyObj_test.SetActive(false);
-                enemyObjectPool.Add(EnemyObj_test);
+                GameObject Enemy_Bee = (GameObject)Instantiate(enemyPrefab_type01);
+                Enemy_Bee.name = "Enemy_Bee_" + i.ToString();
+                Enemy_Bee.SetActive(false);
+
+
+                GameObject Enemy_Moth = (GameObject)Instantiate(enemyPrefab_type02);
+                Enemy_Moth.name = "Enemy_Moth_" + i.ToString();
+                Enemy_Moth.SetActive(false);
+
+                enemyObjectPool.Add(Enemy_Bee);
+                enemyObjectPool.Add(Enemy_Moth);
             }
+
+
         }
 
         /// <summary>
@@ -231,24 +246,18 @@ namespace IF
             for (int i = 0; i < maxEachItem; i++)
             {
                 GameObject Item_type01 = (GameObject)Instantiate(itemPrefab_type01);
-                Item_type01.transform.parent = GoogleARCore.IF.TowerBuildController.TBController.DefenseStation_Anchor_Tr;
+                //Item_type01.transform.parent = GoogleARCore.IF.TowerBuildController.TBController.DefenseStation_Anchor_Tr;
                 Item_type01.name = "Item_Cinnamon_" + i.ToString();
-                //Item_type01.GetComponent<ItemCtrl>().ItemType = 1;
-                Item_type01.tag = "ITEM";
                 Item_type01.SetActive(false);
 
                 GameObject Item_type02 = (GameObject)Instantiate(itemPrefab_type02);
-                Item_type02.transform.parent = GoogleARCore.IF.TowerBuildController.TBController.DefenseStation_Anchor_Tr;
+                //Item_type02.transform.parent = GoogleARCore.IF.TowerBuildController.TBController.DefenseStation_Anchor_Tr;
                 Item_type02.name = "Item_Type02_" + i.ToString();
-                //Item_type02.GetComponent<ItemCtrl>().ItemType = 2;
-                Item_type02.tag = "ITEM";
                 Item_type02.SetActive(false);
 
                 GameObject Item_type03 = (GameObject)Instantiate(itemPrefab_type03);
-                Item_type03.transform.parent = GoogleARCore.IF.TowerBuildController.TBController.DefenseStation_Anchor_Tr;
+                //Item_type03.transform.parent = GoogleARCore.IF.TowerBuildController.TBController.DefenseStation_Anchor_Tr;
                 Item_type03.name = "Item_Type03_" + i.ToString();
-                //Item_type03.GetComponent<ItemCtrl>().ItemType = 3;
-                Item_type03.tag = "ITEM";
                 Item_type03.SetActive(false);
 
                 ItemObjectPool.Add(Item_type01);
@@ -267,6 +276,7 @@ namespace IF
                 int randIdex = Random.Range(0, maxItem);
                 if (!ItemObjectPool[randIdex].activeSelf)
                 {
+                    ItemObjectPool[randIdex].transform.parent = GoogleARCore.IF.TowerBuildController.TBController.DefenseStation_Anchor_Tr;
                     ItemObjectPool[randIdex].transform.position = butterflyTransform.position;
                     ItemObjectPool[randIdex].SetActive(true);
                     ItemObjectPool[randIdex].GetComponent<ItemType01Ctrl>().StartTrackingPlayer();

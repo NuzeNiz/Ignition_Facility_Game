@@ -6,7 +6,6 @@ using UnityEngine.AI;
 
 namespace IF
 {
-    [RequireComponent(typeof(AudioSource))]
     public class BeeCtrl : EnemyBaseClass
     {
         /// <summary>

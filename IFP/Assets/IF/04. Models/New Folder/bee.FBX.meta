@@ -1,17 +1,17 @@
 fileFormatVersion: 2
-guid: 80defcda8c8d36f4aabc7a814ae359a9
-timeCreated: 1524801492
+guid: 4551e655865a957449f1f29a6efe4241
+timeCreated: 1525142198
 licenseType: Free
 ModelImporter:
   serializedVersion: 22
   fileIDToRecycleName:
-    100000: //RootNode
-    100002: Box001
-    100004: Box002
-    400000: //RootNode
-    400002: Box001
-    400004: Box002
-    2100000: No Name
+    100000: Box001
+    100002: Box002
+    100004: //RootNode
+    400000: Box001
+    400002: Box002
+    400004: //RootNode
+    2100000: 01 - Default
     2300000: Box001
     2300002: Box002
     3300000: Box001
@@ -50,7 +50,7 @@ ModelImporter:
     isReadable: 1
   meshes:
     lODScreenPercentages: []
-    globalScale: 1
+    globalScale: 0.05
     meshCompression: 0
     addColliders: 0
     importVisibility: 1

@@ -4,6 +4,7 @@ using UnityEngine;
 
 namespace IF
 {
+    [RequireComponent(typeof(AudioSource))]
     public class EnemyBaseClass : MonoBehaviour
     {
 
