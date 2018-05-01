@@ -7,7 +7,7 @@ using UnityEngine.AI;
 namespace IF
 {
     [RequireComponent(typeof(AudioSource))]
-    public class EnemyCtrl : MonoBehaviour
+    public class BeeCtrl1 : EnemyBaseClass
     {
         /// <summary>
         /// 20180403 SangBin : Broken Enemy Explosion Effect Prefab;
@@ -129,6 +129,8 @@ namespace IF
         /// 20180430 SangBin : 
         /// </summary>
         private float attackDistEtoDS = 1.0f;
+
+        private Vector3 DSoffset = Vector3.up * 0.5f;
         //------------------------------------------------------------------------------------------------------------------------
 
         private void Awake()
@@ -318,6 +320,7 @@ namespace IF
             myEnemyState = EnemyState.die;
             GetComponent<BoxCollider>().enabled = false;
             GameUIManagement.GameUIManagerInstance.DisplayScore(50);
+            IsDamaged = false;
 
             StartCoroutine(this.PushObjectPool());
             Destroy(explosion, 2.0f);

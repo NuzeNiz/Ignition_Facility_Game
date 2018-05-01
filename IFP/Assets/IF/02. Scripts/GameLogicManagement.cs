@@ -133,7 +133,7 @@ namespace IF
 
         private void Update()
         {
-            if(PlayerCtrl.PlayerInstance.PlayerHP <= 0.0d)
+            if(PlayerCtrl.PlayerInstance.PlayerHP <= 0.0d || DefenseStationCtrl.DS_Instance.DefenseStation_HP <= 0.0d)
             {
                 GameOver();
             }

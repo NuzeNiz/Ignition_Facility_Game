@@ -57,7 +57,7 @@ namespace IF
         /// <summary>
         /// 20180403 SangBin : Player's Max Health Power Property
         /// </summary>
-        public double PlayerMaxHP { get { return playerMaxHP; } set { playerMaxHP = value; } }
+        public double PlayerMaxHP { get { return playerMaxHP; } }
 
         /// <summary>
         /// 20180403 SangBin : Player's Current Health Power
@@ -67,7 +67,7 @@ namespace IF
         /// <summary>
         /// 20180403 SangBin : Player's Current Health Power Property
         /// </summary>
-        public double PlayerHP { get { return playerHP; } set { playerHP = value; } }
+        public double PlayerHP { get { return playerHP; } }
 
         /// <summary>
         /// 20180430 SangBin : Player Bullet Flare Effect
@@ -131,8 +131,8 @@ namespace IF
         {
             if (collision.gameObject.tag == "ENEMY_BEE_STINGER")
             {
-                playerHP -= 2.0d; // test
-                //collision.gameObject.SendMessage("DeactivateBullet", SendMessageOptions.DontRequireReceiver);
+                //playerHP -= 2.0d; // test
+                playerHP -= collision.gameObject.GetComponent<BeeStingerCtrl>().stingerDamage;
                 collision.gameObject.GetComponent<TrailRenderer>().enabled = false;
                 collision.gameObject.SetActive(false);
             }

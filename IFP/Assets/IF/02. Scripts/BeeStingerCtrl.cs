@@ -4,17 +4,18 @@ using UnityEngine;
 
 namespace IF
 {
-    public class EnemyBulletCtrl : MonoBehaviour
+    public class BeeStingerCtrl : MonoBehaviour
     {
         /// <summary>
-        /// 20180403 SangBin : Bullet Damage
+        /// 20180501 SangBin : Stinger Damage
         /// </summary>
-        //private int bulletDamage = 10;
+        [HideInInspector]
+        public double stingerDamage = 5.0d;
 
         /// <summary>
-        /// 20180403 SangBin : Bullet Speed
+        /// 20180403 SangBin : Stinger Speed
         /// </summary>
-        private float bulletSpeed = 50.0f;
+        private float stingerSpeed = 50.0f;
 
         //-----------------------------------------------------------------------------------------------------------------------------
 
@@ -22,7 +23,6 @@ namespace IF
         {
             GetComponent<Rigidbody>().isKinematic = false;
             StartCoroutine(this.CheckBulletState());
-            //AddForceToBullet(directionVetor);
         }
 
         private void OnDisable()
@@ -42,7 +42,7 @@ namespace IF
             /// <summary>
             /// 20180403 SangBin : Add force to this object on the world space 
             /// </summary>
-            GetComponent<Rigidbody>().AddForce(directionVetor * bulletSpeed, ForceMode.Force);
+            GetComponent<Rigidbody>().AddForce(directionVetor * stingerSpeed, ForceMode.Force);
 
             /// <summary>
             /// 20180403 SangBin : Add force to this object on the local space
