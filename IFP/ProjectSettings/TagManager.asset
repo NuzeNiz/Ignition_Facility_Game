@@ -10,6 +10,7 @@ TagManager:
   - ENEMY_BUTTERFLY
   - ENEMY_TYPE01
   - ENEMY_TYPE01_BULLET
+  - ENEMY_MOTH
   layers:
   - Default
   - TransparentFX
