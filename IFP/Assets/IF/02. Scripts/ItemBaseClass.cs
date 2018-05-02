@@ -7,6 +7,7 @@ namespace IF
     [RequireComponent(typeof(AudioSource))]
     abstract public class ItemBaseClass : MonoBehaviour
     {
+        #region Fields : Item Type
         /// <summary>
         /// 20180418 SangBin : Item Type Enum
         /// </summary>
@@ -17,48 +18,44 @@ namespace IF
         /// 20180418 SangBin : Item Type
         /// </summary>
         abstract public ItemTypeEnum ItemType { get; }
+        #endregion
 
+        #region Fields : Sound Files
         /// <summary>
         /// 20180403 SangBin : Sound File when item is collided
         /// </summary>
         abstract protected AudioClip CollsionSF { get; }
 
         /// <summary>
+        /// 20180430 SangBin : Sound File when item is collided
+        /// </summary>
+        abstract protected AudioClip ItemSoundFile { get; }
+        #endregion
+
+        #region Fields : Prefabs
+        /// <summary>
         /// 20180418 SangBin : Effect Prefab when item is collided
         /// </summary>
         abstract protected GameObject CollEffectPrefab { get; }
 
         /// <summary>
-        /// 20180430 SangBin : Sound File when item is collided
-        /// </summary>
-        abstract protected AudioClip ItemSoundFile { get; }
-
-        /// <summary>
         /// 20180430 SangBin : Effect Prefab when item is collided
         /// </summary>
         abstract protected GameObject ItemEffectPrefab { get; }
+        #endregion
 
+        #region Fields : Tracking
         /// <summary>
         /// 20180418 SangBin : Normalized Vector From This Item To Player 
         /// </summary>
         private Vector3 directionVector_Normalized;
 
         /// <summary>
-        /// 20180418 SangBin : Normalized Direction Vector Property
-        /// </summary>
-        public Vector3 DirectionVector_Normalized { get { return directionVector_Normalized; } set { directionVector_Normalized = value; } }
-
-        /// <summary>
         /// 20180418 SangBin : Item Moving Speed
         /// </summary>
-        private float MovingSpeed = 50.0f;
-
+        private float movingSpeed = 50.0f;
+        #endregion
         //-----------------------------------------------------------------------------------------------------------------
-
-        /// <summary>
-        /// 20180418 SangBin : Item function
-        /// </summary>
-        abstract public IEnumerator ItemFunction();
 
         protected void OnEnable()
         {
@@ -72,6 +69,11 @@ namespace IF
             GetComponent<MeshRenderer>().enabled = true;
             GetComponent<SphereCollider>().enabled = true;
         }
+
+        /// <summary>
+        /// 20180418 SangBin : Item function
+        /// </summary>
+        abstract public IEnumerator ItemFunction();
 
         /// <summary>
         /// 20180418 SangBin : Being Hit By Player
@@ -114,17 +116,9 @@ namespace IF
         {
             directionVector_Normalized = Vector3.Normalize(PlayerCtrl.PlayerInstance.PlayerTr.position - transform.position);
             transform.LookAt(PlayerCtrl.PlayerInstance.PlayerTr);
-            GetComponent<Rigidbody>().AddForce(directionVector_Normalized * MovingSpeed, ForceMode.Force);
+            GetComponent<Rigidbody>().AddForce(directionVector_Normalized * movingSpeed, ForceMode.Force);
             yield return new WaitForSeconds(0.1f);
         }
-
-        ///// <summary>
-        ///// 20180427 SangBin : Tracking Player
-        ///// </summary>
-        //protected void StartTrackingPlayer()
-        //{
-        //    StartCoroutine(TrackingPlayer());
-        //}
 
         /// <summary>
         /// 20180427 SangBin : Obtaining Item
