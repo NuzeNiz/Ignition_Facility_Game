@@ -51,7 +51,7 @@ namespace IF
         }
 
         /// <summary>
-        /// 20180501 SangBin : Collision event between Defense Station and enemy bullet
+        /// 20180501 SangBin : Collision event between Defense Station and Enemy Bee Stinger
         /// </summary>
         private void OnCollisionEnter(Collision collision)
         {
@@ -60,6 +60,18 @@ namespace IF
                 defenseStation_HP -= collision.gameObject.GetComponent<BeeStingerCtrl>().stingerDamage;
                 collision.gameObject.GetComponent<TrailRenderer>().enabled = false;
                 collision.gameObject.SetActive(false);
+            }
+
+        }
+
+        /// <summary>
+        /// 20180501 SangBin : Trigger event between Defense Station and Enemy Moth
+        /// </summary>
+        private void OnTriggerStay(Collider collider)
+        {
+            if (collider.gameObject.tag == "ENEMY_MOTH_SCALE")
+            {
+                    defenseStation_HP -= 0.01d; //damage per frame
             }
         }
     }

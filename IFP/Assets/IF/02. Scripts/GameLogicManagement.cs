@@ -159,13 +159,12 @@ namespace IF
 
                 GameObject Enemy_Moth = (GameObject)Instantiate(enemyPrefab_type02);
                 Enemy_Moth.name = "Enemy_Moth_" + i.ToString();
+                Enemy_Moth.transform.GetChild(0).gameObject.SetActive(false);
                 Enemy_Moth.SetActive(false);
 
                 enemyObjectPool.Add(Enemy_Bee);
                 enemyObjectPool.Add(Enemy_Moth);
             }
-
-
         }
 
         /// <summary>

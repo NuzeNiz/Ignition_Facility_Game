@@ -214,7 +214,7 @@ namespace IF
                     //    break;
 
                     case EnemyState.traceToDS:
-                        transform.LookAt(DefenseStationCtrl.DS_Instance.DefenseStationTR.position + (Vector3.up * 20.0f));
+                        //transform.LookAt(DefenseStationCtrl.DS_Instance.DefenseStationTR.position + (Vector3.up * 20.0f));
                         GetComponent<Rigidbody>().AddForce(directionVector_NormalizedEtoDS * MovingSpeed, ForceMode.Force);
                         //animator.SetBool("IsAttack", false); // later
                         //animator.SetBool("IsTrace", true); // later
@@ -239,6 +239,7 @@ namespace IF
         /// </summary>
         IEnumerator PushObjectPool()
         {
+            transform.GetChild(0).gameObject.SetActive(false);
             //yield return new WaitForSeconds(4.0f); //destroy delay
             yield return null;
             isDie = false;
@@ -322,11 +323,14 @@ namespace IF
             directionVector_NormalizedEtoDS = Vector3.Normalize(directionVectorEtoDS);
         }
 
+        /// <summary>
+        /// 20180501 SangBin : 
+        /// </summary>
         void ScatteringScalePowder()
         {
             //bool equalizer = false;
             transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.identity, 10.0f * Time.deltaTime);
-            this.gameObject.transform.GetChild(0).gameObject.SetActive(true);
+            transform.GetChild(0).gameObject.SetActive(true);
         }
     }
 }

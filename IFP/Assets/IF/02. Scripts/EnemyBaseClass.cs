@@ -7,6 +7,6 @@ namespace IF
     [RequireComponent(typeof(AudioSource))]
     public class EnemyBaseClass : MonoBehaviour
     {
-
+        //작업 중
     }
 }
