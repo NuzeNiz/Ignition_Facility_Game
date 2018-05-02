@@ -7,85 +7,25 @@ using UnityEngine.AI;
 
 namespace IF
 {
-    [RequireComponent(typeof(AudioSource))]
-    public class BeeCtrl : MonoBehaviour
+    public class BeeCtrl : EnemyBaseClass
     {
+        #region Fields : Prefabs
         /// <summary>
-        /// 20180403 SangBin : Broken Enemy Explosion Effect Prefab;
+        /// 20180502 SangBin : Enemy Bee Death Effect Prefab
         /// </summary>
         [SerializeField]
         private GameObject deathEffectPrefab;
 
-        //protected override GameObject deathEffect
-        //{
-        //    get
-        //    {
-        //        return deathEffectPrefab;
-        //    }
-        //}
-
         /// <summary>
-        /// 20180403 SangBin : Enemy Current Health Power
+        /// 20180502 SangBin : Enemy Bee Death Effect
         /// </summary>
-        private double enemyHP = 100.0d;
-
-        /// <summary>
-        /// 20180403 SangBin : Enemy Died or not
-        /// </summary>
-        private bool isDie = false;
-
-        /// <summary>
-        /// 20180403 SangBin : Enemy's Transfrom
-        /// </summary>
-        //private Transform EnemyTr;
-
-        /// <summary>
-        /// 20180403 SangBin : Unity AI Baked Navigation Agent
-        /// 20180418 SangBin : Unity AI Baked Navigation --> Thread & RigidBody.Addforce
-        /// </summary>
-        //private NavMeshAgent nvAgent;
-
-        /// <summary>
-        /// 20180403 SangBin : Unity AI Baked Navigation / Enemy's Enable Tracing Distance
-        /// 20180418 SangBin : Unity AI Baked Navigation --> Coroutine & RigidBody.Addforce
-        /// </summary>
-        private float traceDistEtoP = 10.0f;
-
-        /// <summary>
-        /// 20180403 SangBin : Unity AI Baked Navigation / Enemy's Enable attack Distance
-        /// 20180418 SangBin : Unity AI Baked Navigation --> Coroutine & RigidBody.Addforce
-        /// </summary>
-        private float attackDistEtoP = 2.0f;
-
-        /// <summary>
-        /// 20180403 SangBin : Vector From This Enemy To Player 
-        /// </summary>
-        private Vector3 directionVectorEtoP;
-
-        /// <summary>
-        /// 20180418 SangBin : Distance between This Enemy and Player
-        /// </summary>
-        private float distanceEtoP;
-
-        /// <summary>
-        /// 20180418 SangBin : Normalized Vector From This Enemy To Player 
-        /// </summary>
-        private Vector3 directionVector_NormalizedEtoP;
-
-        /// <summary>
-        /// 20180418 SangBin : Enemy Moving Speed
-        /// </summary>
-        private float movingSpeed = 5.0f;
-
-        /// <summary>
-        /// 20180403 SangBin : Enemy Action State
-        /// </summary>
-        private enum EnemyState { idle, traceToDS, traceToPlayer, attackOnDS, attackOnPlayer, die };
-
-        /// <summary>
-        /// 20180403 SangBin : Enemy Present Action State
-        /// </summary>
-        private EnemyState currentEnemyState = EnemyState.idle;
+        override protected GameObject DeathEffect
+        {
+            get
+            {
+                return deathEffectPrefab;
+            }
+        }
 
         /// <summary>
         /// 20180403 SangBin : Enemy Stinger Prefab
@@ -93,6 +33,56 @@ namespace IF
         [SerializeField]
         private GameObject stingerPrefab;
 
+        #endregion
+
+        #region Fields : Enemy Statistics
+        /// <summary>
+        /// 20180502 SangBin : Bee Current Health Power
+        /// </summary>
+        private double currentBeeHP = 100.0d;
+
+        /// <summary>
+        /// 20180403 SangBin : Enemy Current Health Power
+        /// </summary>
+        override protected double CurrentHealthPower
+        {
+            get
+            {
+                return currentBeeHP;
+            }
+
+            set
+            {
+                currentBeeHP = value;
+            }
+        }
+
+        /// <summary>
+        /// 20180502 SangBin : Bee Moving Speed
+        /// </summary>
+        private float beeMovingSpeed = 5.0f;
+
+        /// <summary>
+        /// 20180418 SangBin : Enemy Moving Speed
+        /// </summary>
+        protected override float MovingSpeed
+        {
+            get
+            {
+                return beeMovingSpeed;
+            }
+        }
+
+        protected override string TagName
+        {
+            get
+            {
+                return "ENEMY_BEE";
+            }
+        }
+        #endregion
+
+        #region Fields : Bee Stinger
         /// <summary>
         /// 20180403 SangBin : Contraints of the number of Enemy Bullet
         /// </summary>
@@ -102,195 +92,43 @@ namespace IF
         /// 20180403 SangBin : Stinger Object Pool List
         /// </summary>
         private List<GameObject> stingerObjectPool = new List<GameObject>();
+        #endregion
 
+        #region Fields : Sound Files
         /// <summary>
         /// 20180430 SangBin : stinger shoot Sound File
         /// </summary>
-       [SerializeField]
+        [SerializeField]
         private AudioClip stingerSoundFile;
-
-        /// <summary>
-        /// 20180430 SangBin : Vector From This Enemy To Defense Station 
-        /// </summary>
-        private Vector3 directionVectorEtoDS;
-
-        /// <summary>
-        /// 20180430 SangBin : Distance between This Enemy and Defense Station 
-        /// </summary>
-        private float distanceEtoDS;
-
-        /// <summary>
-        /// 20180430 SangBin : Normalized Vector From This Enemy To Defense Station  
-        /// </summary>
-        private Vector3 directionVector_NormalizedEtoDS;
-
-        /// <summary>
-        /// 20180430 SangBin : 
-        /// </summary>
-        private bool isDamaged = false;
-
-        /// <summary>
-        /// 20180430 SangBin : 
-        /// </summary>
-        private float traceDistEtoDS = 10.0f;
-
-        /// <summary>
-        /// 20180430 SangBin : 
-        /// </summary>
-        private float attackDistEtoDS = 2.0f;
+        #endregion
 
         //------------------------------------------------------------------------------------------------------------------------
 
-        private void Awake()
+        override protected void Awake()
         {
-            //EnemyTr = this.gameObject.GetComponent<Transform>();
+            base.Awake();
             CreateBulletObjectPool();
-        }
-
-        private void OnEnable()
-        {
-            StartCoroutine(this.TracingAction()); //Finite State Machine (or Finite Automaton)
-            StartCoroutine(this.CheckEnemyState());
         }
 
         /// <summary>
         /// 20180403 SangBin : Damage to enemy (Message Driven Method)
         /// </summary>
-        void OnDamaged(object[] parameters)
+        new private void OnDamaged(object[] parameters)
         {
-            isDamaged = true;
-            enemyHP -= (double)parameters[1];
-
-            if (enemyHP <= 0.0d)
-            {
-                EnemyKilled();
-            }
+            base.isDamaged = true;
+            base.OnDamaged(parameters);
         }
 
         /// <summary>
-        /// 20180403 SangBin : Check enemy action state by distance to target from enemy
-        /// 20180430 SangBin : + target(Defense Station) 
+        /// 20180430 SangBin : stinger Shooting
         /// </summary>
-        IEnumerator CheckEnemyState()
-        {
-            while (!isDie)
-            {
-                yield return new WaitForSeconds(0.2f);
-
-                if (isDamaged)
-                {
-                    Cal_DirectionEtoP();
-
-                    if (distanceEtoP <= attackDistEtoP)
-                    {
-                        currentEnemyState = EnemyState.attackOnPlayer;
-                    }
-                    else if (distanceEtoP <= traceDistEtoP)
-                    {
-                        currentEnemyState = EnemyState.traceToPlayer;
-                    }
-                    else
-                    {
-                        currentEnemyState = EnemyState.idle;
-                    }
-                }
-                else
-                {
-                    Cal_DirectionEtoDS();
-
-                    if (distanceEtoDS <= attackDistEtoDS)
-                    {
-                        currentEnemyState = EnemyState.attackOnDS;
-                    }
-                    else if (distanceEtoDS <= traceDistEtoDS)
-                    {
-                        currentEnemyState = EnemyState.traceToDS;
-                    }
-                    else
-                    {
-                        currentEnemyState = EnemyState.idle;
-                    }
-                }
-            }
-        }
-
-        /// <summary>
-        /// 20180403 SangBin : Control enemy tracing 
-        /// 20180430 SangBin : + Tracing Defense Station
-        /// </summary>
-        IEnumerator TracingAction()
-        {
-            while (!isDie)
-            {
-                switch (currentEnemyState)
-                {
-                    case EnemyState.idle:
-                        GetComponent<Rigidbody>().velocity = Vector3.zero;
-                        GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
-                        //animator.SetBool("IsTrace", false); // later
-                        break;
-
-                    case EnemyState.traceToPlayer:
-                        transform.LookAt(PlayerCtrl.PlayerInstance.PlayerTr);
-                        GetComponent<Rigidbody>().AddForce(directionVector_NormalizedEtoP * movingSpeed, ForceMode.Force);
-                        //animator.SetBool("IsAttack", false); // later
-                        //animator.SetBool("IsTrace", true); // later
-                        break;
-
-                    case EnemyState.attackOnPlayer:
-                        transform.LookAt(PlayerCtrl.PlayerInstance.PlayerTr);
-                        GetComponent<Rigidbody>().velocity = Vector3.zero;
-                        GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
-                        //animator.SetBool("IsAttack", true); // later
-                        StartCoroutine(StingerShooting(directionVector_NormalizedEtoP));
-                        yield return new WaitForSeconds(2.0f);
-                        break;
-
-                    case EnemyState.traceToDS:
-                        transform.LookAt(DefenseStationCtrl.DS_Instance.DefenseStationTR);
-                        GetComponent<Rigidbody>().AddForce(directionVector_NormalizedEtoDS * movingSpeed, ForceMode.Force);
-                        //animator.SetBool("IsAttack", false); // later
-                        //animator.SetBool("IsTrace", true); // later
-                        break;
-
-                    case EnemyState.attackOnDS:
-                        transform.LookAt(DefenseStationCtrl.DS_Instance.DefenseStationTR);
-                        GetComponent<Rigidbody>().velocity = Vector3.zero;
-                        GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
-                        //animator.SetBool("IsAttack", true); // later
-                        StartCoroutine(StingerShooting(directionVector_NormalizedEtoDS));
-                        yield return new WaitForSeconds(2.0f);
-                        break;
-                }
-                yield return null;
-            }
-        }
-
-        /// <summary>
-        /// 20180403 SangBin : Push broken enemy into the object pool and initialize some fields
-        /// </summary>
-        IEnumerator PushObjectPool()
-        {
-            //yield return new WaitForSeconds(4.0f); //destroy delay
-            yield return null;
-            isDie = false;
-            enemyHP = 100.0d;
-            this.gameObject.tag = "ENEMY_BEE";
-            currentEnemyState = EnemyState.idle;
-            GetComponent<BoxCollider>().enabled = true;
-            gameObject.SetActive(false);
-
-        }
-
         IEnumerator StingerShooting(Vector3 directionVector_Normalized)
         {
             foreach (GameObject bulletObj in stingerObjectPool)
             {
                 if (!bulletObj.activeSelf)
                 {
-                    //bulletObj.GetComponent<EnemyBulletCtrl>().DirectionVetor = directionVector;
                     bulletObj.transform.SetPositionAndRotation(this.gameObject.transform.position, this.gameObject.transform.rotation);
-                    //yield return new WaitForSeconds(0.3f);
                     yield return null;
                     GameLogicManagement.GLM_Instance.SoundEffect(transform.position, stingerSoundFile);
                     bulletObj.SetActive(true);
@@ -314,44 +152,23 @@ namespace IF
             }
         }
 
-        /// <summary>
-        /// 20180403 SangBin : Fall down broken enemy without conflict
-        /// </summary>
-        void EnemyKilled()
+        protected override void ActionC()
         {
-            //Because expecting to Enemy's Falling Animation by graphic designer, I did not make Enemy deactivated at once   
-            this.gameObject.tag = "Untagged";
-            GameObject explosion = (GameObject)Instantiate(deathEffectPrefab, this.gameObject.transform.position, Quaternion.identity);
-
-            StopAllCoroutines();
-            isDie = true;
-            currentEnemyState = EnemyState.die;
-            GetComponent<BoxCollider>().enabled = false;
-            GameUIManagement.GameUIManagerInstance.DisplayScore(50);
-            isDamaged = false;
-
-            StartCoroutine(this.PushObjectPool());
-            Destroy(explosion, 2.0f);
+            base.ActionC();
+            StartCoroutine(StingerShooting(base.directionVector_NormalizedEtoP));
         }
 
-        /// <summary>
-        /// 20180418 SangBin : Calculation Direction Vector from Enemy to Player
-        /// </summary>
-        void Cal_DirectionEtoP()
+        protected override void ActionD()
         {
-            directionVectorEtoP = PlayerCtrl.PlayerInstance.PlayerTr.position - transform.position;
-            distanceEtoP = directionVectorEtoP.magnitude;
-            directionVector_NormalizedEtoP = Vector3.Normalize(directionVectorEtoP);
+            transform.LookAt(DefenseStationCtrl.DS_Instance.DefenseStationTR);
+            base.ActionD();
         }
 
-        /// <summary>
-        /// 20180430 SangBin : Calculation Direction Vectorfrom Enemy to Defense Station
-        /// </summary>
-        void Cal_DirectionEtoDS()
+        protected override void ActionE()
         {
-            directionVectorEtoDS = DefenseStationCtrl.DS_Instance.DefenseStationTR.position - transform.position;
-            distanceEtoDS = directionVectorEtoDS.magnitude;
-            directionVector_NormalizedEtoDS = Vector3.Normalize(directionVectorEtoDS);
+            transform.LookAt(DefenseStationCtrl.DS_Instance.DefenseStationTR);
+            base.ActionE();
+            StartCoroutine(StingerShooting(base.directionVector_NormalizedEtoDS));
         }
     }
 }
