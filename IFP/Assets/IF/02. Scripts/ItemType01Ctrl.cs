@@ -82,17 +82,6 @@ namespace IF
         }
 
         //---------------------------------------------------------------------------------------------------------
-
-        private void OnEnable()
-        {
-            //StartCoroutine(base.TrackingPlayer());
-        }
-
-        private void OnDisable()
-        {
-            StopAllCoroutines();
-        }
-
         /// <summary>
         /// 20180418 SangBin : Being Hit By Player
         /// </summary>
@@ -120,7 +109,7 @@ namespace IF
             Collider[] colls = Physics.OverlapSphere(transform.position, 5.0f);
             foreach (Collider coll in colls)
             {
-                if (coll.gameObject.tag == "ENEMY_BEE")
+                if (coll.gameObject.tag == "ENEMY_BEE"|| coll.gameObject.tag == "ENEMY_MOTH")
                 {
                     Rigidbody rbody = coll.GetComponent<Rigidbody>();
                     if (rbody != null)
@@ -131,16 +120,8 @@ namespace IF
             }
 
             GetComponent<Rigidbody>().useGravity = false;
-            GetComponent<SphereCollider>().enabled = true;
+            //GetComponent<SphereCollider>().enabled = true;
             gameObject.SetActive(false);
-        }
-
-        /// <summary>
-        /// 20180427 SangBin : Tracking Player (Called by GLM)
-        /// </summary>
-        new public void StartTrackingPlayer()
-        {
-            base.StartTrackingPlayer();
         }
     }
 }

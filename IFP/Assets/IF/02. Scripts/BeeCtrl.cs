@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -6,18 +7,27 @@ using UnityEngine.AI;
 
 namespace IF
 {
-    public class BeeCtrl : EnemyBaseClass
+    [RequireComponent(typeof(AudioSource))]
+    public class BeeCtrl : MonoBehaviour
     {
         /// <summary>
         /// 20180403 SangBin : Broken Enemy Explosion Effect Prefab;
         /// </summary>
         [SerializeField]
-        private GameObject expEffectPrefab;
+        private GameObject deathEffectPrefab;
+
+        //protected override GameObject deathEffect
+        //{
+        //    get
+        //    {
+        //        return deathEffectPrefab;
+        //    }
+        //}
 
         /// <summary>
         /// 20180403 SangBin : Enemy Current Health Power
         /// </summary>
-        private double EnemyHP = 100.0d;
+        private double enemyHP = 100.0d;
 
         /// <summary>
         /// 20180403 SangBin : Enemy Died or not
@@ -65,7 +75,7 @@ namespace IF
         /// <summary>
         /// 20180418 SangBin : Enemy Moving Speed
         /// </summary>
-        private float MovingSpeed = 5.0f;
+        private float movingSpeed = 5.0f;
 
         /// <summary>
         /// 20180403 SangBin : Enemy Action State
@@ -75,23 +85,23 @@ namespace IF
         /// <summary>
         /// 20180403 SangBin : Enemy Present Action State
         /// </summary>
-        private EnemyState myEnemyState = EnemyState.idle;
+        private EnemyState currentEnemyState = EnemyState.idle;
 
         /// <summary>
         /// 20180403 SangBin : Enemy Stinger Prefab
         /// </summary>
         [SerializeField]
-        private GameObject StingerPrefab;
+        private GameObject stingerPrefab;
 
         /// <summary>
         /// 20180403 SangBin : Contraints of the number of Enemy Bullet
         /// </summary>
-        private int MaxBullet = 5;
+        private int maxStinger = 5;
 
         /// <summary>
         /// 20180403 SangBin : Stinger Object Pool List
         /// </summary>
-        private List<GameObject> StingerObjectPool = new List<GameObject>();
+        private List<GameObject> stingerObjectPool = new List<GameObject>();
 
         /// <summary>
         /// 20180430 SangBin : stinger shoot Sound File
@@ -117,7 +127,7 @@ namespace IF
         /// <summary>
         /// 20180430 SangBin : 
         /// </summary>
-        private bool IsDamaged = false;
+        private bool isDamaged = false;
 
         /// <summary>
         /// 20180430 SangBin : 
@@ -129,7 +139,6 @@ namespace IF
         /// </summary>
         private float attackDistEtoDS = 2.0f;
 
-        private Vector3 DSoffset = Vector3.up * 0.5f;
         //------------------------------------------------------------------------------------------------------------------------
 
         private void Awake()
@@ -149,10 +158,10 @@ namespace IF
         /// </summary>
         void OnDamaged(object[] parameters)
         {
-            IsDamaged = true;
-            EnemyHP -= (double)parameters[1];
+            isDamaged = true;
+            enemyHP -= (double)parameters[1];
 
-            if (EnemyHP <= 0.0d)
+            if (enemyHP <= 0.0d)
             {
                 EnemyKilled();
             }
@@ -168,21 +177,21 @@ namespace IF
             {
                 yield return new WaitForSeconds(0.2f);
 
-                if (IsDamaged)
+                if (isDamaged)
                 {
                     Cal_DirectionEtoP();
 
                     if (distanceEtoP <= attackDistEtoP)
                     {
-                        myEnemyState = EnemyState.attackOnPlayer;
+                        currentEnemyState = EnemyState.attackOnPlayer;
                     }
                     else if (distanceEtoP <= traceDistEtoP)
                     {
-                        myEnemyState = EnemyState.traceToPlayer;
+                        currentEnemyState = EnemyState.traceToPlayer;
                     }
                     else
                     {
-                        myEnemyState = EnemyState.idle;
+                        currentEnemyState = EnemyState.idle;
                     }
                 }
                 else
@@ -191,15 +200,15 @@ namespace IF
 
                     if (distanceEtoDS <= attackDistEtoDS)
                     {
-                        myEnemyState = EnemyState.attackOnDS;
+                        currentEnemyState = EnemyState.attackOnDS;
                     }
                     else if (distanceEtoDS <= traceDistEtoDS)
                     {
-                        myEnemyState = EnemyState.traceToDS;
+                        currentEnemyState = EnemyState.traceToDS;
                     }
                     else
                     {
-                        myEnemyState = EnemyState.idle;
+                        currentEnemyState = EnemyState.idle;
                     }
                 }
             }
@@ -213,7 +222,7 @@ namespace IF
         {
             while (!isDie)
             {
-                switch (myEnemyState)
+                switch (currentEnemyState)
                 {
                     case EnemyState.idle:
                         GetComponent<Rigidbody>().velocity = Vector3.zero;
@@ -223,7 +232,7 @@ namespace IF
 
                     case EnemyState.traceToPlayer:
                         transform.LookAt(PlayerCtrl.PlayerInstance.PlayerTr);
-                        GetComponent<Rigidbody>().AddForce(directionVector_NormalizedEtoP * MovingSpeed, ForceMode.Force);
+                        GetComponent<Rigidbody>().AddForce(directionVector_NormalizedEtoP * movingSpeed, ForceMode.Force);
                         //animator.SetBool("IsAttack", false); // later
                         //animator.SetBool("IsTrace", true); // later
                         break;
@@ -239,7 +248,7 @@ namespace IF
 
                     case EnemyState.traceToDS:
                         transform.LookAt(DefenseStationCtrl.DS_Instance.DefenseStationTR);
-                        GetComponent<Rigidbody>().AddForce(directionVector_NormalizedEtoDS * MovingSpeed, ForceMode.Force);
+                        GetComponent<Rigidbody>().AddForce(directionVector_NormalizedEtoDS * movingSpeed, ForceMode.Force);
                         //animator.SetBool("IsAttack", false); // later
                         //animator.SetBool("IsTrace", true); // later
                         break;
@@ -265,9 +274,9 @@ namespace IF
             //yield return new WaitForSeconds(4.0f); //destroy delay
             yield return null;
             isDie = false;
-            EnemyHP = 100.0d;
+            enemyHP = 100.0d;
             this.gameObject.tag = "ENEMY_BEE";
-            myEnemyState = EnemyState.idle;
+            currentEnemyState = EnemyState.idle;
             GetComponent<BoxCollider>().enabled = true;
             gameObject.SetActive(false);
 
@@ -275,7 +284,7 @@ namespace IF
 
         IEnumerator StingerShooting(Vector3 directionVector_Normalized)
         {
-            foreach (GameObject bulletObj in StingerObjectPool)
+            foreach (GameObject bulletObj in stingerObjectPool)
             {
                 if (!bulletObj.activeSelf)
                 {
@@ -296,12 +305,12 @@ namespace IF
         /// </summary>
         void CreateBulletObjectPool()
         {
-            for (int i = 0; i < MaxBullet; i++)
+            for (int i = 0; i < maxStinger; i++)
             {
-                GameObject bulletObj = Instantiate(StingerPrefab, this.gameObject.transform.position, this.gameObject.transform.rotation, GoogleARCore.IF.TowerBuildController.TBController.DefenseStation_Anchor_Tr);
+                GameObject bulletObj = Instantiate(stingerPrefab, this.gameObject.transform.position, this.gameObject.transform.rotation, GoogleARCore.IF.TowerBuildController.TBController.DefenseStation_Anchor_Tr);
                 bulletObj.name = this.gameObject.name + "Bee_Stinger_" + i.ToString();
                 bulletObj.SetActive(false);
-                StingerObjectPool.Add(bulletObj);
+                stingerObjectPool.Add(bulletObj);
             }
         }
 
@@ -312,14 +321,14 @@ namespace IF
         {
             //Because expecting to Enemy's Falling Animation by graphic designer, I did not make Enemy deactivated at once   
             this.gameObject.tag = "Untagged";
-            GameObject explosion = (GameObject)Instantiate(expEffectPrefab, this.gameObject.transform.position, Quaternion.identity);
+            GameObject explosion = (GameObject)Instantiate(deathEffectPrefab, this.gameObject.transform.position, Quaternion.identity);
 
             StopAllCoroutines();
             isDie = true;
-            myEnemyState = EnemyState.die;
+            currentEnemyState = EnemyState.die;
             GetComponent<BoxCollider>().enabled = false;
             GameUIManagement.GameUIManagerInstance.DisplayScore(50);
-            IsDamaged = false;
+            isDamaged = false;
 
             StartCoroutine(this.PushObjectPool());
             Destroy(explosion, 2.0f);
