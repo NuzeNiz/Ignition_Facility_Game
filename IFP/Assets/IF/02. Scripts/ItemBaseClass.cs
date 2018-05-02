@@ -60,6 +60,19 @@ namespace IF
         /// </summary>
         abstract public IEnumerator ItemFunction();
 
+        protected void OnEnable()
+        {
+            StartCoroutine(TrackingPlayer());
+        }
+
+        protected void OnDisable()
+        {
+            StopAllCoroutines();
+            tag = "ITEM";
+            GetComponent<MeshRenderer>().enabled = true;
+            GetComponent<SphereCollider>().enabled = true;
+        }
+
         /// <summary>
         /// 20180418 SangBin : Being Hit By Player
         /// </summary>
@@ -105,13 +118,13 @@ namespace IF
             yield return new WaitForSeconds(0.1f);
         }
 
-        /// <summary>
-        /// 20180427 SangBin : Tracking Player
-        /// </summary>
-        protected void StartTrackingPlayer()
-        {
-            StartCoroutine(TrackingPlayer());
-        }
+        ///// <summary>
+        ///// 20180427 SangBin : Tracking Player
+        ///// </summary>
+        //protected void StartTrackingPlayer()
+        //{
+        //    StartCoroutine(TrackingPlayer());
+        //}
 
         /// <summary>
         /// 20180427 SangBin : Obtaining Item
@@ -126,6 +139,7 @@ namespace IF
             transform.position = (Vector3.back * 5.0f);
 
             /// Add some codes, this item should be enter in UI slot ******************************************
+            /// use "ItemType" for intem image in slot
         }
     }
 }

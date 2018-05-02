@@ -29,7 +29,7 @@ namespace IF
         /// <summary>
         /// 20180403 SangBin : Temporary Respawn Points
         /// </summary>
-        private Transform[] TempSpawnpoints;
+        private Transform[] tempSpawnpoints;
 
         /// <summary>
         /// 20180403 SangBin : Enemy Bee Prefabs
@@ -67,7 +67,7 @@ namespace IF
         /// <summary>
         /// 20180418 SangBin : Item Object Pool List
         /// </summary>
-        private List<GameObject> ItemObjectPool = new List<GameObject>();
+        private List<GameObject> itemObjectPool = new List<GameObject>();
 
         /// <summary>
         /// 20180418 SangBin : Item Prefabs
@@ -125,9 +125,9 @@ namespace IF
         {
             CreateEnemyObjectPool();
 
-            TempSpawnpoints = GameObject.Find("EnemySpawnPoints").GetComponentsInChildren<Transform>();
+            tempSpawnpoints = GameObject.Find("EnemySpawnPoints").GetComponentsInChildren<Transform>();
 
-            if (TempSpawnpoints.Length > 0)
+            if (tempSpawnpoints.Length > 0)
             {
                 StartCoroutine(this.ActivateEnemy());
             }
@@ -205,8 +205,8 @@ namespace IF
                 {
                     if (!enemy.activeSelf)
                     {
-                        int index = Random.Range(1, TempSpawnpoints.Length);
-                        enemy.transform.position = TempSpawnpoints[index].position;
+                        int index = Random.Range(1, tempSpawnpoints.Length);
+                        enemy.transform.position = tempSpawnpoints[index].position;
                         enemy.transform.parent = GoogleARCore.IF.TowerBuildController.TBController.DefenseStation_Anchor_Tr;
                         enemy.SetActive(true);
                         break;
@@ -259,9 +259,9 @@ namespace IF
                 Item_type03.name = "Item_Type03_" + i.ToString();
                 Item_type03.SetActive(false);
 
-                ItemObjectPool.Add(Item_type01);
-                ItemObjectPool.Add(Item_type02);
-                ItemObjectPool.Add(Item_type03);
+                itemObjectPool.Add(Item_type01);
+                itemObjectPool.Add(Item_type02);
+                itemObjectPool.Add(Item_type03);
             }
         }
 
@@ -273,13 +273,11 @@ namespace IF
             for (int i = 0; i < maxItem; i++)
             {
                 int randIdex = Random.Range(0, maxItem);
-                if (!ItemObjectPool[randIdex].activeSelf)
+                if (!itemObjectPool[randIdex].activeSelf)
                 {
-                    ItemObjectPool[randIdex].transform.parent = GoogleARCore.IF.TowerBuildController.TBController.DefenseStation_Anchor_Tr;
-                    ItemObjectPool[randIdex].transform.position = butterflyTransform.position;
-                    ItemObjectPool[randIdex].SetActive(true);
-                    ItemObjectPool[randIdex].GetComponent<ItemType01Ctrl>().StartTrackingPlayer();
-                    //ItemObjectPool[randIdex].SendMessage("StartTrackingPlayer", SendMessageOptions.DontRequireReceiver);
+                    itemObjectPool[randIdex].transform.parent = GoogleARCore.IF.TowerBuildController.TBController.DefenseStation_Anchor_Tr;
+                    itemObjectPool[randIdex].transform.position = butterflyTransform.position;
+                    itemObjectPool[randIdex].SetActive(true);
                     break;
                 }
             }

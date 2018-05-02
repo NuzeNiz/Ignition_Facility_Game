@@ -6,8 +6,7 @@ using UnityEngine.AI;
 
 namespace IF
 {
-    [RequireComponent(typeof(AudioSource))]
-    public class MothCtrl : MonoBehaviour
+    public class MothCtrl1 : EnemyBaseClass
     {
         /// <summary>
         /// 20180403 SangBin : Broken Enemy Explosion Effect Prefab;
