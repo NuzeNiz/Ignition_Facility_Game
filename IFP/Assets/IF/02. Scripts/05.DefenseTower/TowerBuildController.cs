@@ -106,6 +106,15 @@ namespace GoogleARCore.IF
         /// </summary>
         //public Transform DefenseStation_Tr { get { return defenseStation_Tr; } }
 
+        GameObject planeGridObject;
+
+        /// <summary>
+        /// 20180509 SangBin : Defense Station Ground Prefab
+        /// </summary>
+        [SerializeField]
+        private GameObject groundPlane;
+
+
         //---------------------------------------------------------------------------------------------
 
         void Awake()
@@ -150,11 +159,11 @@ namespace GoogleARCore.IF
                     // Instantiate a plane visualization prefab and set it to track the new plane. The transform is set to
                     // the origin with an identity rotation since the mesh for our prefab is updated in Unity World
                     // coordinates.
-                    GameObject planeObject = Instantiate(TrackedPlanePrefab, Vector3.zero, Quaternion.identity,
+                    planeGridObject = Instantiate(TrackedPlanePrefab, Vector3.zero, Quaternion.identity,
                         transform);
-                    planeObject.GetComponent<TrackedPlaneVisualizer>().Initialize(m_NewPlanes[i]); //아마 이 planeobject가 없어지면 설치후 그릴 없엘수 잇겟다
+                    planeGridObject.GetComponent<TrackedPlaneVisualizer>().Initialize(m_NewPlanes[i]); //아마 이 planeobject가 없어지면 설치후 그릴 없엘수 잇겟다
                 }
-
+                
                 // Disable the snackbar UI when no planes are valid.
                 Session.GetTrackables<TrackedPlane>(m_AllPlanes); //여기서 현재 추적되어 있는 그릴을 찾는군
                 bool showSearchingUI = true;
@@ -208,7 +217,10 @@ namespace GoogleARCore.IF
                     //defenseStation_Tr = defenseStation.transform;
                     defenseStation_Anchor_Tr = defenseStation_Anchor.transform;
 
+                    planeGridObject.GetComponent<MeshRenderer>().enabled = false;
+                    planeGridObject.GetComponent<TrackedPlaneVisualizer>().enabled = false;
                     SceneManager.LoadScene("GameScene B",LoadSceneMode.Additive);
+                    GameObject ground = Instantiate(groundPlane, defenseStation.transform.position, Quaternion.identity);
                 }
             }
         }

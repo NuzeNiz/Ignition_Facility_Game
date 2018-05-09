@@ -97,6 +97,7 @@ namespace IF
         {
             while (gameObject.activeSelf)
             {
+                GameLogicManagement.GLM_Instance.SoundEffect(transform.position, ItemSoundFile);
                 transform.SetPositionAndRotation(PlayerCtrl.PlayerInstance.PlayerTr.position + (PlayerCtrl.PlayerInstance.PlayerTr.forward), PlayerCtrl.PlayerInstance.PlayerTr.rotation);
                 GetComponent<MeshRenderer>().enabled = true;
                 GetComponent<Rigidbody>().useGravity = true;
@@ -106,7 +107,7 @@ namespace IF
 
                 yield return new WaitForSeconds(1.0f);
 
-                GameLogicManagement.GLM_Instance.SoundEffect(transform.position, ItemSoundFile);
+
                 GameObject itemEffect = (GameObject)Instantiate(ItemEffectPrefab, transform.position, Quaternion.identity);
                 Destroy(itemEffect, 2.0f);
 

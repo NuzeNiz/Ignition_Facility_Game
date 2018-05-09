@@ -270,6 +270,8 @@ MonoBehaviour:
   defenseStation_Prefab: {fileID: 1262427346044128, guid: b7f15dd65bb50934cba57ea5b56e961e,
     type: 2}
   SearchingForPlaneUI: {fileID: 1133631540}
+  groundPlane: {fileID: 1015607651362900, guid: f90acfe6cb368fe4898514e6468f4aad,
+    type: 2}
 --- !u!20 &896679035 stripped
 Camera:
   m_PrefabParentObject: {fileID: 20155940112608238, guid: c10877f7cd5764de18d46d7b777d1faa,
@@ -303,7 +305,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1133631541
 RectTransform:
   m_ObjectHideFlags: 0
@@ -443,7 +445,7 @@ MonoBehaviour:
   m_Script: {fileID: 1980459831, guid: f70555f144d8491a825f0804e09c671c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_UiScaleMode: 0
+  m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
   m_ReferenceResolution: {x: 800, y: 600}
@@ -607,8 +609,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
-  m_AnchoredPosition: {x: 80, y: 0}
-  m_SizeDelta: {x: 600.4, y: 100}
+  m_AnchoredPosition: {x: 24.4, y: 0}
+  m_SizeDelta: {x: 993.5, y: 100}
   m_Pivot: {x: 0, y: 0.5}
 --- !u!114 &1764419357
 MonoBehaviour:
@@ -622,7 +624,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.19269031, g: 0.9705882, b: 0.39118847, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -631,18 +633,19 @@ MonoBehaviour:
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
     m_Font: {fileID: 12800000, guid: f66655b38428d40769e9e41ee237cbdc, type: 3}
-    m_FontSize: 46
+    m_FontSize: 40
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 0
     m_MaxSize: 72
-    m_Alignment: 3
+    m_Alignment: 4
     m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "Searching for surfaces\u2026"
+  m_Text: "\uBC14\uB2E5\uC744 \uCD94\uC801 \uC911\uC785\uB2C8\uB2E4. \uD770\uC0C9
+    \uADF8\uB9B4\uC5D0 \uB098\uBB34\uB97C \uC124\uCE58\uD558\uC138\uC694!"
 --- !u!222 &1764419358
 CanvasRenderer:
   m_ObjectHideFlags: 0
