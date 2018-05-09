@@ -106,7 +106,7 @@ namespace IF
         /// <summary>
         /// 20180430 SangBin : 
         /// </summary>
-        private float attackDistEtoDS = 0.3f;
+        private float attackDistEtoDS = 0.5f;
         //------------------------------------------------------------------------------------------------------------------------
 
         private void Awake()
@@ -330,7 +330,7 @@ namespace IF
         void ScatteringScalePowder()
         {
             //bool equalizer = false;
-            transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.identity, 10.0f * Time.deltaTime);
+            //transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.identity, 10.0f * Time.deltaTime);
             transform.GetChild(0).gameObject.SetActive(true);
         }
     }

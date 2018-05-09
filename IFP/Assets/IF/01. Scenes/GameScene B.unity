@@ -30423,7 +30423,7 @@ MonoBehaviour:
   isSoundEffectMute: 0
   enemyPrefab_type01: {fileID: 1091823405148940, guid: acb433471fa848842842683e0906d74f,
     type: 2}
-  enemyPrefab_type02: {fileID: 1091823405148940, guid: acb433471fa848842842683e0906d74f,
+  enemyPrefab_type02: {fileID: 1994958786981402, guid: e8a4a609408f04342871e5fd26a2b32b,
     type: 2}
   thisLevelState: 1
   itemPrefab_type01: {fileID: 1185642529807098, guid: 217976abe42283549b7beb074f9e1b4c,
@@ -30846,7 +30846,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 0.000034810946, y: -0.000007629397}
+  m_AnchoredPosition: {x: 0.000004331973, y: -0.000007629397}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &1075557609
@@ -31103,7 +31103,7 @@ Prefab:
     m_Modifications:
     - target: {fileID: 4281687322103956, guid: acb433471fa848842842683e0906d74f, type: 2}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: 0.764
       objectReference: {fileID: 0}
     - target: {fileID: 4281687322103956, guid: acb433471fa848842842683e0906d74f, type: 2}
       propertyPath: m_LocalPosition.y

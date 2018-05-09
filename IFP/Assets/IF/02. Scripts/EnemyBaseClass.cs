@@ -307,7 +307,7 @@ namespace IF
         /// <summary>
         /// 20180403 SangBin : Fall down broken enemy without conflict
         /// </summary>
-        void EnemyKilled()
+        protected void EnemyKilled()
         {
             //Because expecting to Enemy's Falling Animation by graphic designer, I did not make Enemy deactivated at once   
             this.gameObject.tag = "Untagged";

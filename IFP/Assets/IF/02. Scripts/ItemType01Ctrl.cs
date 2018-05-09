@@ -95,33 +95,39 @@ namespace IF
         /// </summary>
         override public IEnumerator ItemFunction()
         {
-            transform.SetPositionAndRotation(PlayerCtrl.PlayerInstance.transform.position + (Vector3.forward * 0.5f), PlayerCtrl.PlayerInstance.transform.rotation);
-            GetComponent<MeshRenderer>().enabled = true;
-            GetComponent<Rigidbody>().AddForce((PlayerCtrl.PlayerInstance.transform.forward + PlayerCtrl.PlayerInstance.transform.up) * 10.0f, ForceMode.Force);
-            GetComponent<Rigidbody>().useGravity = true;
-
-            yield return new WaitForSeconds(2.0f);
-
-            GameLogicManagement.GLM_Instance.SoundEffect(transform.position, ItemSoundFile);
-            GameObject itemEffect = (GameObject)Instantiate(ItemEffectPrefab, transform.position, Quaternion.identity);
-            Destroy(itemEffect, 2.0f);
-
-            Collider[] colls = Physics.OverlapSphere(transform.position, 5.0f);
-            foreach (Collider coll in colls)
+            while (gameObject.activeSelf)
             {
-                if (coll.gameObject.tag == "ENEMY_BEE"|| coll.gameObject.tag == "ENEMY_MOTH")
+                transform.SetPositionAndRotation(PlayerCtrl.PlayerInstance.PlayerTr.position + (PlayerCtrl.PlayerInstance.PlayerTr.forward), PlayerCtrl.PlayerInstance.PlayerTr.rotation);
+                GetComponent<MeshRenderer>().enabled = true;
+                GetComponent<Rigidbody>().useGravity = true;
+                Vector3 directionVec = PlayerCtrl.PlayerInstance.PlayerTr.forward + (PlayerCtrl.PlayerInstance.PlayerTr.up * 0.5f);
+                GetComponent<Rigidbody>().AddForce(directionVec * 300.0f, ForceMode.Force);
+
+
+                yield return new WaitForSeconds(1.0f);
+
+                GameLogicManagement.GLM_Instance.SoundEffect(transform.position, ItemSoundFile);
+                GameObject itemEffect = (GameObject)Instantiate(ItemEffectPrefab, transform.position, Quaternion.identity);
+                Destroy(itemEffect, 2.0f);
+
+                Collider[] colls = Physics.OverlapSphere(transform.position, 10.0f);
+                foreach (Collider coll in colls)
                 {
-                    Rigidbody rbody = coll.GetComponent<Rigidbody>();
-                    if (rbody != null)
+                    if (coll.gameObject.tag == "ENEMY_BEE" || coll.gameObject.tag == "ENEMY_MOTH")
                     {
-                        coll.SendMessage("EnemyKilled", SendMessageOptions.DontRequireReceiver);
+                        Rigidbody rbody = coll.GetComponent<Rigidbody>();
+                        if (rbody != null)
+                        {
+                            coll.SendMessage("EnemyKilled", SendMessageOptions.DontRequireReceiver);
+                        }
                     }
                 }
-            }
 
-            GetComponent<Rigidbody>().useGravity = false;
-            //GetComponent<SphereCollider>().enabled = true;
-            gameObject.SetActive(false);
+                GetComponent<Rigidbody>().useGravity = false;
+                //GetComponent<SphereCollider>().enabled = true;
+                gameObject.SetActive(false);
+            }
+            yield return null;
         }
     }
 }
