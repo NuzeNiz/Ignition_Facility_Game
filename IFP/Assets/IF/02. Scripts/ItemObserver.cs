@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 
 public class ItemObserver : Observer
 {
@@ -14,7 +11,7 @@ public class ItemObserver : Observer
 
     public override void Reactive(Subject sub)
     {
-        if (sub is ItemSubject)
+        if(sub is ItemSubject)
         {
             ObserverDelegate(sub as ItemSubject);
         }

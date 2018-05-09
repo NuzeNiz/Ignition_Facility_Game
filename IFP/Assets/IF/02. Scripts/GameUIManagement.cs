@@ -44,7 +44,6 @@ namespace IF
         void Start()
         {
             DisplayScore(0);
-
         }
 
         // Update is called once per frame
@@ -73,6 +72,22 @@ namespace IF
             PlayerPos.text = "X : <color=#FF000064>" + PlayerCtrl.PlayerInstance.PlayerTr.position.x.ToString() + "</color>"
                 + "  Y : <color=#FF990064>" + PlayerCtrl.PlayerInstance.PlayerTr.position.y.ToString() + "</color>"
                 + "  Z : <color=#00FF1764>" + PlayerCtrl.PlayerInstance.PlayerTr.position.z.ToString() + "</color>";
+        }
+
+        /// <summary>
+        /// 20180503 SeongJun : Add Item 
+        /// </summary>
+        public void AddItem()
+        {
+
+        }
+
+        /// <summary>
+        /// 20180503 SeongJun : Add Weapon
+        /// </summary>
+        public void AddWeapon()
+        {
+
         }
     }
 }

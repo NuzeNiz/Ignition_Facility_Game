@@ -79,6 +79,7 @@ namespace IF
 
         /// <summary>
         /// 20180427 SangBin : Collision & Obtaining Item
+        /// 20180508 SeongJun : Notify to ItemWindow
         /// </summary>
         protected void OnCollisionEnter(Collision collision)
         {
@@ -91,6 +92,7 @@ namespace IF
                 ObtainingItem();
 
                 //gameObject.SetActive(false);
+                ItemWindow.Instance.AddItem(this);
             }
         }
 

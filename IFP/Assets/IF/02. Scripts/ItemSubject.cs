@@ -1,15 +1,24 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
+using IF;
 
-public class ItemSubject : Subject {
-    public GameObject selectedItem { get; private set; }
-    public Image itemImage { get { return selectedItem.transform.GetChild(0).GetComponent<Image>(); } }
+public class ItemSubject : Subject
+{
+    public ItemBaseClass SelectedItem { get; private set; }
 
-    public void SetCurruntItem(GameObject item)
+    public void SetCurruntItem(ItemBaseClass item)
     {
-        selectedItem = item;
+        SelectedItem = item;
+        base.Notify();
+    }
+
+    public void CheckItem()
+    {
+        if (SelectedItem.gameObject.activeSelf == false)
+        {
+            SelectedItem = null;
+        }
         base.Notify();
     }
 }

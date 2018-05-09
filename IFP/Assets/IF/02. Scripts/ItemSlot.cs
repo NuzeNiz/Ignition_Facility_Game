@@ -2,25 +2,27 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using IF;
 
 public class ItemSlot : MonoBehaviour {
-    private void Start()
+    public ItemBaseClass itemInfo;
+    private void Awake()
     {
-        var subject = GameObject.Find("Item_Window").GetComponent<ItemWindow>().itemSubject;
+        var subject = ItemWindow.Instance.ItemSubject;
 
         subject.Attach(new ItemObserver(a => {
-            var backgroundImage = gameObject.GetComponent<Image>();
-            if (a.selectedItem == gameObject)
+            var image = gameObject.GetComponent<Image>();
+            if (subject.SelectedItem == itemInfo)
             {
-                backgroundImage.color = new Color(1.0f, 0, 0);
+                image.color = new Color((float)36 / 255, (float)234 / 255, (float)169 / 255, 1.0f);
             }
             else
             {
-                backgroundImage.color = new Color(1.0f, 1.0f, 1.0f);
+                image.color = new Color(1.0f, 1.0f, 1.0f, 1.0f);
             }
         }));
 
         var button = gameObject.GetComponent<Button>();
-        button.onClick.AddListener(() => { subject.SetCurruntItem(gameObject); });
+        button.onClick.AddListener(() => { subject.SetCurruntItem(itemInfo); });
     }
 }
