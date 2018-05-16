@@ -8,14 +8,14 @@ public class Ladar : MonoBehaviour {
     public float distance = 1.0f;
 
     RectTransform map;
-    Transform myTransform;
+    Transform playerTransform;
     List<GameObject> dots;
 
     public int dotsCount { get { return dots.Count; } }
 
     void Start () {
         map = gameObject.transform.GetChild(0).GetComponent<RectTransform>();
-        myTransform = GameObject.Find("ARCore Device").transform;
+        playerTransform = GameObject.Find("ARCore Device").transform;
         dots = new List<GameObject>();
 	}
 
@@ -35,7 +35,7 @@ public class Ladar : MonoBehaviour {
         for(int i = 0; i < enemies.Count; i++)
         {
             dots[i].SetActive(true);
-            var localPosition = distance * (enemies[i].position - myTransform.position);
+            var localPosition = distance * (enemies[i].position - playerTransform.position);
             localPosition.y = localPosition.z;
             localPosition.z = 0;
             dots[i].GetComponent<RectTransform>().localPosition = localPosition;
@@ -45,7 +45,7 @@ public class Ladar : MonoBehaviour {
             dots[i].SetActive(false);
         }
         //var localAngle = new Vector3(0, 0, myTransform.eulerAngles.y);
-        var localAngle = new Vector3(0, 0, myTransform.transform.GetChild(0).eulerAngles.y);
+        var localAngle = new Vector3(0, 0, playerTransform.transform.GetChild(0).eulerAngles.y);
         map.localEulerAngles = localAngle;
     }
 }

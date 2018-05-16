@@ -107,6 +107,14 @@ namespace IF
         /// 20180430 SangBin : 
         /// </summary>
         private float attackDistEtoDS = 0.3f;
+
+        private Vector3 DSoffset = Vector3.up * 0.5f;
+
+        /// <summary>
+        /// 20180514 SeongJun : HP Display in Child
+        /// </summary>
+        [SerializeField]
+        private HPDisplayer healthDisplay;
         //------------------------------------------------------------------------------------------------------------------------
 
         private void Awake()
@@ -123,11 +131,17 @@ namespace IF
 
         /// <summary>
         /// 20180403 SangBin : Damage to enemy (Message Driven Method)
+        /// 20180514 SeongJun : Use HP_Displayer
         /// </summary>
         void OnDamaged(object[] parameters)
         {
             //IsDamaged = true;
             EnemyHP -= (double)parameters[1];
+
+            if (healthDisplay != null)
+            {
+                healthDisplay.SetHP(EnemyHP);
+            }
 
             if (EnemyHP <= 0.0d)
             {
