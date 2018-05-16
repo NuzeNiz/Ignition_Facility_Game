@@ -124,7 +124,7 @@ GameObject:
   - component: {fileID: 198217222136009320}
   - component: {fileID: 199828402236251250}
   m_Layer: 0
-  m_Name: Type04
+  m_Name: Type01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -141,7 +141,7 @@ GameObject:
   - component: {fileID: 198390332316728738}
   - component: {fileID: 199423493102342980}
   m_Layer: 0
-  m_Name: Type01
+  m_Name: Type04
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -690,10 +690,10 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 4635194804299034}
+  - {fileID: 4707638870304914}
   - {fileID: 4701917797344254}
   - {fileID: 4926392842487484}
-  - {fileID: 4707638870304914}
+  - {fileID: 4635194804299034}
   m_Father: {fileID: 4066695611374378}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -762,7 +762,7 @@ Transform:
   - {fileID: 4522268593902396}
   - {fileID: 4207526337417400}
   m_Father: {fileID: 4467626898478914}
-  m_RootOrder: 0
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4646331364409846
 Transform:
@@ -818,7 +818,7 @@ Transform:
   - {fileID: 4956138210562050}
   - {fileID: 4893442945864600}
   m_Father: {fileID: 4467626898478914}
-  m_RootOrder: 3
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4755499007294202
 Transform:
@@ -1130,22 +1130,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: abbd190cc1bb13a48a36b47abae59aa5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  holeSpot: {fileID: 4308748964324148}
+  shotSpot: {fileID: 4329296566018088}
   FlareEffect: {fileID: 100006, guid: bbf845707de997c4ab59c0f853142efa, type: 2}
   weaponType01_shot_HoleEffect: {fileID: 1132466077389358, guid: aaf1ed3c8d096034d94d8978eea1576d,
     type: 2}
   weaponType01_shot_sound: {fileID: 8300000, guid: f87b7ce70b3c56c4f8ec95b34fb2ddd8,
     type: 3}
-  holeSpot: {fileID: 4308748964324148}
   weaponType03_shot_Effect: {fileID: 1371068799369898, guid: 1dbb2a3f27fadd24db0692d54858f3ba,
     type: 2}
   weaponType04_shot_Effect: {fileID: 1770571462784790, guid: 0c4decb947b2a534dabc6aa8be4f2b52,
     type: 2}
-  shotSpot: {fileID: 4329296566018088}
   currentMaterial: {fileID: 2100000, guid: a375e4bb734ed6c40af66c7bc581ad1a, type: 2}
-  weaponType01_01: {fileID: 2800000, guid: 278b6b3fadd9ff645842e01d3a7def80, type: 3}
-  weaponType01_02: {fileID: 2800000, guid: dc5c1c909bbcad745a11b9a896e9e881, type: 3}
-  weaponType01_03: {fileID: 2800000, guid: 9b6713ee661b45f47bf3d4e23dcae9f7, type: 3}
-  weaponType01_04: {fileID: 2800000, guid: cb362c071765af34ca8fc4dd0f949d72, type: 3}
+  weaponType01_01: {fileID: 2800000, guid: 3c99f0043adac5940851e07f367391eb, type: 3}
+  weaponType01_02: {fileID: 2800000, guid: 8f57ea443ba8948489bc1871230a74bd, type: 3}
+  weaponType01_03: {fileID: 2800000, guid: 71841c3cc43830840a753857941f863c, type: 3}
+  weaponType01_04: {fileID: 2800000, guid: 948444f8974641f4c92342c8bec82ac7, type: 3}
   weaponType02_01: {fileID: 2800000, guid: 76b32faeec0a4a5479393d41a1c80555, type: 3}
   weaponType02_02: {fileID: 2800000, guid: 1c08b4c1fa0559240b454f8e034509cf, type: 3}
   weaponType02_03: {fileID: 2800000, guid: 71eec9c72312f404bbc2fc6866f806ab, type: 3}
@@ -1154,10 +1154,10 @@ MonoBehaviour:
   weaponType03_02: {fileID: 2800000, guid: ebe1e4ac5cd534f4ea11033fa76551ac, type: 3}
   weaponType03_03: {fileID: 2800000, guid: 11b46b67f375d1d4e84e317f06842c43, type: 3}
   weaponType03_04: {fileID: 2800000, guid: b28edc7c752d16b4f909d2682c1ece6e, type: 3}
-  weaponType04_01: {fileID: 2800000, guid: 3c99f0043adac5940851e07f367391eb, type: 3}
-  weaponType04_02: {fileID: 2800000, guid: 8f57ea443ba8948489bc1871230a74bd, type: 3}
-  weaponType04_03: {fileID: 2800000, guid: 71841c3cc43830840a753857941f863c, type: 3}
-  weaponType04_04: {fileID: 2800000, guid: 948444f8974641f4c92342c8bec82ac7, type: 3}
+  weaponType04_01: {fileID: 2800000, guid: 278b6b3fadd9ff645842e01d3a7def80, type: 3}
+  weaponType04_02: {fileID: 2800000, guid: dc5c1c909bbcad745a11b9a896e9e881, type: 3}
+  weaponType04_03: {fileID: 2800000, guid: 9b6713ee661b45f47bf3d4e23dcae9f7, type: 3}
+  weaponType04_04: {fileID: 2800000, guid: cb362c071765af34ca8fc4dd0f949d72, type: 3}
 --- !u!136 &136709585280007530
 CapsuleCollider:
   m_ObjectHideFlags: 1
@@ -11314,7 +11314,7 @@ ParticleSystem:
   moveWithTransform: 1
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: -608827078
+  randomSeed: 1334287086
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -38138,7 +38138,7 @@ ParticleSystem:
   moveWithTransform: 1
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: 1336154615
+  randomSeed: -2033850595
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -48261,7 +48261,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 2
-  randomSeed: 327240428
+  randomSeed: 289011261
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -48351,7 +48351,7 @@ ParticleSystem:
       serializedVersion: 2
       minMaxState: 0
       minColor: {r: 1, g: 1, b: 1, a: 1}
-      maxColor: {r: 0.031790644, g: 0.7205882, b: 0.28170833, a: 1}
+      maxColor: {r: 0.76862746, g: 0.78039217, b: 0.023529412, a: 1}
       maxGradient:
         serializedVersion: 2
         key0: {r: 1, g: 1, b: 1, a: 1}

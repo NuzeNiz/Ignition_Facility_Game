@@ -174,7 +174,7 @@ namespace IF
             holeSparkPS = transform.GetChild(1).gameObject.GetComponent<ParticleSystem>();
 
             //test
-            currentWeaponType = WeaponTypeEnum.weaponType04;
+            currentWeaponType = WeaponTypeEnum.weaponType01;
         }
 
         /// <summary>
@@ -336,7 +336,7 @@ namespace IF
             {
                 case WeaponTypeEnum.weaponType01:
                     //transform.GetChild(1).gameObject.GetComponent<ParticleSystem>().main.startColor = new Color(8.0f, 184.0f, 72.0f, 255.0f);
-                    mainPS.startColor = new Color(8.0f, 184.0f, 72.0f, 255.0f);
+                    mainPS.startColor = new Color(196.0f, 199.0f, 6.0f, 255.0f);
                     currentMaterial.SetTexture("_EmissionMap", weaponType01_01);
                     transform.GetChild(0).transform.GetChild(0).gameObject.SetActive(true);
                     yield return new WaitForSeconds(3.0f);
@@ -360,7 +360,7 @@ namespace IF
                     break;
 
                 case WeaponTypeEnum.weaponType04:
-                    mainPS.startColor = new Color(196.0f, 199.0f, 6.0f, 255.0f);
+                    mainPS.startColor = new Color(8.0f, 184.0f, 72.0f, 255.0f);
                     currentMaterial.SetTexture("_EmissionMap", weaponType04_01);
                     transform.GetChild(0).transform.GetChild(3).gameObject.SetActive(true);
                     yield return new WaitForSeconds(3.0f);
