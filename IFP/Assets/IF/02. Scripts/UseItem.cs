@@ -10,22 +10,25 @@ public class UseItem : MonoBehaviour{
 
     private ItemBaseClass itemInfo;
 
-    private Image myImage;
+    private ItemSubject subject;
 
     private void Awake()
     {
-        myImage = gameObject.GetComponent<Image>();
-
-        var subject = ItemWindow.Instance.ItemSubject;
+        subject = ItemWindow.Instance.ItemSubject;
         var button = gameObject.GetComponent<Button>();
 
         subject.Attach(new ItemObserver(a => {
             itemInfo = a.SelectedItem;
+            var childImage = gameObject.transform.GetChild(0).GetComponent<Image>();
             if (a.SelectedItem != null)
             {
-                var childImage = gameObject.transform.GetChild(0).GetComponent<Image>();
                 childImage.sprite = setImage;
                 childImage.color = new Color(1.0f, 1.0f, 1.0f, 1.0f);
+            }
+            else
+            {
+                childImage.sprite = null;
+                childImage.color = new Color(1.0f, 1.0f, 1.0f, 0.0f);
             }
         }));
 
@@ -37,6 +40,7 @@ public class UseItem : MonoBehaviour{
             else
             {
                 StartCoroutine(itemInfo.ItemFunction());
+                subject.CheckItem();
             }
         });
     }
