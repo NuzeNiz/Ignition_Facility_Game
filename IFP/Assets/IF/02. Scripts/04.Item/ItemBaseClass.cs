@@ -55,7 +55,14 @@ namespace IF
         /// </summary>
         private float movingSpeed = 50.0f;
         #endregion
+
+        string itemTag;
         //-----------------------------------------------------------------------------------------------------------------
+
+        protected void Awake()
+        {
+            itemTag = gameObject.tag;
+        }
 
         protected void OnEnable()
         {
@@ -65,7 +72,7 @@ namespace IF
         protected void OnDisable()
         {
             StopAllCoroutines();
-            tag = "ITEM";
+            tag = itemTag;
             GetComponent<MeshRenderer>().enabled = true;
             GetComponent<SphereCollider>().enabled = true;
         }
@@ -81,13 +88,12 @@ namespace IF
         protected void OnHit()
         {
             tag = "Untagged";
-            GameLogicManagement.GLM_Instance.SoundEffect(transform.position, CollsionSF);
+            GameLogicManagement.instance.SoundEffect(transform.position, CollsionSF);
             GameObject itemHitEffect = (GameObject)Instantiate(CollEffectPrefab, transform.position, Quaternion.identity);
             GetComponent<SphereCollider>().enabled = false;
             GetComponent<MeshRenderer>().enabled = false;
 
             Destroy(itemHitEffect, 2.0f);
-            //gameObject.SetActive(false);
 
             ObtainingItem();
         }
@@ -100,13 +106,12 @@ namespace IF
         {
             if (collision.gameObject.tag == "Player")
             {
-                GameLogicManagement.GLM_Instance.SoundEffect(transform.position, CollsionSF);
+                GameLogicManagement.instance.SoundEffect(transform.position, CollsionSF);
                 GameObject itemCollEffect = (GameObject)Instantiate(CollEffectPrefab, transform.position, Quaternion.identity);
                 Destroy(itemCollEffect, 2.0f);
 
                 ObtainingItem();
 
-                //gameObject.SetActive(false);
                 ItemWindow.Instance.AddItem(this);
             }
         }
@@ -116,8 +121,8 @@ namespace IF
         /// </summary>
         protected IEnumerator TrackingPlayer()
         {
-            directionVector_Normalized = Vector3.Normalize(PlayerCtrl.PlayerInstance.PlayerTr.position - transform.position);
-            transform.LookAt(PlayerCtrl.PlayerInstance.PlayerTr);
+            directionVector_Normalized = Vector3.Normalize(PlayerCtrl.instance.PlayerTr.position - transform.position);
+            transform.LookAt(PlayerCtrl.instance.PlayerTr);
             GetComponent<Rigidbody>().AddForce(directionVector_Normalized * movingSpeed, ForceMode.Force);
             yield return new WaitForSeconds(0.1f);
         }
@@ -133,9 +138,6 @@ namespace IF
             GetComponent<SphereCollider>().enabled = false;
             //transform.parent = PlayerCtrl.PlayerInstance.PlayerTr;
             transform.position = (Vector3.back * 5.0f);
-
-            /// Add some codes, this item should be enter in UI slot ******************************************
-            /// use "ItemType" for intem image in slot
         }
     }
 }

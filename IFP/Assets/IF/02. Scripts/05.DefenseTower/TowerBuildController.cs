@@ -74,7 +74,7 @@ namespace GoogleARCore.IF
         /// <summary>
         /// 20180403 SangBin : Singletone Pattern
         /// </summary>
-        public static TowerBuildController TBController = null;
+        public static TowerBuildController instance = null;
 
         /// <summary>
         /// 20180403 SangBin : Tower Base Tracing State
@@ -119,7 +119,16 @@ namespace GoogleARCore.IF
 
         void Awake()
         {
-            TBController = this;
+            //if (instance == null)
+            //{
+            //    instance = this;
+            //    DontDestroyOnLoad(gameObject);
+            //}
+            //else
+            //{
+            //    DestroyImmediate(this);
+            //}
+            instance = this;
         }
 
         /// <summary>

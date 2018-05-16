@@ -127,7 +127,7 @@ namespace IF
         void OnDamaged(object[] parameters)
         {
             //IsDamaged = true;
-            EnemyHP -= (double)parameters[1];
+            EnemyHP -= (double)parameters[0];
 
             if (EnemyHP <= 0.0d)
             {
@@ -297,7 +297,7 @@ namespace IF
             isDie = true;
             myEnemyState = EnemyState.die;
             GetComponent<BoxCollider>().enabled = false;
-            GameUIManagement.GameUIManagerInstance.DisplayScore(50);
+            GameUIManagement.instance.DisplayScore(50);
             //IsDamaged = false;
 
             StartCoroutine(this.PushObjectPool());
@@ -319,7 +319,7 @@ namespace IF
         /// </summary>
         void Cal_DirectionEtoDS()
         {
-            directionVectorEtoDS = (DefenseStationCtrl.DS_Instance.DefenseStationTR.position + (Vector3.up * 2.0f)) - transform.position;
+            directionVectorEtoDS = (DefenseStationCtrl.instance.DefenseStationTR.position + (Vector3.up * 2.0f)) - transform.position;
             distanceEtoDS = directionVectorEtoDS.magnitude;
             directionVector_NormalizedEtoDS = Vector3.Normalize(directionVectorEtoDS);
         }
@@ -332,6 +332,21 @@ namespace IF
             //bool equalizer = false;
             //transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.identity, 10.0f * Time.deltaTime);
             transform.GetChild(0).gameObject.SetActive(true);
+        }
+
+        protected void OnTriggerStay(Collider collider)
+        {
+            if (collider.gameObject.tag == "WEAPON_TYPE02_FLAME")
+            {
+                EnemyHP -= 10.0d; //damage per frame
+            }
+
+            //임시로 넣음
+            if (EnemyHP <= 0.0d)
+            {
+                EnemyKilled();
+            }
+
         }
     }
 }

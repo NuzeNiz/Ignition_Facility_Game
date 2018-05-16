@@ -135,16 +135,37 @@ namespace IF
         }
 
         /// <summary>
-        /// 20180403 SangBin : Damage to enemy (Message Driven Method)
+        /// 20180403 SangBin : Damage to enemy
+        /// 20180515 SangBin : + Splash Damage to enemy
         /// </summary>
         protected void OnDamaged(object[] parameters)
         {
             //isDamaged = true;
-            CurrentHealthPower -= (double)parameters[1];
+            CurrentHealthPower -= (double)parameters[0];
+            bool IsSplashDamage = (bool)parameters[1];
 
             if (CurrentHealthPower <= 0.0d)
             {
                 EnemyKilled();
+            }
+
+            if (IsSplashDamage)
+            {
+                Collider[] colls = Physics.OverlapSphere(transform.position, 2.0f);
+                foreach (Collider coll in colls)
+                {
+                    if (coll.gameObject.layer == 8)
+                    {
+                        Rigidbody rbody = coll.GetComponent<Rigidbody>();
+                        if (rbody != null)
+                        {
+                            object[] _parameters = new object[2];
+                            parameters[0] = BalanceManagement.instance.PlayerStrkingPower_Splash(coll.gameObject.tag);
+                            parameters[1] = false;
+                            coll.SendMessage("OnDamaged", _parameters, SendMessageOptions.DontRequireReceiver);
+                        }
+                    }
+                }
             }
         }
 
@@ -232,7 +253,7 @@ namespace IF
         }
 
         /// <summary>
-        /// 20180502 SangBin : 
+        /// 20180502 SangBin : Enemy Idle Action
         /// </summary>
         virtual protected void ActionA()
         {
@@ -242,22 +263,22 @@ namespace IF
         }
 
         /// <summary>
-        /// 20180502 SangBin : 
+        /// 20180502 SangBin : Enemy Tracing to Player Action
         /// </summary>
         virtual protected void ActionB()
         {
-            transform.LookAt(PlayerCtrl.PlayerInstance.PlayerTr);
+            transform.LookAt(PlayerCtrl.instance.PlayerTr);
             GetComponent<Rigidbody>().AddForce(directionVector_NormalizedEtoP * MovingSpeed, ForceMode.Force);
             //animator.SetBool("IsAttack", false); // later
             //animator.SetBool("IsTrace", true); // later
         }
 
         /// <summary>
-        /// 20180502 SangBin : 
+        /// 20180502 SangBin : Enemy Attack to Player Action
         /// </summary>
         virtual protected void ActionC()
         {
-            transform.LookAt(PlayerCtrl.PlayerInstance.PlayerTr);
+            transform.LookAt(PlayerCtrl.instance.PlayerTr);
             GetComponent<Rigidbody>().velocity = Vector3.zero;
             GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
             //animator.SetBool("IsAttack", true); // later
@@ -265,7 +286,7 @@ namespace IF
         }
 
         /// <summary>
-        /// 20180502 SangBin : 
+        /// 20180502 SangBin : Enemy Tracing to DS Action
         /// </summary>
         virtual protected void ActionD()
         {
@@ -275,7 +296,7 @@ namespace IF
         }
 
         /// <summary>
-        /// 20180502 SangBin : 
+        /// 20180502 SangBin : Enemy Attack to DS Action
         /// </summary>
         virtual protected void ActionE()
         {
@@ -289,7 +310,7 @@ namespace IF
         /// </summary>
         void Cal_DirectionEtoP()
         {
-            directionVectorEtoP = PlayerCtrl.PlayerInstance.PlayerTr.position - transform.position;
+            directionVectorEtoP = PlayerCtrl.instance.PlayerTr.position - transform.position;
             distanceEtoP = directionVectorEtoP.magnitude;
             directionVector_NormalizedEtoP = Vector3.Normalize(directionVectorEtoP);
         }
@@ -299,7 +320,7 @@ namespace IF
         /// </summary>
         void Cal_DirectionEtoDS()
         {
-            directionVectorEtoDS = DefenseStationCtrl.DS_Instance.DefenseStationTR.position - transform.position;
+            directionVectorEtoDS = DefenseStationCtrl.instance.DefenseStationTR.position - transform.position;
             distanceEtoDS = directionVectorEtoDS.magnitude;
             directionVector_NormalizedEtoDS = Vector3.Normalize(directionVectorEtoDS);
         }
@@ -319,7 +340,7 @@ namespace IF
             currentEnemyState = EnemyState.die;
             GetComponent<BoxCollider>().enabled = false;
             //animator.SetBool("IsDie", true); // later
-            GameUIManagement.GameUIManagerInstance.DisplayScore(50);
+            GameUIManagement.instance.DisplayScore(50);
 
             StartCoroutine(PushObjectPool());
             Destroy(explosion, 2.0f);
@@ -340,12 +361,44 @@ namespace IF
         }
 
         /// <summary>
-        /// 20180502 SangBin : 
+        /// 20180502 SangBin : Rest enemy tag
         /// </summary>
         private void ResetTag(string tag)
         {
             gameObject.tag = tag;
         }
 
+        //protected void OnTriggerStay(Collider collider)
+        //{
+        //    if (collider.gameObject.tag == "WEAPON_TYPE02_FLAME")
+        //    {
+        //        CurrentHealthPower -= 10.0d; //damage per frame
+        //    }
+
+        //    //임시로 넣음
+        //    if (CurrentHealthPower <= 0.0d)
+        //    {
+        //        EnemyKilled();
+        //    }
+
+        //}
+
+
+        /// <summary>
+        /// 20180516 SangBin : 
+        /// </summary>
+        private void OnParticleCollision(GameObject other)
+        {
+            //if (collision.gameObject.tag == "WEAPON_TYPE03_PROJECTILE")
+            {
+                CurrentHealthPower -= BalanceManagement.instance.PlayerStrkingPower(TagName, WeaponCtrl.instance.CurrentWeaponType); //damage per frame
+            }
+
+            //임시로 넣음
+            if (CurrentHealthPower <= 0.0d)
+            {
+                EnemyKilled();
+            }
+        }
     }
 }

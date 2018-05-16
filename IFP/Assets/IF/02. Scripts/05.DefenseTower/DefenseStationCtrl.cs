@@ -9,7 +9,7 @@ namespace IF
         /// <summary>
         /// 20180403 SangBin : Singletone Pattern
         /// </summary>
-        public static DefenseStationCtrl DS_Instance = null;
+        public static DefenseStationCtrl instance = null;
 
         /// <summary>
         /// 20180403 SangBin : Defense Station's Transform
@@ -45,7 +45,16 @@ namespace IF
 
         private void Awake()
         {
-            DS_Instance = this;
+            //if (instance == null)
+            //{
+            //    instance = this;
+            //    DontDestroyOnLoad(gameObject);
+            //}
+            //else
+            //{
+            //    DestroyImmediate(this);
+            //}
+            instance = this;
             defenseStationTR = this.gameObject.transform;
             defenseStation_MAXHP = defenseStation_HP;
         }
@@ -55,9 +64,9 @@ namespace IF
         /// </summary>
         private void OnCollisionEnter(Collision collision)
         {
-            if (collision.gameObject.tag == "ENEMY_BEE_STINGER")
+            if (collision.gameObject.tag == "ENEMY_TYPE01_PROJECTILE")
             {
-                defenseStation_HP -= collision.gameObject.GetComponent<BeeStingerCtrl>().stingerDamage;
+                defenseStation_HP -= collision.gameObject.GetComponent<EnemyType01ProjectileCtrl>().projectileDamage;
                 collision.gameObject.GetComponent<TrailRenderer>().enabled = false;
                 collision.gameObject.SetActive(false);
             }

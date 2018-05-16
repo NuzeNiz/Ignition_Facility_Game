@@ -11,7 +11,7 @@ namespace IF
         /// <summary>
         /// 20180403 SangBin : Singletone Pattern
         /// </summary>
-        public static GameUIManagement GameUIManagerInstance = null;
+        public static GameUIManagement instance = null;
 
         /// <summary>
         /// 20180403 SangBin : Player Total Score
@@ -37,7 +37,16 @@ namespace IF
 
         void Awake()
         {
-            GameUIManagerInstance = this;
+            //if (instance == null)
+            //{
+            //    instance = this;
+            //    DontDestroyOnLoad(gameObject);
+            //}
+            //else
+            //{
+            //    DestroyImmediate(this);
+            //}
+            instance = this;
         }
 
         // Use this for initialization
@@ -49,7 +58,7 @@ namespace IF
         // Update is called once per frame
         void Update()
         {
-            playerHP_Bar.fillAmount = (float)(PlayerCtrl.PlayerInstance.PlayerHP / PlayerCtrl.PlayerInstance.PlayerMaxHP);
+            playerHP_Bar.fillAmount = (float)(PlayerCtrl.instance.PlayerHP / PlayerCtrl.instance.PlayerMaxHP);
 
             DisplayDebug();
         }
@@ -69,9 +78,9 @@ namespace IF
         /// </summary>
         public void DisplayDebug()
         {
-            PlayerPos.text = "X : <color=#FF000064>" + PlayerCtrl.PlayerInstance.PlayerTr.position.x.ToString() + "</color>"
-                + "  Y : <color=#FF990064>" + PlayerCtrl.PlayerInstance.PlayerTr.position.y.ToString() + "</color>"
-                + "  Z : <color=#00FF1764>" + PlayerCtrl.PlayerInstance.PlayerTr.position.z.ToString() + "</color>";
+            PlayerPos.text = "X : <color=#FF000064>" + PlayerCtrl.instance.PlayerTr.position.x.ToString() + "</color>"
+                + "  Y : <color=#FF990064>" + PlayerCtrl.instance.PlayerTr.position.y.ToString() + "</color>"
+                + "  Z : <color=#00FF1764>" + PlayerCtrl.instance.PlayerTr.position.z.ToString() + "</color>";
         }
 
         /// <summary>

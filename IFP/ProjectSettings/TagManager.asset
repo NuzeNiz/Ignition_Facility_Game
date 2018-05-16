@@ -5,11 +5,14 @@ TagManager:
   serializedVersion: 2
   tags:
   - ITEM
-  - ENEMY_BEE
-  - ENEMY_BEE_STINGER
   - ENEMY_BUTTERFLY
   - ENEMY_MOTH
   - ENEMY_MOTH_SCALE
+  - ENEMY_TYPE01
+  - ENEMY_TYPE01_PROJECTILE
+  - WEAPON_TYPE02_FLAME
+  - Fire
+  - WEAPON_TYPE03_PROJECTILE
   layers:
   - Default
   - TransparentFX
@@ -20,7 +23,7 @@ TagManager:
   - 
   - 
   - ENEMY
-  - 
+  - WEAPON_PROJECTILE
   - ITEM
   - PLAYER
   - 

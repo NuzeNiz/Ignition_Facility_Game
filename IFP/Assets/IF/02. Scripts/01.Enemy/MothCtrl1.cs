@@ -297,7 +297,7 @@ namespace IF
             isDie = true;
             myEnemyState = EnemyState.die;
             GetComponent<BoxCollider>().enabled = false;
-            GameUIManagement.GameUIManagerInstance.DisplayScore(50);
+            GameUIManagement.instance.DisplayScore(50);
             //IsDamaged = false;
 
             StartCoroutine(this.PushObjectPool());
@@ -319,7 +319,7 @@ namespace IF
         /// </summary>
         void Cal_DirectionEtoDS()
         {
-            directionVectorEtoDS = (DefenseStationCtrl.DS_Instance.DefenseStationTR.position + (Vector3.up * 2.0f)) - transform.position;
+            directionVectorEtoDS = (DefenseStationCtrl.instance.DefenseStationTR.position + (Vector3.up * 2.0f)) - transform.position;
             distanceEtoDS = directionVectorEtoDS.magnitude;
             directionVector_NormalizedEtoDS = Vector3.Normalize(directionVectorEtoDS);
         }

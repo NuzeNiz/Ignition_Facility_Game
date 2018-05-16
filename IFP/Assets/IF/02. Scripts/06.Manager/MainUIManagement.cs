@@ -8,7 +8,8 @@ public class MainUIManagement : MonoBehaviour
     /// <summary>
     /// 20180403 SangBin : Start button event handler
     /// </summary>
-    public void OnclickStartBtn(){
+    public void OnclickStartBtn()
+    {
         SceneManager.LoadScene("GameScene A");
     }
 }

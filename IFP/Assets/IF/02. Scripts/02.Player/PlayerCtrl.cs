@@ -12,7 +12,7 @@ namespace IF
         /// <summary>
         /// 20180403 SangBin : Singletone Pattern
         /// </summary>
-        public static PlayerCtrl PlayerInstance = null;
+        public static PlayerCtrl instance = null;
 
         /// <summary>
         /// 20180403 SangBin : Projectile Style Bullet Prefabs
@@ -47,7 +47,7 @@ namespace IF
         /// <summary>
         /// 20180403 SangBin : Player's Striking Power
         /// </summary>
-        private double PlayerStrikingPower = 50.0d;
+        //private double PlayerStrikingPower = 50.0d;
 
         /// <summary>
         /// 20180403 SangBin : Player's Max Health Power
@@ -62,65 +62,130 @@ namespace IF
         /// <summary>
         /// 20180403 SangBin : Player's Current Health Power
         /// </summary>
-        private double playerHP = 100.0d;
+        private double playerHP;
 
         /// <summary>
         /// 20180403 SangBin : Player's Current Health Power Property
         /// </summary>
         public double PlayerHP { get { return playerHP; } }
 
+        #region Fields : Camera Shaking
         /// <summary>
-        /// 20180430 SangBin : Player Bullet Flare Effect
+        /// 20180514 SangBin : Shaking Camera fields
         /// </summary>
-        [SerializeField]
-        private GameObject FlareEffect;
+        private float shakeTime = 1.5f;
 
+        /// <summary>
+        /// 20180514 SangBin : Shaking Camera fields
+        /// </summary>
+        private float shakeAmount = 0.1f;
+
+        /// <summary>
+        /// 20180514 SangBin : Shaking Camera fields
+        /// </summary>
+        private float shakeSpeed = 4.0f;
+        #endregion
         //-----------------------------------------------------------------------------------------------------------------------------
 
         private void Awake()
         {
-            PlayerInstance = this;
-            playerTr = GameObject.Find("First Person Camera").GetComponent<Transform>();
+            //if (instance == null)
+            //{
+            //    instance = this;
+            //    DontDestroyOnLoad(gameObject);
+            //}
+            //else
+            //{
+            //    DestroyImmediate(this);
+            //}
+            instance = this;
             muzzleFlash.enabled = false;
+            playerHP = 100.0d;
             playerMaxHP = playerHP;
 
         }
 
+        private void Start()
+        {
+            playerTr = GameObject.Find("First Person Camera").GetComponent<Transform>();
+
+            StartCoroutine(SetPositionAndRotation());
+        }
+
         void Update() {
-            this.gameObject.transform.SetPositionAndRotation(playerTr.position, playerTr.rotation);
+            PlayerShoot();
+        }
 
-            Touch touch;
-            if ((touch = Input.GetTouch(0)).phase == TouchPhase.Began)
+        /// <summary>
+        /// 20180403 SangBin : Player's RayCast Shoot to Enemy
+        /// 20180418 SangBin : + to Item
+        /// 20180427 SangBin : + to Butterfly
+        /// 20180515 SangBin : ReFactorying with weapons
+        /// 20180516 SangBin : Add weapon Type03,04
+        /// </summary>
+        private void PlayerShoot()
+        {
+            Touch myTouch;
+
+            RaycastHit hitinfo;
+
+            if (Input.touchCount > 0)
             {
-                Fire();
-
-                /// <summary>
-                /// 20180403 SangBin : Player's RayCast Shoot to Enemy
-                /// 20180418 SangBin : + to Item
-                /// 20180427 SangBin : + to Butterfly
-                /// </summary>
-                RaycastHit hitinfo;
-
-                if (Physics.Raycast(playerTr.position, playerTr.forward, out hitinfo, rayMaxDistance))                
+                if (WeaponCtrl.instance.CurrentWeaponType == WeaponCtrl.WeaponTypeEnum.weaponType02)
                 {
-                    if(hitinfo.collider.gameObject.layer == 8)
-                    //if (hitinfo.collider.tag == "ENEMY_BEE")
+                    myTouch = Input.GetTouch(0);
+                    if (myTouch.phase == TouchPhase.Stationary || myTouch.phase == TouchPhase.Moved)
                     {
-                        object[] parameters = new object[2]; 
-                        parameters[0] = hitinfo.point;
-                        parameters[1] = PlayerStrikingPower;
-                        GameObject flare = (GameObject)Instantiate(FlareEffect, hitinfo.collider.gameObject.transform.position, Quaternion.identity);
-                        hitinfo.collider.gameObject.SendMessage("OnDamaged", parameters, SendMessageOptions.DontRequireReceiver);
-                        Destroy(flare, 3.0f);
+                        WeaponCtrl.instance.MakeWeaponShotEffect();
+
+                        //RaycastHit hitinfo;
+
+                        //if (Physics.Raycast(playerTr.position, playerTr.forward, out hitinfo, rayMaxDistance))
+                        if (Physics.SphereCast(playerTr.position, 0.2f, playerTr.forward, out hitinfo, rayMaxDistance))
+                        {
+                            if (hitinfo.collider.gameObject.layer == 8)
+                            {
+                                WeaponCtrl.instance.WeaponFunc(ref hitinfo);
+                            }
+                        }
                     }
-                    //else if (hitinfo.collider.tag == "ITEM")
-                    //{
-                    //    hitinfo.collider.gameObject.SendMessage("OnHit", SendMessageOptions.DontRequireReceiver);
-                    //}
-                    //else if (hitinfo.collider.tag == "ENEMY_BUTTERFLY")
-                    //{
-                    //    hitinfo.collider.gameObject.SendMessage("OnHit", SendMessageOptions.DontRequireReceiver);
-                    //}
+                    else if (myTouch.phase == TouchPhase.Ended)
+                    {
+                        WeaponCtrl.instance.StopFlame();
+                    }
+                }
+                else if (WeaponCtrl.instance.CurrentWeaponType == WeaponCtrl.WeaponTypeEnum.weaponType03 || WeaponCtrl.instance.CurrentWeaponType == WeaponCtrl.WeaponTypeEnum.weaponType04)
+                {
+                    for (int i = 0; i < Input.touchCount; i++)
+                    {
+                        myTouch = Input.GetTouch(i);
+                        if (myTouch.phase == TouchPhase.Began)
+                        {
+                            //WeaponClass.instance.MakeWeaponShotEffect();
+                            WeaponCtrl.instance.WeaponFunc();
+                        }
+                    }
+                }
+                else
+                {
+                    for (int i = 0; i < Input.touchCount; i++)
+                    {
+                        myTouch = Input.GetTouch(i);
+                        if (myTouch.phase == TouchPhase.Began)
+                        {
+                            WeaponCtrl.instance.MakeWeaponShotEffect();
+
+                            //RaycastHit hitinfo;
+
+                            if (Physics.Raycast(playerTr.position, playerTr.forward, out hitinfo, rayMaxDistance))
+                            {
+                                if (hitinfo.collider.gameObject.layer == 8)
+                                {
+                                    WeaponCtrl.instance.WeaponFunc(ref hitinfo);
+                                }
+                            }
+                        }
+                    }
                 }
             }
         }
@@ -130,10 +195,11 @@ namespace IF
         /// </summary>
         private void OnCollisionEnter(Collision collision)
         {
-            if (collision.gameObject.tag == "ENEMY_BEE_STINGER")
+            if (collision.gameObject.tag == "ENEMY_TYPE01_PROJECTILE")
             {
+                StartCoroutine(CameraShake());
                 //playerHP -= 2.0d; // test
-                playerHP -= collision.gameObject.GetComponent<BeeStingerCtrl>().stingerDamage;
+                playerHP -= collision.gameObject.GetComponent<EnemyType01ProjectileCtrl>().projectileDamage;
                 collision.gameObject.GetComponent<TrailRenderer>().enabled = false;
                 collision.gameObject.SetActive(false);
             }
@@ -144,8 +210,8 @@ namespace IF
         /// </summary>
         void Fire()
         {
-            StartCoroutine(this.ShowMuzzleFlash());
-            GameLogicManagement.GLM_Instance.SoundEffect(playerTr.position, fireSoundFile);
+            //StartCoroutine(this.ShowMuzzleFlash());
+            GameLogicManagement.instance.SoundEffect(playerTr.position, fireSoundFile);
         }
 
         /// <summary>
@@ -163,6 +229,38 @@ namespace IF
             muzzleFlash.enabled = true;
             yield return new WaitForSeconds(Random.Range(0.05f, 0.3f));
             muzzleFlash.enabled = false;
+        }
+
+        private IEnumerator CameraShake()
+        {
+            StopCoroutine(SetPositionAndRotation());
+            Vector3 originPos = playerTr.position;
+
+            float elapsedTime = 0.0f;
+
+            while (elapsedTime < shakeTime)
+            {
+                Vector3 randomPoint = originPos + Random.insideUnitSphere * shakeAmount;
+
+                playerTr.position = Vector3.Lerp(playerTr.position, randomPoint, Time.deltaTime * shakeSpeed);
+
+                yield return null;
+
+                elapsedTime += Time.deltaTime;
+            }
+
+            playerTr.position = originPos;
+            StartCoroutine(SetPositionAndRotation());
+        }
+
+        private IEnumerator SetPositionAndRotation()
+        {
+            while (GameLogicManagement.instance.ThisStageAlive)
+            {
+                transform.SetPositionAndRotation(playerTr.position, playerTr.rotation);
+                yield return null;
+            }
+
         }
     }
 }

@@ -97,11 +97,11 @@ namespace IF
         {
             while (gameObject.activeSelf)
             {
-                GameLogicManagement.GLM_Instance.SoundEffect(transform.position, ItemSoundFile);
-                transform.SetPositionAndRotation(PlayerCtrl.PlayerInstance.PlayerTr.position + (PlayerCtrl.PlayerInstance.PlayerTr.forward), PlayerCtrl.PlayerInstance.PlayerTr.rotation);
+                GameLogicManagement.instance.SoundEffect(transform.position, ItemSoundFile);
+                transform.SetPositionAndRotation(PlayerCtrl.instance.PlayerTr.position + (PlayerCtrl.instance.PlayerTr.forward), PlayerCtrl.instance.PlayerTr.rotation);
                 GetComponent<MeshRenderer>().enabled = true;
                 GetComponent<Rigidbody>().useGravity = true;
-                Vector3 directionVec = PlayerCtrl.PlayerInstance.PlayerTr.forward + (PlayerCtrl.PlayerInstance.PlayerTr.up * 0.5f);
+                Vector3 directionVec = PlayerCtrl.instance.PlayerTr.forward + (PlayerCtrl.instance.PlayerTr.up * 0.5f);
                 GetComponent<Rigidbody>().AddForce(directionVec * 300.0f, ForceMode.Force);
 
 
@@ -114,7 +114,7 @@ namespace IF
                 Collider[] colls = Physics.OverlapSphere(transform.position, 10.0f);
                 foreach (Collider coll in colls)
                 {
-                    if (coll.gameObject.tag == "ENEMY_BEE" || coll.gameObject.tag == "ENEMY_MOTH")
+                    if (coll.gameObject.layer == 8)
                     {
                         Rigidbody rbody = coll.GetComponent<Rigidbody>();
                         if (rbody != null)
@@ -128,7 +128,7 @@ namespace IF
                 //GetComponent<SphereCollider>().enabled = true;
                 gameObject.SetActive(false);
             }
-            yield return null;
+            yield break;
         }
     }
 }

@@ -117,7 +117,7 @@ GameObject:
   - component: {fileID: 114909855228848710}
   m_Layer: 8
   m_Name: StoneMonster
-  m_TagString: ENEMY_BEE
+  m_TagString: ENEMY_TYPE01
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -415,9 +415,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   deathEffectPrefab: {fileID: 138338, guid: cd1ff9e92aad8ac4db78b6ffd5f1eab7, type: 2}
-  stingerPrefab: {fileID: 1638296122159508, guid: c31f49f5f614a924aa84f8d78fdaf820,
+  projectilePrefab: {fileID: 1638296122159508, guid: c31f49f5f614a924aa84f8d78fdaf820,
     type: 2}
-  stingerSoundFile: {fileID: 8300000, guid: 12e5152dd914d1743b8fb9cb18c68223, type: 3}
+  shootingSoundFile: {fileID: 8300000, guid: 12e5152dd914d1743b8fb9cb18c68223, type: 3}
 --- !u!137 &137921366408229790
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 1

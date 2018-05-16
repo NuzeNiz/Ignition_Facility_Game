@@ -13,7 +13,7 @@ namespace IF
         /// <summary>
         /// 20180403 SangBin : Singletone Pattern
         /// </summary>
-        public static GameLogicManagement GLM_Instance = null;
+        public static GameLogicManagement instance = null;
 
         /// <summary>
         /// 20180403 SangBin : Arbitrary Sound Volume
@@ -62,7 +62,7 @@ namespace IF
         /// 20180403 SangBin : This Level Cleared or not
         /// </summary>
         [HideInInspector]
-        public bool thisLevelState = true;
+        public bool ThisStageAlive = true;
 
         /// <summary>
         /// 20180418 SangBin : Item Object Pool List
@@ -117,7 +117,16 @@ namespace IF
 
         void Awake()
         {
-            GLM_Instance = this;
+            //if (instance == null)
+            //{
+            //    instance = this;
+            //    DontDestroyOnLoad(gameObject);
+            //}
+            //else
+            //{
+            //    DestroyImmediate(this);
+            //}
+            instance = this;
             maxItem = maxEachItem * itemSort;
         }
 
@@ -139,7 +148,7 @@ namespace IF
 
         private void Update()
         {
-            if(PlayerCtrl.PlayerInstance.PlayerHP <= 0.0d || DefenseStationCtrl.DS_Instance.DefenseStation_HP <= 0.0d)
+            if(PlayerCtrl.instance.PlayerHP <= 0.0d || DefenseStationCtrl.instance.DefenseStation_HP <= 0.0d)
             {
                 GameOver();
             }
@@ -194,11 +203,11 @@ namespace IF
         /// </summary>
         IEnumerator ActivateEnemy()
         {
-            while (thisLevelState)
+            while (ThisStageAlive)
             {
                 yield return new WaitForSeconds(enemyGenerationPeriod);
 
-                if (!thisLevelState)
+                if (!ThisStageAlive)
                     yield break;
 
                 foreach (GameObject enemy in enemyObjectPool)
@@ -207,7 +216,7 @@ namespace IF
                     {
                         int index = Random.Range(1, tempSpawnpoints.Length);
                         enemy.transform.position = tempSpawnpoints[index].position;
-                        enemy.transform.parent = GoogleARCore.IF.TowerBuildController.TBController.DefenseStation_Anchor_Tr;
+                        enemy.transform.parent = GoogleARCore.IF.TowerBuildController.instance.DefenseStation_Anchor_Tr;
                         enemy.SetActive(true);
                         break;
                     }
@@ -275,7 +284,7 @@ namespace IF
                 int randIdex = Random.Range(0, maxItem);
                 if (!itemObjectPool[randIdex].activeSelf)
                 {
-                    itemObjectPool[randIdex].transform.parent = GoogleARCore.IF.TowerBuildController.TBController.DefenseStation_Anchor_Tr;
+                    itemObjectPool[randIdex].transform.parent = GoogleARCore.IF.TowerBuildController.instance.DefenseStation_Anchor_Tr;
                     itemObjectPool[randIdex].transform.position = butterflyTransform.position;
                     itemObjectPool[randIdex].SetActive(true);
                     break;
@@ -291,7 +300,7 @@ namespace IF
             for (int i = 0; i < 2; i++)
             {
                 GameObject butterFly = (GameObject)Instantiate(butterFlyPrefab_type01);
-                butterFly.transform.parent = GoogleARCore.IF.TowerBuildController.TBController.DefenseStation_Anchor_Tr;
+                butterFly.transform.parent = GoogleARCore.IF.TowerBuildController.instance.DefenseStation_Anchor_Tr;
                 butterFly.name = "Enemy_Butterfly_" + i.ToString();
                 butterFly.SetActive(false);
                 butterFlyObjectPool.Add(butterFly);
@@ -303,13 +312,13 @@ namespace IF
         /// </summary>
         IEnumerator ActivateButterFly()
         {
-            while (thisLevelState)
+            while (ThisStageAlive)
             {
                 foreach (GameObject butterFly in butterFlyObjectPool)
                 {
                     if (!butterFly.activeSelf)
                     {
-                        butterFly.transform.position = IF.DefenseStationCtrl.DS_Instance.DefenseStationTR.position + (Vector3.right * 3) + (Vector3.up * 2);
+                        butterFly.transform.position = IF.DefenseStationCtrl.instance.DefenseStationTR.position + (Vector3.right * 3) + (Vector3.up * 2);
                         butterFly.SetActive(true);
                         break;
                     }

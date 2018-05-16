@@ -25,7 +25,7 @@ GameObject:
   - component: {fileID: 96045832069036670}
   m_Layer: 2
   m_Name: Test Bullet
-  m_TagString: ENEMY_BEE_STINGER
+  m_TagString: ENEMY_TYPE01_PROJECTILE
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -234,7 +234,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 09c3677863b182742b4fb827b8ff863f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  stingerDamage: 2
+  projectileDamage: 2
 --- !u!135 &135291685350506898
 SphereCollider:
   m_ObjectHideFlags: 1
