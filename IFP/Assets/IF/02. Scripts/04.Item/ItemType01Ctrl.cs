@@ -92,6 +92,7 @@ namespace IF
 
         /// <summary>
         /// 20180430 SangBin : Item Cinnamon function
+        /// 20180516 SeongJun : If item used notify
         /// </summary>
         override public IEnumerator ItemFunction()
         {
@@ -127,6 +128,7 @@ namespace IF
                 GetComponent<Rigidbody>().useGravity = false;
                 //GetComponent<SphereCollider>().enabled = true;
                 gameObject.SetActive(false);
+                ItemWindow.Instance.ItemSubject.CheakConsumedItem();
             }
             yield break;
         }

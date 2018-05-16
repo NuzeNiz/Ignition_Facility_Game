@@ -8,7 +8,7 @@ using IF;
 public class UseItem : MonoBehaviour{
     public Sprite setImage;
 
-    private ItemBaseClass itemInfo;
+    public int slotNum = 0;
 
     private ItemSubject subject;
 
@@ -18,9 +18,8 @@ public class UseItem : MonoBehaviour{
         var button = gameObject.GetComponent<Button>();
 
         subject.Attach(new ItemObserver(a => {
-            itemInfo = a.SelectedItem;
             var childImage = gameObject.transform.GetChild(0).GetComponent<Image>();
-            if (a.SelectedItem != null)
+            if (a.SelectedItem[slotNum] != null)
             {
                 childImage.sprite = setImage;
                 childImage.color = new Color(1.0f, 1.0f, 1.0f, 1.0f);
@@ -33,14 +32,13 @@ public class UseItem : MonoBehaviour{
         }));
 
         button.onClick.AddListener(() => {
-            if (itemInfo == null)
+            if (subject.SelectedItem[slotNum] == null)
             {
 
             }
             else
             {
-                StartCoroutine(itemInfo.ItemFunction());
-                subject.CheckItem();
+                StartCoroutine(subject.SelectedItem[slotNum].ItemFunction());
             }
         });
     }

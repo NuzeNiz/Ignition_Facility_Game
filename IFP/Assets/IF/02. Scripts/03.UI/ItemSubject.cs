@@ -6,28 +6,49 @@ using IF;
 
 public class ItemSubject : Subject
 {
-    private List<ItemObserver> observeOnCheckItem = new List<ItemObserver>();
+    private int itemCount = 0;
+    public ItemBaseClass[] SelectedItem { get; private set; }
 
-    public ItemBaseClass SelectedItem { get; private set; }
-
-    public void SetCurruntItem(ItemBaseClass item)
+    public ItemSubject()
     {
-        SelectedItem = item;
-        base.Notify();
+        SelectedItem = new ItemBaseClass[2];
     }
 
-    public void CheckItem()
+    public void ItemAcquisition(ItemBaseClass item)
     {
-        if (SelectedItem.gameObject.activeSelf == false)
+        if (itemCount < 2)
         {
-            observeOnCheckItem.ForEach(a => { a.Reactive(this); });
-            SelectedItem = null;
+            var emptySlot = 0;
+            for (; emptySlot < 2; emptySlot++)
+            {
+                if (SelectedItem[emptySlot] == null)
+                {
+                    break;
+                }
+            }
+            SelectedItem[emptySlot] = item;
+            itemCount++;
+            Notify();
         }
-        base.Notify();
     }
 
-    public void AttachOnCheckItem(ItemObserver observe)
+    public void CheakConsumedItem()
     {
-        observeOnCheckItem.Add(observe);
+        var marker = false;
+
+        for (int i = 0; i < 2; i++)
+        {
+            if (SelectedItem[i].gameObject.activeSelf == false)
+            {
+                SelectedItem[i] = null;
+                marker = true;
+                itemCount--;
+            }
+        }
+
+        if (marker)
+        {
+            Notify();
+        }
     }
 }
