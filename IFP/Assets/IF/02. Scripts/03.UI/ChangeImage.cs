@@ -10,7 +10,7 @@ public class ChangeImage : MonoBehaviour {
         var subject = GameObject.Find("Item_Window").GetComponent<ItemWindow>().WeaponSubject;
         subject.Attach(new WeaponObserver(a =>
         {
-            myImage.sprite = a.ItemImage.sprite;
+            myImage.sprite = a.WeaponImage.sprite;
             myImage.color = new Color(1.0f, 1.0f, 1.0f, 1.0f);
         }));
     }

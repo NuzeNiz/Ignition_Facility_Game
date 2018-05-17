@@ -7,6 +7,8 @@ namespace IF
     public class WeaponCtrl : MonoBehaviour
     {
 
+        private WeaponSubject weaponSubject;
+
         #region Fields : Weapon __
         /// <summary>
         /// 20180515 SangBin : 
@@ -175,6 +177,10 @@ namespace IF
 
             //test
             currentWeaponType = WeaponTypeEnum.weaponType01;
+
+            //Notify to WeaponSlots 
+            weaponSubject = ItemWindow.Instance.WeaponSubject;
+            //weaponSubject.NotifyNewItem(WeaponTypeEnum.weaponType01);
         }
 
         /// <summary>
@@ -289,20 +295,25 @@ namespace IF
 
         /// <summary>
         /// 20180515 SangBin : 
+        /// 20180517 SeongJun : Item Add Routin
         /// </summary>
         private void GetWeapons()
         {
+            WeaponTypeEnum newType;
             if (PlayerPrefs.HasKey("weaponType02"))
             {
-                weaponDic.Add(1, WeaponTypeEnum.weaponType02);
+                weaponDic.Add(1, newType = WeaponTypeEnum.weaponType02);
+                weaponSubject.NotifyNewItem(newType);
             }
             if (PlayerPrefs.HasKey("weaponType03"))
             {
-                weaponDic.Add(2, WeaponTypeEnum.weaponType03);
+                weaponDic.Add(2, newType = WeaponTypeEnum.weaponType03);
+                weaponSubject.NotifyNewItem(newType);
             }
             if (PlayerPrefs.HasKey("weaponType04"))
             {
-                weaponDic.Add(3, WeaponTypeEnum.weaponType04);
+                weaponDic.Add(3, newType = WeaponTypeEnum.weaponType04);
+                weaponSubject.NotifyNewItem(newType);
             }
         }
 

@@ -39,6 +39,8 @@ public class UseItem : MonoBehaviour{
             else
             {
                 StartCoroutine(subject.SelectedItem[slotNum].ItemFunction());
+                subject.SelectedItem[slotNum] = null;
+                subject.Notify();
             }
         });
     }

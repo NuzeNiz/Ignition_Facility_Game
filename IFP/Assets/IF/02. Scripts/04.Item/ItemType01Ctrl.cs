@@ -128,7 +128,7 @@ namespace IF
                 GetComponent<Rigidbody>().useGravity = false;
                 //GetComponent<SphereCollider>().enabled = true;
                 gameObject.SetActive(false);
-                ItemWindow.Instance.ItemSubject.CheakConsumedItem();
+                //ItemWindow.Instance.ItemSubject.CheakConsumedItem();
             }
             yield break;
         }

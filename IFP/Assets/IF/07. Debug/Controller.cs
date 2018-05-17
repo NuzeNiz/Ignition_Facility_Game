@@ -15,12 +15,23 @@ namespace IF.Debug
             const string welcomeMessage = "Hello, IFG!";
             var cli = CLI.Bridge.TryInstall(port, welcomeMessage: welcomeMessage);
 
-            cli.Executer = new CLI.Executer().Bind(typeof(DLadar));
+            cli.Executer = new CLI.Executer()
+                .Bind(typeof(DLadar))
+                .Bind(typeof(DWeapon));
 
             // bind class
             //cli.Executer = new CLI.Executer()
             //    .Bind(typeof(Binding1))
             //    .Bind(typeof(Binding2));
+        }
+    }
+
+    public static class DWeapon
+    {
+        [CLI.Bind]
+        public static CLI.Result AddWeapon()
+        {
+            return CLI.Result.Success("Add Weapon");
         }
     }
 

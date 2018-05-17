@@ -7,15 +7,15 @@ using UnityEngine.EventSystems;
 /// </summary>
 public class ItemWindowOpen : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 {
-    public GameObject itemWindow;
+    //public GameObject itemWindow;
 
     public void OnPointerDown(PointerEventData eventData)
     {
-        itemWindow.SetActive(true);
+        ItemWindow.Instance.gameObject.SetActive(true);
     }
 
     public void OnPointerUp(PointerEventData eventData)
     {
-        itemWindow.SetActive(false);
+        ItemWindow.Instance.gameObject.SetActive(false);
     }
 }

@@ -5,12 +5,23 @@ using UnityEngine.UI;
 using IF;
 
 public class WeaponSubject : Subject {
-    public GameObject SelectedItem { get; private set; }
-    public Image ItemImage { get { return SelectedItem.transform.GetChild(0).GetComponent<Image>(); } }
+    private WeaponCtrl weaponCtrl = WeaponCtrl.instance;
 
-    public void SetCurruntWeapon(GameObject item)
+    public WeaponCtrl.WeaponTypeEnum SelectedItem { get { return weaponCtrl.CurrentWeaponType; } }
+    public WeaponCtrl.WeaponTypeEnum NewItem { get; private set; }
+    public bool isNewItemNotify = false;
+    public Image WeaponImage { get { return null; } }
+
+    public void SetCurruntWeapon(WeaponCtrl.WeaponTypeEnum item)
     {
-        SelectedItem = item;
-        base.Notify();
+        weaponCtrl.SwitchWeapon(item);
+        Notify();
+    }
+
+    public void NotifyNewItem(WeaponCtrl.WeaponTypeEnum item)
+    {
+        isNewItemNotify = true;
+        NewItem = item;
+        Notify();
     }
 }

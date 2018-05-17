@@ -15,27 +15,42 @@ public class ItemWindow : MonoBehaviour
     public Transform itemslot2;
 
     public GameObject slotPrefeb;
+    [SerializeField]
+    private Transform content;
 
-    private List<GameObject> weapons;
+    private List<GameObject> newSlots;
 
     private void Awake()
     {
         Instance = this;
         WeaponSubject = new WeaponSubject();
         ItemSubject = new ItemSubject();
-        weapons = new List<GameObject>();
+        newSlots = new List<GameObject>();
 
-        var content = gameObject.transform.GetChild(0).GetChild(0);
-        for (int i = 0; i < content.childCount; i++)
+        WeaponSubject.Attach(new WeaponObserver(a =>
         {
-            weapons.Add(content.GetChild(i).gameObject);
-        }
-        if (weapons.Count > 0)
-        {
-            WeaponSubject.SetCurruntWeapon(weapons[0]);
-        }
+            if (a.isNewItemNotify)
+            {
+                var newSlot = Instantiate(slotPrefeb);
+                newSlots.Add(newSlot);
+                newSlot.GetComponent<WeaponSlot>().Init(a.NewItem);
+                WeaponSlot.slotsCount++;
+                a.isNewItemNotify = false;
+            }
+        }));
+
+        WeaponSubject.Notify();
 
         gameObject.SetActive(false);
+    }
+
+    private void OnEnable()
+    {
+        newSlots.ForEach(a =>
+        {
+            a.transform.parent = content;
+        });
+        newSlots = new List<GameObject>();
     }
 
     public void AddItem(ItemBaseClass item)
