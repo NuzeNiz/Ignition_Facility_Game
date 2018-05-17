@@ -10,6 +10,9 @@ namespace IF
     [RequireComponent(typeof(AudioSource))]
     abstract public class EnemyBaseClass : MonoBehaviour
     {
+        [SerializeField]
+        private HPDisplayer hPDisplayer;
+
         #region Fields : Prefabs
         /// <summary>
         /// 20180403 SangBin : Enemy Death Effect Prefab;
@@ -143,6 +146,8 @@ namespace IF
             //isDamaged = true;
             CurrentHealthPower -= (double)parameters[0];
             bool IsSplashDamage = (bool)parameters[1];
+
+            hPDisplayer.SetHP(CurrentHealthPower);
 
             if (CurrentHealthPower <= 0.0d)
             {

@@ -26,6 +26,7 @@ public class UseItem : MonoBehaviour{
             }
             else
             {
+                a.itemCount--;
                 childImage.sprite = null;
                 childImage.color = new Color(1.0f, 1.0f, 1.0f, 0.0f);
             }

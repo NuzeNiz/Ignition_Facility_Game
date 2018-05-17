@@ -6,7 +6,7 @@ using IF;
 
 public class ItemSubject : Subject
 {
-    private int itemCount = 0;
+    public int itemCount = 0;
     public ItemBaseClass[] SelectedItem { get; private set; }
 
     public ItemSubject()
@@ -32,23 +32,23 @@ public class ItemSubject : Subject
         }
     }
 
-    public void CheakConsumedItem()
-    {
-        var marker = false;
+    //public void CheakConsumedItem()
+    //{
+    //    var marker = false;
 
-        for (int i = 0; i < 2; i++)
-        {
-            if (SelectedItem[i].gameObject.activeSelf == false)
-            {
-                SelectedItem[i] = null;
-                marker = true;
-                itemCount--;
-            }
-        }
+    //    for (int i = 0; i < 2; i++)
+    //    {
+    //        if (SelectedItem[i].gameObject.activeSelf == false)
+    //        {
+    //            SelectedItem[i] = null;
+    //            marker = true;
+    //            itemCount--;
+    //        }
+    //    }
 
-        if (marker)
-        {
-            Notify();
-        }
-    }
+    //    if (marker)
+    //    {
+    //        Notify();
+    //    }
+    //}
 }
