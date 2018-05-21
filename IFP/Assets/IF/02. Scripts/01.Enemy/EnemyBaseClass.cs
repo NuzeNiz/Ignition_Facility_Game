@@ -160,7 +160,7 @@ namespace IF
                         if (rbody != null)
                         {
                             object[] _parameters = new object[2];
-                            parameters[0] = BalanceManagement.instance.PlayerStrkingPower_Splash(coll.gameObject.tag);
+                            parameters[0] = BalanceManagement.instance.CalcPlayerStrkingPower_Splash(coll.gameObject.tag);
                             parameters[1] = false;
                             coll.SendMessage("OnDamaged", _parameters, SendMessageOptions.DontRequireReceiver);
                         }
@@ -391,7 +391,7 @@ namespace IF
         {
             //if (collision.gameObject.tag == "WEAPON_TYPE03_PROJECTILE")
             {
-                CurrentHealthPower -= BalanceManagement.instance.PlayerStrkingPower(TagName, WeaponCtrl.instance.CurrentWeaponType); //damage per frame
+                CurrentHealthPower -= BalanceManagement.instance.CalcPlayerStrkingPower(TagName, WeaponCtrl.instance.CurrentWeaponType); //damage per frame
             }
 
             //임시로 넣음

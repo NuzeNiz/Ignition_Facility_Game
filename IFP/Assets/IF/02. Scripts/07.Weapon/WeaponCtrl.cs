@@ -186,7 +186,7 @@ namespace IF
             switch (currentWeaponType)
             {
                 case WeaponTypeEnum.weaponType01 :
-                    parameters[0] = BalanceManagement.instance.PlayerStrkingPower(hitinfo.collider.gameObject.tag, currentWeaponType);
+                    parameters[0] = BalanceManagement.instance.CalcPlayerStrkingPower(hitinfo.collider.gameObject.tag, currentWeaponType);
                     parameters[1] = false;
                     GameObject flare = Instantiate(FlareEffect, hitinfo.collider.gameObject.transform.position, Quaternion.identity);
                     hitinfo.collider.gameObject.SendMessage("OnDamaged", parameters, SendMessageOptions.DontRequireReceiver);
@@ -206,7 +206,7 @@ namespace IF
                     //}
 
                     ///Flame Thrower Attack Way 2 - change to sphere cast
-                    parameters[0] = BalanceManagement.instance.PlayerStrkingPower(hitinfo.collider.gameObject.tag, currentWeaponType);
+                    parameters[0] = BalanceManagement.instance.CalcPlayerStrkingPower(hitinfo.collider.gameObject.tag, currentWeaponType);
                     parameters[1] = false;
                     hitinfo.collider.gameObject.SendMessage("OnDamaged", parameters, SendMessageOptions.DontRequireReceiver);
                     break;
