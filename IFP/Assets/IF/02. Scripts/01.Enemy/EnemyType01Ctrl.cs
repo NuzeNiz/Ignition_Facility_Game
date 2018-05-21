@@ -149,10 +149,10 @@ namespace IF
                 {
                     projectileObj.transform.SetPositionAndRotation(this.gameObject.transform.position + (gameObject.transform.up * 0.1f), this.gameObject.transform.rotation);
                     yield return null;
-                    GameLogicManagement.instance.SoundEffect(transform.position, shootingSoundFile);
+                    GameManagement.instance.SoundEffect(transform.position, shootingSoundFile);
                     projectileObj.SetActive(true);
                     //projectileObj.SendMessage("AddForceToProjectile", directionVector_Normalized, SendMessageOptions.DontRequireReceiver);
-                    projectileObj.GetComponent<EnemyType01ProjectileCtrl>().AddForceToProjectile(directionVector_Normalized);
+                    projectileObj.GetComponent<EnemyProjectileType01Ctrl>().AddForceToProjectile(directionVector_Normalized);
                     break;
                 }
             }

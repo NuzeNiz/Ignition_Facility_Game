@@ -88,7 +88,7 @@ namespace IF
         protected void OnHit()
         {
             tag = "Untagged";
-            GameLogicManagement.instance.SoundEffect(transform.position, CollsionSF);
+            GameManagement.instance.SoundEffect(transform.position, CollsionSF);
             GameObject itemHitEffect = (GameObject)Instantiate(CollEffectPrefab, transform.position, Quaternion.identity);
             GetComponent<SphereCollider>().enabled = false;
             GetComponent<MeshRenderer>().enabled = false;
@@ -106,7 +106,7 @@ namespace IF
         {
             if (collision.gameObject.tag == "Player")
             {
-                GameLogicManagement.instance.SoundEffect(transform.position, CollsionSF);
+                GameManagement.instance.SoundEffect(transform.position, CollsionSF);
                 GameObject itemCollEffect = (GameObject)Instantiate(CollEffectPrefab, transform.position, Quaternion.identity);
                 Destroy(itemCollEffect, 2.0f);
 

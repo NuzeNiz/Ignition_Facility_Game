@@ -66,7 +66,7 @@ namespace IF
         {
             if (collision.gameObject.tag == "ENEMY_TYPE01_PROJECTILE")
             {
-                defenseStation_HP -= collision.gameObject.GetComponent<EnemyType01ProjectileCtrl>().projectileDamage;
+                defenseStation_HP -= collision.gameObject.GetComponent<EnemyProjectileType01Ctrl>().projectileDamage;
                 collision.gameObject.GetComponent<TrailRenderer>().enabled = false;
                 collision.gameObject.SetActive(false);
             }

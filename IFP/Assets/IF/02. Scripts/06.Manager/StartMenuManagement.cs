@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class MainUIManagement : MonoBehaviour
+public class StartMenuManagement : MonoBehaviour
 {
     /// <summary>
     /// 20180403 SangBin : Start button event handler
