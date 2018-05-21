@@ -9,8 +9,8 @@ namespace IF
         /// <summary>
         /// 20180501 SangBin : Projectile Damage
         /// </summary>
-        [HideInInspector]
-        public double projectileDamage = 2.0d;
+        //[HideInInspector]
+        //public double projectileDamage = 2.0d;
 
         /// <summary>
         /// 20180403 SangBin : Projectile Speed
