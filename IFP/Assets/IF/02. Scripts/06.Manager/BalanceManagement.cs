@@ -108,16 +108,19 @@ namespace IF
                     switch (enemyTag)
                     {
                         case "ENEMY_TYPE01":
-                            strikingPower = 10.0d;
+                            strikingPower = w2ToE1;
                             break;
                         case "ENEMY_TYPE02":
-                            strikingPower = 10.0d;
+                            strikingPower = w2ToE2;
                             break;
                         case "ENEMY_TYPE03":
-                            strikingPower = 10.0d;
+                            strikingPower = w2ToE3;
+                            break;
+                        case "ENEMY_TYPE04":
+                            strikingPower = w2ToE4;
                             break;
                         case "ENEMY_BUTTERFLY":
-                            strikingPower = 10.0d;
+                            strikingPower = wToIM;
                             break;
                         case "ENEMY_MOTH":
                             strikingPower = 10.0d;
@@ -129,16 +132,19 @@ namespace IF
                     switch (enemyTag)
                     {
                         case "ENEMY_TYPE01":
-                            strikingPower = 50.0d;
+                            strikingPower = w3ToE1;
                             break;
                         case "ENEMY_TYPE02":
-                            strikingPower = 50.0d;
+                            strikingPower = w3ToE2;
                             break;
                         case "ENEMY_TYPE03":
-                            strikingPower = 50.0d;
+                            strikingPower = w3ToE3;
+                            break;
+                        case "ENEMY_TYPE04":
+                            strikingPower = w3ToE4;
                             break;
                         case "ENEMY_BUTTERFLY":
-                            strikingPower = 50.0d;
+                            strikingPower = wToIM;
                             break;
                         case "ENEMY_MOTH":
                             strikingPower = 50.0d;
@@ -150,16 +156,19 @@ namespace IF
                     switch (enemyTag)
                     {
                         case "ENEMY_TYPE01":
-                            strikingPower = 50.0d;
+                            strikingPower = w4ToE1;
                             break;
                         case "ENEMY_TYPE02":
-                            strikingPower = 50.0d;
+                            strikingPower = w4ToE2;
                             break;
                         case "ENEMY_TYPE03":
-                            strikingPower = 50.0d;
+                            strikingPower = w4ToE3;
+                            break;
+                        case "ENEMY_TYPE04":
+                            strikingPower = w4ToE4;
                             break;
                         case "ENEMY_BUTTERFLY":
-                            strikingPower = 50.0d;
+                            strikingPower = wToIM;
                             break;
                         case "ENEMY_MOTH":
                             strikingPower = 50.0d;

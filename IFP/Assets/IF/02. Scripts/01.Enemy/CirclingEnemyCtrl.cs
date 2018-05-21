@@ -52,5 +52,18 @@ namespace IF
             }
         }
 
+        /// <summary>
+        /// 20180516 SangBin : 
+        /// </summary>
+        private void OnParticleCollision(GameObject other)
+        {
+            GameObject explosion = (GameObject)Instantiate(expEffectPrefab, this.gameObject.transform.position, Quaternion.identity);
+            GameManagement.instance.SoundEffect(transform.position, SoundFile);
+            GameManagement.instance.ActivateItem(transform);
+            Destroy(explosion, 2.0f);
+
+            gameObject.SetActive(false);
+        }
+
     }
 }
