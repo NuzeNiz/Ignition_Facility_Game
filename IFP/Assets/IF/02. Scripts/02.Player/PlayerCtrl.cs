@@ -199,7 +199,7 @@ namespace IF
             {
                 StartCoroutine(CameraShake());
                 //playerHP -= 2.0d; // test
-                playerHP -= collision.gameObject.GetComponent<EnemyType01ProjectileCtrl>().projectileDamage;
+                playerHP -= collision.gameObject.GetComponent<EnemyProjectileType01Ctrl>().projectileDamage;
                 collision.gameObject.GetComponent<TrailRenderer>().enabled = false;
                 collision.gameObject.SetActive(false);
             }
@@ -211,7 +211,7 @@ namespace IF
         void Fire()
         {
             //StartCoroutine(this.ShowMuzzleFlash());
-            GameLogicManagement.instance.SoundEffect(playerTr.position, fireSoundFile);
+            GameManagement.instance.SoundEffect(playerTr.position, fireSoundFile);
         }
 
         /// <summary>
@@ -255,7 +255,7 @@ namespace IF
 
         private IEnumerator SetPositionAndRotation()
         {
-            while (GameLogicManagement.instance.ThisStageAlive)
+            while (GameManagement.instance.ThisStageAlive)
             {
                 transform.SetPositionAndRotation(playerTr.position, playerTr.rotation);
                 yield return null;

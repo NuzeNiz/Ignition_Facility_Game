@@ -8,12 +8,12 @@ using System.Threading;
 
 namespace IF
 {
-    public class GameLogicManagement : MonoBehaviour
+    public class GameManagement : MonoBehaviour
     {
         /// <summary>
         /// 20180403 SangBin : Singletone Pattern
         /// </summary>
-        public static GameLogicManagement instance = null;
+        public static GameManagement instance = null;
 
         /// <summary>
         /// 20180403 SangBin : Arbitrary Sound Volume

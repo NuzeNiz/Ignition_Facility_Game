@@ -97,7 +97,7 @@ namespace IF
         {
             while (gameObject.activeSelf)
             {
-                GameLogicManagement.instance.SoundEffect(transform.position, ItemSoundFile);
+                GameManagement.instance.SoundEffect(transform.position, ItemSoundFile);
                 transform.SetPositionAndRotation(PlayerCtrl.instance.PlayerTr.position + (PlayerCtrl.instance.PlayerTr.forward), PlayerCtrl.instance.PlayerTr.rotation);
                 GetComponent<MeshRenderer>().enabled = true;
                 GetComponent<Rigidbody>().useGravity = true;

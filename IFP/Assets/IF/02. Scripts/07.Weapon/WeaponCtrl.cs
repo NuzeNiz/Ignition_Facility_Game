@@ -244,7 +244,7 @@ namespace IF
                     GameObject holeEffect = Instantiate(weaponType01_shot_HoleEffect, holeSpot.position, Quaternion.identity);
                     holeEffect.transform.SetParent(transform);
                     //GameObject muzzleFlash = Instantiate(weaponType01_shot_HoleEffect, shotSpot.position, Quaternion.identity);
-                    GameLogicManagement.instance.SoundEffect(transform.position, weaponType01_shot_sound);
+                    GameManagement.instance.SoundEffect(transform.position, weaponType01_shot_sound);
                     Destroy(holeEffect, 1.5f);
                     //Destroy(muzzleFlash, 1.5f);
                     break;

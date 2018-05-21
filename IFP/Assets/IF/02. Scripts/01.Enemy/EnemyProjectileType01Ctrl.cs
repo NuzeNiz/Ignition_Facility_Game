@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace IF
 {
-    public class EnemyType01ProjectileCtrl : MonoBehaviour
+    public class EnemyProjectileType01Ctrl : MonoBehaviour
     {
         /// <summary>
         /// 20180501 SangBin : Projectile Damage
