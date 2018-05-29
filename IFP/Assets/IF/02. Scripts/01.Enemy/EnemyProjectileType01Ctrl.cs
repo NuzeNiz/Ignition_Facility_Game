@@ -9,13 +9,13 @@ namespace IF
         /// <summary>
         /// 20180501 SangBin : Projectile Damage
         /// </summary>
-        [HideInInspector]
-        public double projectileDamage = 2.0d;
+        //[HideInInspector]
+        //public double projectileDamage = 2.0d;
 
         /// <summary>
         /// 20180403 SangBin : Projectile Speed
         /// </summary>
-        private float projectileSpeed = 50.0f;
+        //private float projectileSpeed = 50.0f;
 
         //-----------------------------------------------------------------------------------------------------------------------------
 
@@ -36,13 +36,14 @@ namespace IF
         /// <summary>
         /// 20180403 SangBin : Add force to this object
         /// </summary>
-        public void AddForceToProjectile(Vector3 directionVetor)
+        public void AddForceToProjectile(Vector3 directionVetor_normalized)
         {
-            this.gameObject.GetComponent<TrailRenderer>().enabled = true;
+            //this.gameObject.GetComponent<TrailRenderer>().enabled = true;
             /// <summary>
             /// 20180403 SangBin : Add force to this object on the world space 
             /// </summary>
-            GetComponent<Rigidbody>().AddForce(directionVetor * projectileSpeed, ForceMode.Force);
+            /// mess = 1; F=ma; F=50;
+            GetComponent<Rigidbody>().AddForce(directionVetor_normalized * BalanceManagement.instance.EnemyProjectile01Speed, ForceMode.Force);
 
             /// <summary>
             /// 20180403 SangBin : Add force to this object on the local space
@@ -53,13 +54,13 @@ namespace IF
         /// <summary>
         /// 20180403 SangBin : Check Projectile state
         /// </summary>
-        IEnumerator CheckProjectileState()
+        private IEnumerator CheckProjectileState()
         {
             yield return new WaitForSeconds(3.0f);
 
             if (this.gameObject.activeSelf)
             {
-                this.gameObject.GetComponent<TrailRenderer>().enabled = false;
+               // this.gameObject.GetComponent<TrailRenderer>().enabled = false;
                 this.gameObject.SetActive(false);
             }
         }

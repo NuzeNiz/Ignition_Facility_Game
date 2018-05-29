@@ -199,8 +199,9 @@ namespace IF
             {
                 StartCoroutine(CameraShake());
                 //playerHP -= 2.0d; // test
-                playerHP -= collision.gameObject.GetComponent<EnemyProjectileType01Ctrl>().projectileDamage;
-                collision.gameObject.GetComponent<TrailRenderer>().enabled = false;
+                //playerHP -= collision.gameObject.GetComponent<EnemyProjectileType01Ctrl>().projectileDamage;
+                playerHP -= BalanceManagement.instance.EnemyProjectile01damage;
+                //collision.gameObject.GetComponent<TrailRenderer>().enabled = false;
                 collision.gameObject.SetActive(false);
             }
         }

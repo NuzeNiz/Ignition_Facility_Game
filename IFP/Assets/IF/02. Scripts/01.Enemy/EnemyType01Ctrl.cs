@@ -35,7 +35,7 @@ namespace IF
 
         #endregion
 
-        #region Fields : Enemy Statistics
+        #region Fields : Enemy Statistic
         /// <summary>
         /// 20180502 SangBin :  Enemy Type01 Current Health Power
         /// </summary>
@@ -60,7 +60,7 @@ namespace IF
         /// <summary>
         /// 20180502 SangBin :  Enemy Type01 Moving Speed
         /// </summary>
-        private float beeMovingSpeed = 5.0f;
+        private float e1MovingSpeed = 5.0f;
 
         /// <summary>
         /// 20180418 SangBin :  Enemy Type01 Moving Speed
@@ -69,7 +69,7 @@ namespace IF
         {
             get
             {
-                return beeMovingSpeed;
+                return e1MovingSpeed;
             }
         }
 
@@ -108,24 +108,25 @@ namespace IF
         /// <summary>
         /// 20180509 SangBin : Test Animation
         /// </summary>
-        Animation anim;
+        //Animation anim;
 
         /// <summary>
         /// 20180509 SangBin : Test Animation
         /// </summary>
-        public const string IDLE = "Anim_Idle";
-        public const string RUN = "Anim_Run";
-        public const string ATTACK = "Anim_Attack";
-        public const string DAMAGE = "Anim_Damage";
-        public const string DEATH = "Anim_Death";
+        //public const string IDLE = "Anim_Idle";
+        //public const string RUN = "Anim_Run";
+        //public const string ATTACK = "Anim_Attack";
+        //public const string DAMAGE = "Anim_Damage";
+        //public const string DEATH = "Anim_Death";
         #endregion
         //------------------------------------------------------------------------------------------------------------------------
 
         override protected void Awake()
         {
+            base.animator = GetComponent<Animator>();
             base.Awake();
             CreateProjectileObjectPool();
-            anim = GetComponent<Animation>();
+            //anim = GetComponent<Animation>();
             tagName = gameObject.tag;
         }
 
@@ -178,7 +179,7 @@ namespace IF
         protected override void ActionA()
         {
             base.ActionA();
-            anim.CrossFade(IDLE, 0.3f);
+            //anim.CrossFade(IDLE, 0.3f);
         }
 
         /// <summary>
@@ -187,7 +188,7 @@ namespace IF
         protected override void ActionB()
         {
             base.ActionB();
-            anim.CrossFade(RUN, 0.3f);
+            //anim.CrossFade(RUN, 0.3f);
         }
 
         /// <summary>
@@ -196,7 +197,7 @@ namespace IF
         protected override void ActionC()
         {
             base.ActionC();
-            anim.CrossFade(ATTACK, 0.3f);
+            //anim.CrossFade(ATTACK, 0.3f);
             StartCoroutine(ProjectileShooting(base.directionVector_NormalizedEtoP));
         }
 
@@ -207,7 +208,7 @@ namespace IF
         {
             transform.LookAt(DefenseStationCtrl.instance.DefenseStationTR);
             base.ActionD();
-            anim.CrossFade(RUN, 0.3f);
+            //anim.CrossFade(RUN, 0.3f);
         }
 
         /// <summary>
@@ -217,7 +218,7 @@ namespace IF
         {
             transform.LookAt(DefenseStationCtrl.instance.DefenseStationTR);
             base.ActionE();
-            anim.CrossFade(ATTACK, 0.3f);
+            //anim.CrossFade(ATTACK, 0.3f);
             StartCoroutine(ProjectileShooting(base.directionVector_NormalizedEtoDS));
         }
     }
