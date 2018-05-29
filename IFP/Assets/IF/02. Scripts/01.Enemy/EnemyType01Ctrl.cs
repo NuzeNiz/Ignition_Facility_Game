@@ -220,6 +220,7 @@ namespace IF
             base.ActionE();
             //anim.CrossFade(ATTACK, 0.3f);
             StartCoroutine(ProjectileShooting(base.directionVector_NormalizedEtoDS));
+            
         }
     }
 }

@@ -344,6 +344,7 @@ namespace IF
             GetComponent<CapsuleCollider>().enabled = false;
             animator.SetTrigger("IsDie");
             GameUIManagement.instance.DisplayScore(50);
+            DefenseStationCtrl.instance.AbsorbingEnergy(TagName);
 
             StartCoroutine(PushObjectPool());
             Destroy(explosion, 2.0f);

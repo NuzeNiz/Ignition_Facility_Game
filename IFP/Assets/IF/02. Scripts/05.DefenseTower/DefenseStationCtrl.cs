@@ -6,6 +6,8 @@ namespace IF
 {
     public class DefenseStationCtrl : MonoBehaviour
     {
+
+        #region Fields : DS Statistic
         /// <summary>
         /// 20180403 SangBin : Singletone Pattern
         /// </summary>
@@ -41,7 +43,32 @@ namespace IF
         /// </summary>
         public double DefenseStation_HP { get { return defenseStation_HP; } }
 
-        //-----------------------------------------------------------------------------------------------------------------------------
+        private double defenseStation_exp = 0.0d;
+        public double DefenseStation_exp
+        {
+            get { return defenseStation_exp; }
+        }
+
+        private double defenseStation_Fire_Energy = 0.0d;
+        public double DefenseStation_Fire_Energy
+        {
+            get { return defenseStation_Fire_Energy; }
+        }
+
+        private double defenseStation_Water_Energy = 0.0d;
+        public double DefenseStation_Water_Energy
+        {
+            get { return defenseStation_Water_Energy; }
+        }
+
+        private double defenseStation_Leaf_Energy = 0.0d;
+        public double DefenseStation_Leaf_Energy
+        {
+            get { return defenseStation_Leaf_Energy; }
+        }
+
+        #endregion
+            //-----------------------------------------------------------------------------------------------------------------------------
 
         private void Awake()
         {
@@ -82,6 +109,54 @@ namespace IF
             if (collider.gameObject.tag == "ENEMY_MOTH_SCALE")
             {
                     defenseStation_HP -= 0.01d; //damage per frame
+            }
+        }
+
+        /// <summary>
+        /// 20180529 SangBin : 
+        /// </summary>
+        public void AbsorbingEnergy(string enemyTag)
+        {
+            switch (enemyTag)
+            {
+                case "ENEMY_TYPE01":
+                    defenseStation_exp += BalanceManagement.instance.DefenseStation_exp;
+                    defenseStation_Fire_Energy += BalanceManagement.instance.DefenseStation_Spirit_Energy;
+                    break;
+
+                case "ENEMY_TYPE01_BOSS":
+                    //if (지금 스테이지가 무한 모드인지 확인)
+                    //{ //무한모드에서는 얘가 흡수되야함
+                    //    defenseStation_exp += (BalanceManagement.instance.DefenseStation_exp * 2);
+                    //    defenseStation_Fire_Energy += (BalanceManagement.instance.DefenseStation_Spirit_Energy * 2);
+                    //}
+                    break;
+
+                case "ENEMY_TYPE02":
+                    defenseStation_exp += BalanceManagement.instance.DefenseStation_exp;
+                    defenseStation_Water_Energy += BalanceManagement.instance.DefenseStation_Spirit_Energy;
+                    break;
+
+                case "ENEMY_TYPE02_BOSS":
+                    //if (지금 스테이지가 무한 모드인지 확인)
+                    //{ //무한모드에서는 얘가 흡수되야함
+                    //    defenseStation_exp += (BalanceManagement.instance.DefenseStation_exp * 2);
+                    //    defenseStation_Fire_Energy += (BalanceManagement.instance.DefenseStation_Spirit_Energy * 2);
+                    //}
+                    break;
+
+                case "ENEMY_TYPE03":
+                    defenseStation_exp += BalanceManagement.instance.DefenseStation_exp;
+                    defenseStation_Leaf_Energy += BalanceManagement.instance.DefenseStation_Spirit_Energy;
+                    break;
+
+                case "ENEMY_TYPE03_BOSS":
+                    //if (지금 스테이지가 무한 모드인지 확인)
+                    //{ //무한모드에서는 얘가 흡수되야함
+                    //    defenseStation_exp += (BalanceManagement.instance.DefenseStation_exp * 2);
+                    //    defenseStation_Fire_Energy += (BalanceManagement.instance.DefenseStation_Spirit_Energy * 2);
+                    //}
+                    break;
             }
         }
     }
