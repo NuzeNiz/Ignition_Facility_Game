@@ -11,7 +11,7 @@ namespace IF
         /// </summary>
         public static BalanceManagement instance = null;
 
-        #region Fields : Player to Enemy
+        #region Fields : Damage Value Player to Enemy
         /// <summary>
         /// 20180521 SangBin : Damage Value WeaponType01 to Item Monster
         /// </summary>
@@ -75,6 +75,40 @@ namespace IF
         public double EnemyProjectile01damage { get { return 2.0d; } }
         #endregion
 
+        #region Fields : Defense Station Energy
+        /// <summary>
+        /// 20180529 SangBin : 
+        /// </summary>
+        private double defenseStation_exp = 5.0d;
+        public double DefenseStation_exp { get { return defenseStation_exp; } set { defenseStation_exp = value; } }
+
+        /// <summary>
+        /// 20180529 SangBin : 
+        /// </summary>
+        private double defenseStation_Spirit_Energy = 10.0d;
+        public double DefenseStation_Spirit_Energy { get { return defenseStation_Spirit_Energy; } set { defenseStation_Spirit_Energy = value; } }
+
+        ///// <summary>
+        ///// 20180529 SangBin : 
+        ///// </summary>
+        //private double defenseStation_Fire_Energy = 10.0d;
+        //public double DefenseStation_Fire_Energy { get { return defenseStation_Fire_Energy; } set { defenseStation_Fire_Energy = value; } }
+
+        ///// <summary>
+        ///// 20180529 SangBin : 
+        ///// </summary>
+        //private double defenseStation_Water_Energy = 10.0d;
+        //public double DefenseStation_Water_Energy { get { return defenseStation_Water_Energy; } set { defenseStation_Water_Energy = value; } }
+
+        ///// <summary>
+        ///// 20180529 SangBin : 
+        ///// </summary>
+        //private double defenseStation_Leaf_Energy = 10.0d;
+        //public double DefenseStation_Leaf_Energy { get { return defenseStation_Leaf_Energy; } set { defenseStation_Leaf_Energy = value; } }
+
+
+
+        #endregion
         //---------------------------------------------------------------------------------------------------------------------------
 
         private void Awake()
@@ -85,6 +119,7 @@ namespace IF
 
         /// <summary>
         /// 20180515 SangBin : Calculation Player Striking Power
+        /// 20180529 SangBin : Add Boss
         /// </summary>
         public double CalcPlayerStrkingPower(string enemyTag, WeaponCtrl.WeaponTypeEnum currentWeaponType)
         {
@@ -96,22 +131,22 @@ namespace IF
                     switch (enemyTag)
                     {
                         case "ENEMY_TYPE01":
+                        case "ENEMY_TYPE01_BOSS":
                             strikingPower = w1ToE;
                             break;
                         case "ENEMY_TYPE02":
+                        case "ENEMY_TYPE02_BOSS":
                             strikingPower = w1ToE;
                             break;
                         case "ENEMY_TYPE03":
+                        case "ENEMY_TYPE03_BOSS":
                             strikingPower = w1ToE;
                             break;
-                        case "ENEMY_TYPE04":
+                        case "ENEMY_TYPE04_BOSS":
                             strikingPower = w1ToE;
                             break;
                         case "ENEMY_BUTTERFLY":
                             strikingPower = wToIM;
-                            break;
-                        case "ENEMY_MOTH":
-                            strikingPower = 50.0d;
                             break;
                     }
                     break;
@@ -120,22 +155,22 @@ namespace IF
                     switch (enemyTag)
                     {
                         case "ENEMY_TYPE01":
+                        case "ENEMY_TYPE01_BOSS":
                             strikingPower = w2ToE1;
                             break;
                         case "ENEMY_TYPE02":
+                        case "ENEMY_TYPE02_BOSS":
                             strikingPower = w2ToE2;
                             break;
                         case "ENEMY_TYPE03":
+                        case "ENEMY_TYPE03_BOSS":
                             strikingPower = w2ToE3;
                             break;
-                        case "ENEMY_TYPE04":
+                        case "ENEMY_TYPE04_BOSS":
                             strikingPower = w2ToE4;
                             break;
                         case "ENEMY_BUTTERFLY":
                             strikingPower = wToIM;
-                            break;
-                        case "ENEMY_MOTH":
-                            strikingPower = 10.0d;
                             break;
                     }
                     break;
@@ -144,22 +179,22 @@ namespace IF
                     switch (enemyTag)
                     {
                         case "ENEMY_TYPE01":
+                        case "ENEMY_TYPE01_BOSS":
                             strikingPower = w3ToE1;
                             break;
                         case "ENEMY_TYPE02":
+                        case "ENEMY_TYPE02_BOSS":
                             strikingPower = w3ToE2;
                             break;
                         case "ENEMY_TYPE03":
+                        case "ENEMY_TYPE03_BOSS":
                             strikingPower = w3ToE3;
                             break;
-                        case "ENEMY_TYPE04":
+                        case "ENEMY_TYPE04_BOSS":
                             strikingPower = w3ToE4;
                             break;
                         case "ENEMY_BUTTERFLY":
                             strikingPower = wToIM;
-                            break;
-                        case "ENEMY_MOTH":
-                            strikingPower = 50.0d;
                             break;
                     }
                     break;
@@ -168,22 +203,22 @@ namespace IF
                     switch (enemyTag)
                     {
                         case "ENEMY_TYPE01":
+                        case "ENEMY_TYPE01_BOSS":
                             strikingPower = w4ToE1;
                             break;
                         case "ENEMY_TYPE02":
+                        case "ENEMY_TYPE02_BOSS":
                             strikingPower = w4ToE2;
                             break;
                         case "ENEMY_TYPE03":
+                        case "ENEMY_TYPE03_BOSS":
                             strikingPower = w4ToE3;
                             break;
-                        case "ENEMY_TYPE04":
+                        case "ENEMY_TYPE04_BOSS":
                             strikingPower = w4ToE4;
                             break;
                         case "ENEMY_BUTTERFLY":
                             strikingPower = wToIM;
-                            break;
-                        case "ENEMY_MOTH":
-                            strikingPower = 50.0d;
                             break;
                     }
                     break;
