@@ -17,7 +17,7 @@ namespace IF
         abstract protected GameObject DeathEffect { get; }
         #endregion
 
-        #region Fields : Enemy Statistics
+        #region Fields : Enemy Statistic
         /// <summary>
         /// 20180403 SangBin : Enemy Current Health Power
         /// </summary>
@@ -37,6 +37,8 @@ namespace IF
         /// 20180418 SangBin : Enemy Moving Speed
         /// </summary>
         abstract protected float MovingSpeed { get; }
+
+        protected Animator animator;
         #endregion
 
         #region Fields : Enemy State
@@ -140,6 +142,7 @@ namespace IF
         /// </summary>
         protected void OnDamaged(object[] parameters)
         {
+            animator.SetTrigger("IsHit");
             //isDamaged = true;
             CurrentHealthPower -= (double)parameters[0];
             bool IsSplashDamage = (bool)parameters[1];
@@ -173,7 +176,7 @@ namespace IF
         /// 20180403 SangBin : Check enemy action state by distance to target from enemy
         /// 20180430 SangBin : + target(Defense Station) 
         /// </summary>
-        IEnumerator CheckEnemyState()
+        private IEnumerator CheckEnemyState()
         {
             while (!isDie)
             {
@@ -220,7 +223,7 @@ namespace IF
         /// 20180403 SangBin : Control enemy tracing 
         /// 20180430 SangBin : + Tracing Defense Station
         /// </summary>
-        IEnumerator TracingAction()
+        private IEnumerator TracingAction()
         {
             while (!isDie)
             {
@@ -259,7 +262,7 @@ namespace IF
         {
             GetComponent<Rigidbody>().velocity = Vector3.zero;
             GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
-            //animator.SetBool("IsTrace", false); // later
+            animator.SetBool("IsTrace", false); // later
         }
 
         /// <summary>
@@ -269,8 +272,8 @@ namespace IF
         {
             transform.LookAt(PlayerCtrl.instance.PlayerTr);
             GetComponent<Rigidbody>().AddForce(directionVector_NormalizedEtoP * MovingSpeed, ForceMode.Force);
-            //animator.SetBool("IsAttack", false); // later
-            //animator.SetBool("IsTrace", true); // later
+            animator.SetBool("IsAttack", false); // later
+            animator.SetBool("IsTrace", true); // later
         }
 
         /// <summary>
@@ -281,7 +284,7 @@ namespace IF
             transform.LookAt(PlayerCtrl.instance.PlayerTr);
             GetComponent<Rigidbody>().velocity = Vector3.zero;
             GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
-            //animator.SetBool("IsAttack", true); // later
+            animator.SetBool("IsAttack", true); // later
 
         }
 
@@ -291,8 +294,8 @@ namespace IF
         virtual protected void ActionD()
         {
             GetComponent<Rigidbody>().AddForce(directionVector_NormalizedEtoDS * MovingSpeed, ForceMode.Force);
-            //animator.SetBool("IsAttack", false); // later
-            //animator.SetBool("IsTrace", true); // later
+            animator.SetBool("IsAttack", false); // later
+            animator.SetBool("IsTrace", true); // later
         }
 
         /// <summary>
@@ -302,13 +305,13 @@ namespace IF
         {
             GetComponent<Rigidbody>().velocity = Vector3.zero;
             GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
-            //animator.SetBool("IsAttack", true); // later
+            animator.SetBool("IsAttack", true); // later
         }
 
         /// <summary>
         /// 20180418 SangBin : Calculation Direction Vector from Enemy to Player
         /// </summary>
-        void Cal_DirectionEtoP()
+        private void Cal_DirectionEtoP()
         {
             directionVectorEtoP = PlayerCtrl.instance.PlayerTr.position - transform.position;
             distanceEtoP = directionVectorEtoP.magnitude;
@@ -318,7 +321,7 @@ namespace IF
         /// <summary>
         /// 20180430 SangBin : Calculation Direction Vectorfrom Enemy to Defense Station
         /// </summary>
-        void Cal_DirectionEtoDS()
+        private void Cal_DirectionEtoDS()
         {
             directionVectorEtoDS = DefenseStationCtrl.instance.DefenseStationTR.position - transform.position;
             distanceEtoDS = directionVectorEtoDS.magnitude;
@@ -338,8 +341,8 @@ namespace IF
             isDie = true;
             isDamaged = false;
             currentEnemyState = EnemyState.die;
-            GetComponent<BoxCollider>().enabled = false;
-            //animator.SetBool("IsDie", true); // later
+            GetComponent<CapsuleCollider>().enabled = false;
+            animator.SetTrigger("IsDie");
             GameUIManagement.instance.DisplayScore(50);
 
             StartCoroutine(PushObjectPool());
@@ -349,14 +352,14 @@ namespace IF
         /// <summary>
         /// 20180403 SangBin : Push broken enemy into the object pool and initialize some fields
         /// </summary>
-        IEnumerator PushObjectPool()
+        private IEnumerator PushObjectPool()
         {
-            //yield return new WaitForSeconds(4.0f); //destroy delay
-            yield return null;
+            yield return new WaitForSeconds(4.0f); //destroy delay
+            //yield return null;
             isDie = false;
             CurrentHealthPower = maxHealthPower;
             currentEnemyState = EnemyState.idle;
-            GetComponent<BoxCollider>().enabled = true;
+            GetComponent<CapsuleCollider>().enabled = true;
             gameObject.SetActive(false);
         }
 

@@ -17,11 +17,11 @@ namespace IF
         /// </summary>
         private double wToIM = 100.0d;
 
-        /// W1 - Standard   E1 - Water
-        /// W2 - Fire       E2 - Fire
+        /// W1 - Standard   E1 - Fire
+        /// W2 - Fire       E2 - Water
         /// W3 - Water      E3 - Leaf
         /// W4 - Leaf       E4 - Witchs
-        
+
         /// <summary>
         /// 20180521 SangBin : Damage Values WeaponType01 to Enemies
         /// </summary>
@@ -36,8 +36,8 @@ namespace IF
         /// 20180521 SangBin : Damage Values WeaponType02 to Enemies
         /// </summary>
         #region Fields : WeaponType02 to Enemy
-        private double w2ToE1 = 0.3;
-        private double w2ToE2 = 0.6; //per frame
+        private double w2ToE1 = 0.6;
+        private double w2ToE2 = 0.3; //per frame
         private double w2ToE3 = 1.2;
         private double w2ToE4 = 0.0d;
         #endregion
@@ -46,8 +46,8 @@ namespace IF
         /// 20180521 SangBin : Damage Values WeaponType03 to Enemies
         /// </summary>
         #region Fields : WeaponType03 to Enemy
-        private double w3ToE1 = 25.0d;
-        private double w3ToE2 = 50.0d;
+        private double w3ToE1 = 50.0d;
+        private double w3ToE2 = 25.0d;
         private double w3ToE3 = 12.5d;
         private double w3ToE4 = 0.0d;
         #endregion
@@ -56,11 +56,23 @@ namespace IF
         /// 20180521 SangBin : Damage Values WeaponType04 to Enemies
         /// </summary>
         #region Fields : WeaponType04 to Enemy
-        private double w4ToE1 = 50.0d;
-        private double w4ToE2 = 12.5d;
+        private double w4ToE1 = 12.5d;
+        private double w4ToE2 = 50.0d;
         private double w4ToE3 = 25.0d;
         private double w4ToE4 = 0.0d;
         #endregion
+        #endregion
+
+        #region Fields : Enemy Projectile Statistic
+        /// <summary>
+        /// 20180529 SangBin :
+        /// </summary>
+        public float EnemyProjectile01Speed { get{ return 50.0f; } }
+
+        /// <summary>
+        /// 20180529 SangBin :
+        /// </summary>
+        public double EnemyProjectile01damage { get { return 2.0d; } }
         #endregion
 
         //---------------------------------------------------------------------------------------------------------------------------
