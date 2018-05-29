@@ -33,6 +33,26 @@ namespace IF
         /// </summary>
         public Image playerHP_Bar;
 
+        /// <summary>
+        /// 20180529 SangBin : 
+        /// </summary>
+        public Image DefenseStation_Exp_Bar;
+
+        /// <summary>
+        /// 20180529 SangBin : 
+        /// </summary>
+        public Image DefenseStation_Fire_Energy_Bar;
+
+        /// <summary>
+        /// 20180529 SangBin : 
+        /// </summary>
+        public Image DefenseStation_Water_Energy_Bar;
+
+        /// <summary>
+        /// 20180529 SangBin : 
+        /// </summary>
+        public Image DefenseStation_Leaf_Energy_Bar;
+
         //-----------------------------------------------------------------------------------------------------------------------------
 
         void Awake()
@@ -55,12 +75,25 @@ namespace IF
             DisplayScore(0);
         }
 
+        private void OnEnable()
+        {
+            PlayerCtrl.PlayerDamaged += this.PlayerDamaged;
+            DefenseStationCtrl.AbsorbExp += this.AbsorbExp;
+            DefenseStationCtrl.WearEnergy += this.WearEnergy;
+        }
+
+        private void OnDisable()
+        {
+            PlayerCtrl.PlayerDamaged -= this.PlayerDamaged;
+            DefenseStationCtrl.AbsorbExp -= this.AbsorbExp;
+            DefenseStationCtrl.WearEnergy -= this.WearEnergy;
+        }
+
         // Update is called once per frame
         void Update()
         {
-            playerHP_Bar.fillAmount = (float)(PlayerCtrl.instance.PlayerHP / PlayerCtrl.instance.PlayerMaxHP);
 
-            DisplayDebug();
+            //DisplayDebug();
         }
 
         /// <summary>
@@ -97,6 +130,23 @@ namespace IF
         public void AddWeapon()
         {
 
+        }
+
+        private void PlayerDamaged()
+        {
+            playerHP_Bar.fillAmount = (float)(PlayerCtrl.instance.PlayerHP / PlayerCtrl.instance.PlayerMaxHP);
+        }
+
+        private void AbsorbExp()
+        {
+            DefenseStation_Exp_Bar.fillAmount = (float)(DefenseStationCtrl.instance.DefenseStation_exp / 100.0d);
+        }
+
+        private void WearEnergy()
+        {
+            DefenseStation_Fire_Energy_Bar.fillAmount = (float)(DefenseStationCtrl.instance.DefenseStation_Fire_Energy / 100.0d);
+            DefenseStation_Water_Energy_Bar.fillAmount = (float)(DefenseStationCtrl.instance.DefenseStation_Water_Energy / 100.0d);
+            DefenseStation_Leaf_Energy_Bar.fillAmount = (float)(DefenseStationCtrl.instance.DefenseStation_Leaf_Energy / 100.0d);
         }
     }
 }

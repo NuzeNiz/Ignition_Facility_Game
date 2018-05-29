@@ -12,4 +12,9 @@ public class StartMenuManagement : MonoBehaviour
     {
         SceneManager.LoadScene("GameScene A");
     }
+
+    public void OnclickQuitBtn()
+    {
+        Application.Quit();
+    }
 }
