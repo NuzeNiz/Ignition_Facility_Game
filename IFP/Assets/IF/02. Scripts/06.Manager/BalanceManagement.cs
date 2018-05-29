@@ -106,7 +106,11 @@ namespace IF
         //private double defenseStation_Leaf_Energy = 10.0d;
         //public double DefenseStation_Leaf_Energy { get { return defenseStation_Leaf_Energy; } set { defenseStation_Leaf_Energy = value; } }
 
-
+        ///// <summary>
+        ///// 20180529 SangBin : 
+        ///// </summary>
+        private double defenseStation_wValue = 1.0d;
+        public double DefenseStation_wValue { get { return defenseStation_wValue; } set { defenseStation_wValue = value; } } 
 
         #endregion
         //---------------------------------------------------------------------------------------------------------------------------

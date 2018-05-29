@@ -7,12 +7,17 @@ namespace IF
     public class DefenseStationCtrl : MonoBehaviour
     {
 
-        #region Fields : DS Statistic
+
         /// <summary>
         /// 20180403 SangBin : Singletone Pattern
         /// </summary>
         public static DefenseStationCtrl instance = null;
 
+        public delegate void DS_EventHandler();
+        public static event DS_EventHandler AbsorbExp;
+        public static event DS_EventHandler WearEnergy;
+
+        #region Fields : DS Statistic
         /// <summary>
         /// 20180403 SangBin : Defense Station's Transform
         /// </summary>
@@ -66,7 +71,6 @@ namespace IF
         {
             get { return defenseStation_Leaf_Energy; }
         }
-
         #endregion
             //-----------------------------------------------------------------------------------------------------------------------------
 
@@ -86,6 +90,11 @@ namespace IF
             defenseStation_MAXHP = defenseStation_HP;
         }
 
+        private void Start()
+        {
+            StartCoroutine(OnWearEnergy());
+        }
+
         /// <summary>
         /// 20180501 SangBin : Collision event between Defense Station and Enemy Bee Stinger
         /// </summary>
@@ -94,7 +103,7 @@ namespace IF
             if (collision.gameObject.tag == "ENEMY_TYPE01_PROJECTILE")
             {
                 //defenseStation_HP -= collision.gameObject.GetComponent<EnemyProjectileType01Ctrl>().projectileDamage;
-                defenseStation_HP -= BalanceManagement.instance.EnemyProjectile01damage; ;
+                defenseStation_HP -= BalanceManagement.instance.EnemyProjectile01damage;
                 //collision.gameObject.GetComponent<TrailRenderer>().enabled = false;
                 collision.gameObject.SetActive(false);
             }
@@ -104,36 +113,37 @@ namespace IF
         /// <summary>
         /// 20180501 SangBin : Trigger event between Defense Station and Enemy Moth
         /// </summary>
-        private void OnTriggerStay(Collider collider)
-        {
-            if (collider.gameObject.tag == "ENEMY_MOTH_SCALE")
-            {
-                    defenseStation_HP -= 0.01d; //damage per frame
-            }
-        }
+        //private void OnTriggerStay(Collider collider)
+        //{
+        //    if (collider.gameObject.tag == "ENEMY_MOTH_SCALE")
+        //    {
+        //            defenseStation_HP -= 0.01d; //damage per frame
+        //    }
+        //}
 
         /// <summary>
         /// 20180529 SangBin : 
         /// </summary>
-        public void AbsorbingEnergy(string enemyTag)
+        public void OnAbsorbEnergy(string enemyTag)
         {
+            //double sp = BalanceManagement.instance.DefenseStation_Spirit_Energy;
+            double expValue = BalanceManagement.instance.DefenseStation_Spirit_Energy;
+
             switch (enemyTag)
             {
                 case "ENEMY_TYPE01":
-                    defenseStation_exp += BalanceManagement.instance.DefenseStation_exp;
                     defenseStation_Fire_Energy += BalanceManagement.instance.DefenseStation_Spirit_Energy;
                     break;
 
                 case "ENEMY_TYPE01_BOSS":
                     //if (지금 스테이지가 무한 모드인지 확인)
-                    //{ //무한모드에서는 얘가 흡수되야함
+                    //{ //무한모드에서는 얘가 흡수되야함 보스 추가 경험치도
                     //    defenseStation_exp += (BalanceManagement.instance.DefenseStation_exp * 2);
                     //    defenseStation_Fire_Energy += (BalanceManagement.instance.DefenseStation_Spirit_Energy * 2);
                     //}
                     break;
 
                 case "ENEMY_TYPE02":
-                    defenseStation_exp += BalanceManagement.instance.DefenseStation_exp;
                     defenseStation_Water_Energy += BalanceManagement.instance.DefenseStation_Spirit_Energy;
                     break;
 
@@ -146,7 +156,6 @@ namespace IF
                     break;
 
                 case "ENEMY_TYPE03":
-                    defenseStation_exp += BalanceManagement.instance.DefenseStation_exp;
                     defenseStation_Leaf_Energy += BalanceManagement.instance.DefenseStation_Spirit_Energy;
                     break;
 
@@ -158,6 +167,34 @@ namespace IF
                     //}
                     break;
             }
+
+            //기본 경험치
+            defenseStation_exp += expValue;
+            AbsorbExp();
+        }
+
+        private IEnumerator OnWearEnergy()
+        {
+            //시작 어드벤테이지 5초
+            yield return new WaitForSeconds(5.0f);
+            double wValue = BalanceManagement.instance.DefenseStation_wValue;
+
+            //while(스테이지 상태 필요) //반복문 빠져나오도록
+            while (true)
+            {
+                if(defenseStation_Fire_Energy>= wValue)
+                    defenseStation_Fire_Energy -= wValue;
+
+                if (defenseStation_Water_Energy >= wValue)
+                    defenseStation_Water_Energy -= wValue;
+
+                if (defenseStation_Leaf_Energy >= wValue)
+                    defenseStation_Leaf_Energy -= wValue;
+
+                WearEnergy();
+                yield return new WaitForSeconds(0.5f);
+            }
+
         }
     }
 }

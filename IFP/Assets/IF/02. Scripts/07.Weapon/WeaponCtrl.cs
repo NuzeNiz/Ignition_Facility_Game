@@ -206,9 +206,9 @@ namespace IF
                     //}
 
                     ///Flame Thrower Attack Way 2 - change to sphere cast
-                    parameters[0] = BalanceManagement.instance.CalcPlayerStrkingPower(hitinfo.collider.gameObject.tag, currentWeaponType);
-                    parameters[1] = false;
-                    hitinfo.collider.gameObject.SendMessage("OnDamaged", parameters, SendMessageOptions.DontRequireReceiver);
+                    //parameters[0] = BalanceManagement.instance.CalcPlayerStrkingPower(hitinfo.collider.gameObject.tag, currentWeaponType);
+                    //parameters[1] = false;
+                    //hitinfo.collider.gameObject.SendMessage("OnDamaged", parameters, SendMessageOptions.DontRequireReceiver);
                     break;
             }
         }
@@ -220,6 +220,13 @@ namespace IF
         {
             switch (currentWeaponType)
             {
+                case WeaponTypeEnum.weaponType02:
+                    if (!transform.GetChild(3).gameObject.activeSelf)
+                    {
+                        transform.GetChild(3).gameObject.SetActive(true);
+                    }
+                    break;
+
                 case WeaponTypeEnum.weaponType03:
                     StartCoroutine(ProjectileShot(weaponType03_shot_Effect));
                     break;
@@ -283,7 +290,7 @@ namespace IF
         /// </summary>
         public void StopFlame()
         {
-            //transform.GetChild(3).gameObject.SetActive(false);
+            transform.GetChild(3).gameObject.SetActive(false);
             transform.GetChild(2).gameObject.SetActive(false);
         }
 

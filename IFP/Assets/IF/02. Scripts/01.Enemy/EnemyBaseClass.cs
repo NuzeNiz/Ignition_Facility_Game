@@ -344,7 +344,7 @@ namespace IF
             GetComponent<CapsuleCollider>().enabled = false;
             animator.SetTrigger("IsDie");
             GameUIManagement.instance.DisplayScore(50);
-            DefenseStationCtrl.instance.AbsorbingEnergy(TagName);
+            DefenseStationCtrl.instance.OnAbsorbEnergy(TagName);
 
             StartCoroutine(PushObjectPool());
             Destroy(explosion, 2.0f);
@@ -372,20 +372,20 @@ namespace IF
             gameObject.tag = tag;
         }
 
-        //protected void OnTriggerStay(Collider collider)
-        //{
-        //    if (collider.gameObject.tag == "WEAPON_TYPE02_FLAME")
-        //    {
-        //        CurrentHealthPower -= 10.0d; //damage per frame
-        //    }
+        protected void OnTriggerStay(Collider collider)
+        {
+            if (collider.gameObject.tag == "WEAPON_TYPE02_FLAME")
+            {
+                CurrentHealthPower -= BalanceManagement.instance.CalcPlayerStrkingPower(TagName, WeaponCtrl.instance.CurrentWeaponType);
+            }
 
-        //    //임시로 넣음
-        //    if (CurrentHealthPower <= 0.0d)
-        //    {
-        //        EnemyKilled();
-        //    }
+            //임시로 넣음
+            if (CurrentHealthPower <= 0.0d)
+            {
+                EnemyKilled();
+            }
 
-        //}
+        }
 
 
         /// <summary>

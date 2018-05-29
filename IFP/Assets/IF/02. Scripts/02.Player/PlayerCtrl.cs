@@ -27,6 +27,7 @@ namespace IF
         /// <summary>
         /// 20180403 SangBin : Muzzleflash Renderer for Switching
         /// </summary>
+        [HideInInspector]
         public MeshRenderer muzzleFlash;
 
         /// <summary>
@@ -85,6 +86,10 @@ namespace IF
         /// </summary>
         private float shakeSpeed = 4.0f;
         #endregion
+
+
+        public delegate void PlayerEventHandler();
+        public static event PlayerEventHandler PlayerDamaged;
         //-----------------------------------------------------------------------------------------------------------------------------
 
         private void Awake()
@@ -99,7 +104,7 @@ namespace IF
             //    DestroyImmediate(this);
             //}
             instance = this;
-            muzzleFlash.enabled = false;
+            //muzzleFlash.enabled = false;
             playerHP = 100.0d;
             playerMaxHP = playerHP;
 
@@ -138,16 +143,16 @@ namespace IF
                     {
                         WeaponCtrl.instance.MakeWeaponShotEffect();
 
-                        //RaycastHit hitinfo;
+                        ////RaycastHit hitinfo;
 
-                        //if (Physics.Raycast(playerTr.position, playerTr.forward, out hitinfo, rayMaxDistance))
-                        if (Physics.SphereCast(playerTr.position, 0.2f, playerTr.forward, out hitinfo, rayMaxDistance))
-                        {
-                            if (hitinfo.collider.gameObject.layer == 8)
-                            {
-                                WeaponCtrl.instance.WeaponFunc(ref hitinfo);
-                            }
-                        }
+                        ////if (Physics.Raycast(playerTr.position, playerTr.forward, out hitinfo, rayMaxDistance))
+                        //if (Physics.SphereCast(playerTr.position, 0.2f, playerTr.forward, out hitinfo, rayMaxDistance))
+                        //{
+                        //    if (hitinfo.collider.gameObject.layer == 8)
+                        //    {
+                                WeaponCtrl.instance.WeaponFunc();
+                        //    }
+                        //}
                     }
                     else if (myTouch.phase == TouchPhase.Ended)
                     {
@@ -201,6 +206,8 @@ namespace IF
                 //playerHP -= 2.0d; // test
                 //playerHP -= collision.gameObject.GetComponent<EnemyProjectileType01Ctrl>().projectileDamage;
                 playerHP -= BalanceManagement.instance.EnemyProjectile01damage;
+                PlayerDamaged();
+
                 //collision.gameObject.GetComponent<TrailRenderer>().enabled = false;
                 collision.gameObject.SetActive(false);
             }
