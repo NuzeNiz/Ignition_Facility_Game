@@ -17,4 +17,9 @@ public class StartMenuManagement : MonoBehaviour
     {
         Application.Quit();
     }
+
+    public void OnclickTempBtn()
+    {
+        SceneManager.LoadScene("StoryMode Chapter 3");
+    }
 }

@@ -152,6 +152,7 @@ namespace IF
         /// 20180530 SangBin :
         /// </summary>
         private enum EnemySkill { skill_01, skill_02, skill_03, skill_04 };
+        //스킬 중요도 1<2<3<4(most)
 
         /// <summary>
         /// 20180530 SangBin :
@@ -164,11 +165,13 @@ namespace IF
         private bool skill_01_State = false;
         private bool skill_02_State = false;
         private bool skill_03_State = false;
+        private bool skill_04_State = false;
         #endregion
         //--------------------------------------------------------------------------------
 
         protected override void Awake()
         {
+            base.animator = GetComponent<Animator>();
             base.Awake();
             tagName = gameObject.tag;
             CreateProjectileObjectPool();
@@ -176,8 +179,8 @@ namespace IF
 
         override protected void OnEnable()
         {
-            base.isDamaged = true;
             base.OnEnable();
+            base.isDamaged = true;
         }
 
         /// <summary>
@@ -187,7 +190,7 @@ namespace IF
         {
             for (int i = 0; i < maxProjectile; i++)
             {
-                GameObject projectileObj = Instantiate(projectilePrefab, gameObject.transform.position + (gameObject.transform.up * 0.1f), gameObject.transform.rotation, GoogleARCore.IF.TowerBuildController.instance.DefenseStation_Anchor_Tr);
+                GameObject projectileObj = Instantiate(projectilePrefab, gameObject.transform.position + (gameObject.transform.up * 1.0f), gameObject.transform.rotation, GoogleARCore.IF.TowerBuildController.instance.DefenseStation_Anchor_Tr);
                 projectileObj.name = this.gameObject.name + projectileObj.tag + "_" + i.ToString();
                 projectileObj.SetActive(false);
                 projectileObjectPool.Add(projectileObj);
@@ -203,7 +206,7 @@ namespace IF
             {
                 if (!projectileObj.activeSelf)
                 {
-                    projectileObj.transform.SetPositionAndRotation(this.gameObject.transform.position + (gameObject.transform.up * 0.1f), this.gameObject.transform.rotation);
+                    projectileObj.transform.SetPositionAndRotation(this.gameObject.transform.position + (gameObject.transform.up * 1.0f), this.gameObject.transform.rotation);
                     yield return null;
                     GameManagement.instance.SoundEffect(transform.position, shootingSoundFile);
                     projectileObj.SetActive(true);
@@ -219,13 +222,17 @@ namespace IF
         /// </summary>
         protected override void ActionB()
         {
-            base.animator.SetBool("IsAttack", false);
+            base.animator.SetBool("IsBasicAttack", false);
             base.animator.SetBool("IsSkill01", false);
             base.animator.SetBool("IsSkill02", false);
             base.animator.SetBool("IsSkill03", false);
             base.animator.SetBool("IsSkill04", false);
 
-            transform.LookAt(PlayerCtrl.instance.PlayerTr);
+            Vector3 tempV = Vector3.zero;
+            tempV.x = PlayerCtrl.instance.PlayerTr.position.x;
+            tempV.y = PlayerCtrl.instance.PlayerTr.position.y;
+
+            transform.LookAt(tempV);
             GetComponent<Rigidbody>().AddForce(base.directionVector_NormalizedEtoP * MovingSpeed, ForceMode.Force);
             base.animator.SetBool("IsTrace", true); 
         }
@@ -235,14 +242,21 @@ namespace IF
         /// </summary>
         protected override void ActionC()
         {
-            transform.LookAt(PlayerCtrl.instance.PlayerTr);
+            Vector3 tempV = Vector3.zero;
+            tempV.x = PlayerCtrl.instance.PlayerTr.position.x;
+            tempV.y = PlayerCtrl.instance.PlayerTr.position.y;
+
+            transform.LookAt(tempV);
             GetComponent<Rigidbody>().velocity = Vector3.zero;
             GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
 
             AvailableSkillCheck();
 
             if (!isWitchSkillUsed)
+            {
                 StartCoroutine(ProjectileShooting(base.directionVector_NormalizedEtoP));
+                animator.SetBool("IsBasicAttack", true);
+            }
 
         }
 
@@ -253,59 +267,62 @@ namespace IF
         {
             double percentageofHP = currentHP / base.maxHealthPower;
 
-
-            //if (currentHP <= 100.0d && currentHP > 70.0d)
-            //{
-
-            //}
-
             isWitchSkillUsed = false;
 
-            //bool skill04_State = false;
-
-
-            if(percentageofHP<=70.0d)
+            if(percentageofHP<=80.0d)
             {
                 if (percentageofHP <= 20.0d)
                 {
-                    if (skill_03_State)
-                        StartCoroutine(UseSkill_03());
-                    //else if(skill_02_State)
+                    if (skill_04_State)
+                        UseSkill(ref skill_04_State, EnemySkill.skill_04);
 
+                    else if (skill_03_State)
+                        UseSkill(ref skill_03_State, EnemySkill.skill_03);
+
+                    else if (skill_02_State)
+                        UseSkill(ref skill_02_State, EnemySkill.skill_02);
+
+                    else if (skill_01_State)
+                        UseSkill(ref skill_01_State, EnemySkill.skill_01);
                 }
-                else if (percentageofHP <= 50.0d)
+                else if (percentageofHP <= 40.0d)
                 {
+                    if (skill_03_State)
+                        UseSkill(ref skill_03_State, EnemySkill.skill_03);
 
+                    else if (skill_02_State)
+                        UseSkill(ref skill_02_State, EnemySkill.skill_02);
+
+                    else if (skill_01_State)
+                        UseSkill(ref skill_01_State, EnemySkill.skill_01);
+                }
+                else if (percentageofHP <= 60.0d)
+                {
+                    if (skill_02_State)
+                        UseSkill(ref skill_02_State, EnemySkill.skill_02);
+
+                    else if (skill_01_State)
+                        UseSkill(ref skill_01_State, EnemySkill.skill_01);
+                }
+                else
+                {
+                    if (skill_01_State)
+                        UseSkill(ref skill_01_State, EnemySkill.skill_01);
                 }
             }
         }
 
-        /// <summary>
-        /// 20180530 SangBin :
-        /// </summary>
-        private IEnumerator SkillCoolDown(bool skill)
-        {
-
-            //float elapsedTime = 0.0f;
-
-            ////while (elapsedTime < )
-            //{
-            //   // yield return null;
-            //}
-
-            yield return null;
-        }
 
         /// <summary>
         /// 20180530 SangBin :
         /// </summary>
         private IEnumerator UseSkill_01()
         {
+            animator.SetBool("IsSkill01", true);
+            isWitchSkillUsed = true;
 
 
-            skill_01_State = false;
-            StartCoroutine(SkillCoolDown(skill_01_State));
-            yield return null;
+            yield break;
         }
 
         /// <summary>
@@ -313,11 +330,11 @@ namespace IF
         /// </summary>
         private IEnumerator UseSkill_02()
         {
+            animator.SetBool("IsSkill02", true);
+            isWitchSkillUsed = true;
 
 
-            skill_02_State = false;
-            StartCoroutine(SkillCoolDown(skill_02_State));
-            yield return null;
+            yield break;
         }
 
         /// <summary>
@@ -325,18 +342,115 @@ namespace IF
         /// </summary>
         private IEnumerator UseSkill_03()
         {
+            animator.SetBool("IsSkill03", true);
+            isWitchSkillUsed = true;
 
 
-            skill_03_State = false;
-            StartCoroutine(SkillCoolDown(skill_03_State));
-            yield return null;
+            yield break;
         }
 
+        /// <summary>
+        /// 20180530 SangBin :
+        /// </summary>
+        private IEnumerator UseSkill_04()
+        {
+            animator.SetBool("IsSkill04", true);
+            isWitchSkillUsed = true;
+
+
+            yield break;
+        }
+
+        /// <summary>
+        /// 20180530 SangBin :
+        /// </summary>
         private void UseSkill(ref bool skill_State, EnemySkill ek)
         {
+            switch (ek)
+            {
+                case EnemySkill.skill_01:
+                    StartCoroutine(UseSkill_01());
+                    break;
+
+                case EnemySkill.skill_02:
+                    StartCoroutine(UseSkill_02());
+                    break;
+
+                case EnemySkill.skill_03:
+                    StartCoroutine(UseSkill_03());
+                    break;
+
+                case EnemySkill.skill_04:
+                    StartCoroutine(UseSkill_04());
+                    break;
+            }
 
             skill_State = false;
-            StartCoroutine(SkillCoolDown(skill_State));
+            StartCoroutine(SkillCoolDown(ek));
+        }
+
+
+        /// <summary>
+        /// 20180530 SangBin :
+        /// </summary>
+        private IEnumerator SkillCoolDown(EnemySkill ek)
+        {
+            float elapsedTime = 0.0f, coolTime = 0.0f;
+
+            switch (ek)
+            {
+                case EnemySkill.skill_01:
+                    coolTime = 4.0f;
+                    break;
+
+                case EnemySkill.skill_02:
+                    coolTime = 6.0f;
+                    break;
+
+                case EnemySkill.skill_03:
+                    coolTime = 8.0f;
+                    break;
+
+                case EnemySkill.skill_04:
+                    coolTime = 10.0f;
+                    break;
+            }
+
+
+
+            while (elapsedTime < coolTime)
+            {
+                elapsedTime += Time.deltaTime;
+            }
+
+            EnableSkill(ek);
+
+            yield break;
+        }
+
+        /// <summary>
+        /// 20180530 SangBin :
+        /// </summary>
+        private void EnableSkill(EnemySkill ek)
+        {
+            switch (ek)
+            {
+                case EnemySkill.skill_01:
+                    skill_01_State = true;
+                    break;
+
+                case EnemySkill.skill_02:
+                    skill_02_State = true;
+                    break;
+
+                case EnemySkill.skill_03:
+                    skill_03_State = true;
+                    break;
+
+                case EnemySkill.skill_04:
+                    skill_04_State = true;
+                    break;
+            }
         }
     }
 }
