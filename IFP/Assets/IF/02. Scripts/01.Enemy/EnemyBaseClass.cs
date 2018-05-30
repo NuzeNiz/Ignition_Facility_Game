@@ -129,12 +129,12 @@ namespace IF
         /// 20180430 SangBin : Enemy's Enable attack Distance
         /// </summary>
         //private float attackDistEtoDS = 2.0f;
-        virtual protected float AttackDistEtoDS { get { return 2.0f; } }
+        virtual protected float AttackDistEtoDS { get { return 3.0f; } }
 
         /// <summary>
         /// 20180530 SangBin : Interval between Enemy's attack and next attack
         /// </summary>
-        virtual protected float EnemyAttackInterval { get { return 2.0f; } }
+        virtual protected float EnemyAttackInterval { get { return 3.0f; } }
 
         #endregion
 

@@ -27,8 +27,14 @@ namespace IF
         /// <summary>
         /// 20180403 SangBin : Enemy Projectile Prefab
         /// </summary>
+        //[SerializeField]
+        //private GameObject projectilePrefab;
+
+        /// <summary>
+        /// 20180515 SangBin : 
+        /// </summary>
         [SerializeField]
-        private GameObject projectilePrefab;
+        private GameObject basicAttack_shot_Effect;
         #endregion
 
         #region Fields : Enemy Statistic
@@ -56,7 +62,7 @@ namespace IF
         /// <summary>
         /// 20180530 SangBin :  Enemy Type04 Moving Speed
         /// </summary>
-        private float movingSpeed = 5.0f;
+        private float movingSpeed = 2.0f;
 
         /// <summary>
         /// 20180530 SangBin :  Enemy Type04 Moving Speed
@@ -113,7 +119,7 @@ namespace IF
         {
             get
             {
-                return 4.0f;
+                return 5.0f;
             }
         }
         #endregion
@@ -174,7 +180,8 @@ namespace IF
             base.animator = GetComponent<Animator>();
             base.Awake();
             tagName = gameObject.tag;
-            CreateProjectileObjectPool();
+            //CreateProjectileObjectPool();
+            transform.parent = GoogleARCore.IF.TowerBuildController.instance.DefenseStation_Anchor_Tr;
         }
 
         override protected void OnEnable()
@@ -183,38 +190,53 @@ namespace IF
             base.isDamaged = true;
         }
 
-        /// <summary>
-        /// 20180530 SangBin : Create bullet OP
-        /// </summary>
-        void CreateProjectileObjectPool()
-        {
-            for (int i = 0; i < maxProjectile; i++)
-            {
-                GameObject projectileObj = Instantiate(projectilePrefab, gameObject.transform.position + (gameObject.transform.up * 1.0f), gameObject.transform.rotation, GoogleARCore.IF.TowerBuildController.instance.DefenseStation_Anchor_Tr);
-                projectileObj.name = this.gameObject.name + projectileObj.tag + "_" + i.ToString();
-                projectileObj.SetActive(false);
-                projectileObjectPool.Add(projectileObj);
-            }
-        }
+        ///// <summary>
+        ///// 20180530 SangBin : Create bullet OP
+        ///// </summary>
+        //void CreateProjectileObjectPool()
+        //{
+        //    for (int i = 0; i < maxProjectile; i++)
+        //    {
+        //        GameObject projectileObj = Instantiate(projectilePrefab, gameObject.transform.position + (gameObject.transform.up * 1.0f), gameObject.transform.rotation, GoogleARCore.IF.TowerBuildController.instance.DefenseStation_Anchor_Tr);
+        //        projectileObj.name = this.gameObject.name + projectileObj.tag + "_" + i.ToString();
+        //        projectileObj.SetActive(false);
+        //        projectileObjectPool.Add(projectileObj);
+        //    }
+        //}
+
+        ///// <summary>
+        ///// 20180530 SangBin : Projectile Shooting
+        ///// </summary>
+        //IEnumerator ProjectileShooting(Vector3 directionVector_Normalized)
+        //{
+        //    foreach (GameObject projectileObj in projectileObjectPool)
+        //    {
+        //        if (!projectileObj.activeSelf)
+        //        {
+        //            projectileObj.transform.SetPositionAndRotation(this.gameObject.transform.position + (gameObject.transform.up * 1.0f), this.gameObject.transform.rotation);
+        //            yield return null;
+        //            GameManagement.instance.SoundEffect(transform.position, shootingSoundFile);
+        //            projectileObj.SetActive(true);
+        //            //projectileObj.SendMessage("AddForceToProjectile", directionVector_Normalized, SendMessageOptions.DontRequireReceiver);
+        //            projectileObj.GetComponent<EnemyProjectileType01Ctrl>().AddForceToProjectile(directionVector_Normalized);
+        //            break;
+        //        }
+        //    }
+        //}
 
         /// <summary>
-        /// 20180530 SangBin : Projectile Shooting
+        /// 20180530 SangBin : 
         /// </summary>
-        IEnumerator ProjectileShooting(Vector3 directionVector_Normalized)
+        private IEnumerator ProjectileShot(GameObject eff)
         {
-            foreach (GameObject projectileObj in projectileObjectPool)
-            {
-                if (!projectileObj.activeSelf)
-                {
-                    projectileObj.transform.SetPositionAndRotation(this.gameObject.transform.position + (gameObject.transform.up * 1.0f), this.gameObject.transform.rotation);
-                    yield return null;
-                    GameManagement.instance.SoundEffect(transform.position, shootingSoundFile);
-                    projectileObj.SetActive(true);
-                    //projectileObj.SendMessage("AddForceToProjectile", directionVector_Normalized, SendMessageOptions.DontRequireReceiver);
-                    projectileObj.GetComponent<EnemyProjectileType01Ctrl>().AddForceToProjectile(directionVector_Normalized);
-                    break;
-                }
-            }
+            GameObject effect = Instantiate(eff, transform.position + (transform.up * 1.0f), transform.rotation);
+            effect.transform.LookAt(PlayerCtrl.instance.PlayerTr);
+
+            yield return new WaitForSeconds(3.0f);
+
+            if (effect.activeSelf)
+                Destroy(effect, 1.0f);
+
         }
 
         /// <summary>
@@ -230,9 +252,12 @@ namespace IF
 
             Vector3 tempV = Vector3.zero;
             tempV.x = PlayerCtrl.instance.PlayerTr.position.x;
-            tempV.y = PlayerCtrl.instance.PlayerTr.position.y;
+            tempV.z = PlayerCtrl.instance.PlayerTr.position.z;
+            tempV.y = transform.position.y;
 
             transform.LookAt(tempV);
+
+            //transform.LookAt(PlayerCtrl.instance.PlayerTr);
             GetComponent<Rigidbody>().AddForce(base.directionVector_NormalizedEtoP * MovingSpeed, ForceMode.Force);
             base.animator.SetBool("IsTrace", true); 
         }
@@ -244,9 +269,12 @@ namespace IF
         {
             Vector3 tempV = Vector3.zero;
             tempV.x = PlayerCtrl.instance.PlayerTr.position.x;
-            tempV.y = PlayerCtrl.instance.PlayerTr.position.y;
+            tempV.z = PlayerCtrl.instance.PlayerTr.position.z;
+            tempV.y = transform.position.y;
 
             transform.LookAt(tempV);
+
+            //transform.LookAt(PlayerCtrl.instance.PlayerTr);
             GetComponent<Rigidbody>().velocity = Vector3.zero;
             GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
 
@@ -254,7 +282,8 @@ namespace IF
 
             if (!isWitchSkillUsed)
             {
-                StartCoroutine(ProjectileShooting(base.directionVector_NormalizedEtoP));
+                //StartCoroutine(ProjectileShooting(base.directionVector_NormalizedEtoP));
+                StartCoroutine(ProjectileShot(basicAttack_shot_Effect));
                 animator.SetBool("IsBasicAttack", true);
             }
 

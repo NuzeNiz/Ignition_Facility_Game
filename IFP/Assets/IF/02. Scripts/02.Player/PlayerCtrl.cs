@@ -273,5 +273,16 @@ namespace IF
             }
 
         }
+
+        /// <summary>
+        /// 20180530 SangBin : 
+        /// </summary>
+        virtual protected void OnParticleCollision(GameObject other)
+        {
+            StartCoroutine(CameraShake());
+            //playerHP -= BalanceManagement.instance.EnemyProjectile01damage;
+            playerHP -= 2.0d;
+            PlayerDamaged();
+        }
     }
 }
