@@ -220,6 +220,8 @@ namespace IF
         {
             //StartCoroutine(this.ShowMuzzleFlash());
             GameManagement.instance.SoundEffect(playerTr.position, fireSoundFile);
+
+
         }
 
         /// <summary>
@@ -263,7 +265,8 @@ namespace IF
 
         private IEnumerator SetPositionAndRotation()
         {
-            while (GameManagement.instance.ThisStageAlive)
+            //while (GameManagement.instance.ThisStageAlive)
+            while(true)
             {
                 transform.SetPositionAndRotation(playerTr.position, playerTr.rotation);
                 yield return null;

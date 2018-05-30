@@ -140,7 +140,7 @@ namespace IF
 
             if (healthDisplay != null)
             {
-                healthDisplay.SetHP(EnemyHP);
+               // healthDisplay.SetHP(EnemyHP);
             }
 
             if (EnemyHP <= 0.0d)

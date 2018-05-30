@@ -39,7 +39,7 @@ namespace IF
         /// <summary>
         /// 20180502 SangBin :  Enemy Type01 Current Health Power
         /// </summary>
-        private double currentBeeHP = 100.0d;
+        private double currentHP = 100.0d;
 
         /// <summary>
         /// 20180403 SangBin : Enemy Current Health Power
@@ -48,19 +48,19 @@ namespace IF
         {
             get
             {
-                return currentBeeHP;
+                return currentHP;
             }
 
             set
             {
-                currentBeeHP = value;
+                currentHP = value;
             }
         }
 
         /// <summary>
         /// 20180502 SangBin :  Enemy Type01 Moving Speed
         /// </summary>
-        private float e1MovingSpeed = 5.0f;
+        private float movingSpeed = 5.0f;
 
         /// <summary>
         /// 20180418 SangBin :  Enemy Type01 Moving Speed
@@ -69,12 +69,15 @@ namespace IF
         {
             get
             {
-                return e1MovingSpeed;
+                return movingSpeed;
             }
         }
 
-        private string tagName;
 
+        /// <summary>
+        /// 20180502 SangBin : Enemy Type01 Tag
+        /// </summary>
+        private string tagName;
         protected override string TagName
         {
             get
@@ -104,21 +107,6 @@ namespace IF
         private AudioClip shootingSoundFile;
         #endregion
 
-        #region  Fields : Test Animation
-        /// <summary>
-        /// 20180509 SangBin : Test Animation
-        /// </summary>
-        //Animation anim;
-
-        /// <summary>
-        /// 20180509 SangBin : Test Animation
-        /// </summary>
-        //public const string IDLE = "Anim_Idle";
-        //public const string RUN = "Anim_Run";
-        //public const string ATTACK = "Anim_Attack";
-        //public const string DAMAGE = "Anim_Damage";
-        //public const string DEATH = "Anim_Death";
-        #endregion
         //------------------------------------------------------------------------------------------------------------------------
 
         override protected void Awake()
@@ -135,8 +123,10 @@ namespace IF
         /// </summary>
         new private void OnDamaged(object[] parameters)
         {
-            base.isDamaged = true;
             base.OnDamaged(parameters);
+
+            if (!base.isDamaged)
+                base.isDamaged = true;
         }
 
         /// <summary>
@@ -167,7 +157,7 @@ namespace IF
             for (int i = 0; i < maxStinger; i++)
             {
                 GameObject projectileObj = Instantiate(projectilePrefab, gameObject.transform.position + (gameObject.transform.up * 0.1f), gameObject.transform.rotation, GoogleARCore.IF.TowerBuildController.instance.DefenseStation_Anchor_Tr);
-                projectileObj.name = this.gameObject.name + gameObject.tag + "_" + i.ToString();
+                projectileObj.name = this.gameObject.name + projectileObj.tag + "_" + i.ToString();
                 projectileObj.SetActive(false);
                 projectileObjectPool.Add(projectileObj);
             }
@@ -206,7 +196,7 @@ namespace IF
         /// </summary>
         protected override void ActionD()
         {
-            transform.LookAt(DefenseStationCtrl.instance.DefenseStationTR);
+            //transform.LookAt(DefenseStationCtrl.instance.DefenseStationTR);
             base.ActionD();
             //anim.CrossFade(RUN, 0.3f);
         }
@@ -216,11 +206,27 @@ namespace IF
         /// </summary>
         protected override void ActionE()
         {
-            transform.LookAt(DefenseStationCtrl.instance.DefenseStationTR);
+            //transform.LookAt(DefenseStationCtrl.instance.DefenseStationTR);
             base.ActionE();
             //anim.CrossFade(ATTACK, 0.3f);
             StartCoroutine(ProjectileShooting(base.directionVector_NormalizedEtoDS));
             
+        }
+
+        protected override void OnTriggerStay(Collider collider)
+        {
+            base.OnTriggerStay(collider);
+
+            if(!base.isDamaged)
+                base.isDamaged = true;
+        }
+
+        protected override void OnParticleCollision(GameObject other)
+        {
+            base.OnParticleCollision(other);
+
+            if (!base.isDamaged)
+                base.isDamaged = true;
         }
     }
 }

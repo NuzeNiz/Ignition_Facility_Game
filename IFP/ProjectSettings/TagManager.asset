@@ -16,6 +16,7 @@ TagManager:
   - ENEMY_TYPE03_BOSS
   - ENEMY_TYPE04_BOSS
   - ENEMY_TYPE01_BOSS_PROJECTILE
+  - ENEMY_BEE
   layers:
   - Default
   - TransparentFX
@@ -29,8 +30,8 @@ TagManager:
   - WEAPON_PROJECTILE
   - ITEM
   - PLAYER
-  - 
-  - 
+  - ENEMY_PROJECTILE
+  - TREE
   - 
   - 
   - 

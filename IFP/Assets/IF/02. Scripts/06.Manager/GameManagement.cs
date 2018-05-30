@@ -44,6 +44,12 @@ namespace IF
         private GameObject enemyPrefab_type02;
 
         /// <summary>
+        /// 20180501 SangBin : Enemy Moth Prefabs
+        /// </summary>
+        [SerializeField]
+        private GameObject enemyPrefab_type03;
+
+        /// <summary>
         /// 20180403 SangBin : Enemy Object Pool List
         /// </summary>
         private List<GameObject> enemyObjectPool = new List<GameObject>();
@@ -161,18 +167,26 @@ namespace IF
         {
             for (int i = 0; i < maxEnemy; i++)
             {
-                GameObject Enemy_Bee = (GameObject)Instantiate(enemyPrefab_type01);
-                Enemy_Bee.name = "Enemy_Bee_" + i.ToString();
-                Enemy_Bee.SetActive(false);
+                GameObject enemy_type01 = (GameObject)Instantiate(enemyPrefab_type01);
+                enemy_type01.name = "Enemy_type01_" + i.ToString();
+                enemy_type01.SetActive(false);
 
+                GameObject enemy_type02 = (GameObject)Instantiate(enemyPrefab_type01);
+                enemy_type02.name = "Enemy_type01_" + i.ToString();
+                enemy_type02.SetActive(false);
 
-                GameObject Enemy_Moth = (GameObject)Instantiate(enemyPrefab_type02);
-                Enemy_Moth.name = "Enemy_Moth_" + i.ToString();
-                Enemy_Moth.transform.GetChild(0).gameObject.SetActive(false);
-                Enemy_Moth.SetActive(false);
+                GameObject enemy_type03 = (GameObject)Instantiate(enemyPrefab_type01);
+                enemy_type03.name = "Enemy_type01_" + i.ToString();
+                enemy_type03.SetActive(false);
 
-                enemyObjectPool.Add(Enemy_Bee);
-                enemyObjectPool.Add(Enemy_Moth);
+                //GameObject Enemy_Moth = (GameObject)Instantiate(enemyPrefab_type02);
+                //Enemy_Moth.name = "Enemy_Moth_" + i.ToString();
+                //Enemy_Moth.transform.GetChild(0).gameObject.SetActive(false);
+                //Enemy_Moth.SetActive(false);
+
+                enemyObjectPool.Add(enemy_type01);
+                enemyObjectPool.Add(enemy_type02);
+                enemyObjectPool.Add(enemy_type03);
             }
         }
 

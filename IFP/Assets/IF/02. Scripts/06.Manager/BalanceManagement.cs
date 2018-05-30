@@ -39,7 +39,7 @@ namespace IF
         private double w2ToE1 = 0.6;
         private double w2ToE2 = 0.3; //per frame
         private double w2ToE3 = 1.2;
-        private double w2ToE4 = 0.0d;
+        private double w2ToE4 = 0.15d;
         #endregion
 
         /// <summary>
@@ -49,7 +49,7 @@ namespace IF
         private double w3ToE1 = 50.0d;
         private double w3ToE2 = 25.0d;
         private double w3ToE3 = 12.5d;
-        private double w3ToE4 = 0.0d;
+        private double w3ToE4 = 6.25d;
         #endregion
 
         /// <summary>
@@ -59,7 +59,7 @@ namespace IF
         private double w4ToE1 = 12.5d;
         private double w4ToE2 = 50.0d;
         private double w4ToE3 = 25.0d;
-        private double w4ToE4 = 0.0d;
+        private double w4ToE4 = 6.25d;
         #endregion
         #endregion
 
@@ -72,7 +72,7 @@ namespace IF
         /// <summary>
         /// 20180529 SangBin :
         /// </summary>
-        public double EnemyProjectile01damage { get { return 2.0d; } }
+        public double EnemyProjectile01damage { get { return 0.1d; } }
         #endregion
 
         #region Fields : Defense Station Energy

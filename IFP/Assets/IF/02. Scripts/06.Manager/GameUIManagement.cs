@@ -41,6 +41,11 @@ namespace IF
         /// <summary>
         /// 20180529 SangBin : 
         /// </summary>
+        public Image DefenseStation_HP_Bar;
+
+        /// <summary>
+        /// 20180529 SangBin : 
+        /// </summary>
         public Image DefenseStation_Fire_Energy_Bar;
 
         /// <summary>
@@ -80,6 +85,7 @@ namespace IF
             PlayerCtrl.PlayerDamaged += this.PlayerDamaged;
             DefenseStationCtrl.AbsorbExp += this.AbsorbExp;
             DefenseStationCtrl.WearEnergy += this.WearEnergy;
+            DefenseStationCtrl.DS_Damaged += this.DS_Damaged;
         }
 
         private void OnDisable()
@@ -87,6 +93,7 @@ namespace IF
             PlayerCtrl.PlayerDamaged -= this.PlayerDamaged;
             DefenseStationCtrl.AbsorbExp -= this.AbsorbExp;
             DefenseStationCtrl.WearEnergy -= this.WearEnergy;
+            DefenseStationCtrl.DS_Damaged -= this.DS_Damaged;
         }
 
         // Update is called once per frame
@@ -147,6 +154,11 @@ namespace IF
             DefenseStation_Fire_Energy_Bar.fillAmount = (float)(DefenseStationCtrl.instance.DefenseStation_Fire_Energy / 100.0d);
             DefenseStation_Water_Energy_Bar.fillAmount = (float)(DefenseStationCtrl.instance.DefenseStation_Water_Energy / 100.0d);
             DefenseStation_Leaf_Energy_Bar.fillAmount = (float)(DefenseStationCtrl.instance.DefenseStation_Leaf_Energy / 100.0d);
+        }
+
+        private void DS_Damaged()
+        {
+            DefenseStation_HP_Bar.fillAmount = (float)(DefenseStationCtrl.instance.DefenseStation_HP / 100.0d);
         }
     }
 }

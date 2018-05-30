@@ -22,7 +22,7 @@ GameObject:
   - component: {fileID: 33021132766668776}
   - component: {fileID: 23070945541950614}
   - component: {fileID: 193126394748917060}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: tree
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -39,7 +39,7 @@ GameObject:
   - component: {fileID: 4879846845324360}
   - component: {fileID: 114102340034004716}
   - component: {fileID: 136774572574801232}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: Center
   m_TagString: Untagged
   m_Icon: {fileID: 0}

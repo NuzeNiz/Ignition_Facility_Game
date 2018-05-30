@@ -26,7 +26,7 @@ namespace IF
         /// <summary>
         /// 20180502 SangBin : 
         /// </summary>
-        private double maxHealthPower;
+        protected double maxHealthPower;
 
         /// <summary>
         /// 20180502 SangBin : 
@@ -38,7 +38,16 @@ namespace IF
         /// </summary>
         abstract protected float MovingSpeed { get; }
 
+        /// <summary>
+        /// 20180530 SangBin :
+        /// </summary>
         protected Animator animator;
+
+        /// <summary>
+        /// 20180514 SeongJun : HP Display in Child
+        /// </summary>
+        [SerializeField]
+        private HPDisplayer healthDisplay;
         #endregion
 
         #region Fields : Enemy State
@@ -83,13 +92,15 @@ namespace IF
         /// 20180403 SangBin : Unity AI Baked Navigation / Enemy's Enable Tracing Distance
         /// 20180418 SangBin : Unity AI Baked Navigation --> Coroutine & RigidBody.Addforce
         /// </summary>
-        private float traceDistEtoP = 10.0f;
+        //protected float traceDistEtoP = 10.0f;
+        virtual protected float TraceDistEtoP { get { return 10.0f; } }
 
         /// <summary>
         /// 20180403 SangBin : Unity AI Baked Navigation / Enemy's Enable attack Distance
         /// 20180418 SangBin : Unity AI Baked Navigation --> Coroutine & RigidBody.Addforce
         /// </summary>
-        private float attackDistEtoP = 2.0f;
+        //protected float attackDistEtoP = 2.0f;
+        virtual protected float AttackDistEtoP { get { return 2.0f; } }
         #endregion
 
         #region Fields : Tracking(Enemy To Defense Tower)
@@ -111,12 +122,20 @@ namespace IF
         /// <summary>
         /// 20180430 SangBin : Enemy's Enable Tracing Distance
         /// </summary>
-        private float traceDistEtoDS = 10.0f;
+        //private float traceDistEtoDS = 10.0f;
+        virtual protected float TraceDistEtoDS { get { return 10.0f; } }
 
         /// <summary>
         /// 20180430 SangBin : Enemy's Enable attack Distance
         /// </summary>
-        private float attackDistEtoDS = 2.0f;
+        //private float attackDistEtoDS = 2.0f;
+        virtual protected float AttackDistEtoDS { get { return 2.0f; } }
+
+        /// <summary>
+        /// 20180530 SangBin : Interval between Enemy's attack and next attack
+        /// </summary>
+        virtual protected float EnemyAttackInterval { get { return 2.0f; } }
+
         #endregion
 
         //--------------------------------------------------------------------------------------------------
@@ -125,10 +144,11 @@ namespace IF
         {
             maxHealthPower = CurrentHealthPower;
         }
-        protected void OnEnable()
+        virtual protected void OnEnable()
         {
             StartCoroutine(TracingAction()); //Finite State Machine (or Finite Automaton)
             StartCoroutine(CheckEnemyState());
+            isDamaged = false;
         }
 
         protected void OnDisable()
@@ -146,11 +166,6 @@ namespace IF
             //isDamaged = true;
             CurrentHealthPower -= (double)parameters[0];
             bool IsSplashDamage = (bool)parameters[1];
-
-            if (CurrentHealthPower <= 0.0d)
-            {
-                EnemyKilled();
-            }
 
             if (IsSplashDamage)
             {
@@ -170,6 +185,13 @@ namespace IF
                     }
                 }
             }
+
+            SetHPHuD();
+
+            if (CurrentHealthPower <= 0.0d)
+            {
+                EnemyKilled();
+            }
         }
 
         /// <summary>
@@ -186,11 +208,11 @@ namespace IF
                 {
                     Cal_DirectionEtoP();
 
-                    if (distanceEtoP <= attackDistEtoP)
+                    if (distanceEtoP <= AttackDistEtoP)
                     {
                         currentEnemyState = EnemyState.attackOnPlayer;
                     }
-                    else if (distanceEtoP <= traceDistEtoP)
+                    else if (distanceEtoP <= TraceDistEtoP)
                     {
                         currentEnemyState = EnemyState.traceToPlayer;
                     }
@@ -203,11 +225,11 @@ namespace IF
                 {
                     Cal_DirectionEtoDS();
 
-                    if (distanceEtoDS <= attackDistEtoDS)
+                    if (distanceEtoDS <= AttackDistEtoDS)
                     {
                         currentEnemyState = EnemyState.attackOnDS;
                     }
-                    else if (distanceEtoDS <= traceDistEtoDS)
+                    else if (distanceEtoDS <= TraceDistEtoDS)
                     {
                         currentEnemyState = EnemyState.traceToDS;
                     }
@@ -239,7 +261,7 @@ namespace IF
 
                     case EnemyState.attackOnPlayer:
                         ActionC();
-                        yield return new WaitForSeconds(2.0f);
+                        yield return new WaitForSeconds(EnemyAttackInterval);
                         break;
 
                     case EnemyState.traceToDS:
@@ -248,7 +270,7 @@ namespace IF
 
                     case EnemyState.attackOnDS:
                         ActionE();
-                        yield return new WaitForSeconds(2.0f);
+                        yield return new WaitForSeconds(EnemyAttackInterval);
                         break;
                 }
                 yield return null;
@@ -270,9 +292,9 @@ namespace IF
         /// </summary>
         virtual protected void ActionB()
         {
+            animator.SetBool("IsAttack", false); // later
             transform.LookAt(PlayerCtrl.instance.PlayerTr);
             GetComponent<Rigidbody>().AddForce(directionVector_NormalizedEtoP * MovingSpeed, ForceMode.Force);
-            animator.SetBool("IsAttack", false); // later
             animator.SetBool("IsTrace", true); // later
         }
 
@@ -293,6 +315,7 @@ namespace IF
         /// </summary>
         virtual protected void ActionD()
         {
+            transform.LookAt(DefenseStationCtrl.instance.DefenseStationTR);
             GetComponent<Rigidbody>().AddForce(directionVector_NormalizedEtoDS * MovingSpeed, ForceMode.Force);
             animator.SetBool("IsAttack", false); // later
             animator.SetBool("IsTrace", true); // later
@@ -303,6 +326,7 @@ namespace IF
         /// </summary>
         virtual protected void ActionE()
         {
+            transform.LookAt(DefenseStationCtrl.instance.DefenseStationTR);
             GetComponent<Rigidbody>().velocity = Vector3.zero;
             GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
             animator.SetBool("IsAttack", true); // later
@@ -333,7 +357,7 @@ namespace IF
         /// </summary>
         protected void EnemyKilled()
         {
-            //Because expecting to Enemy's Falling Animation by graphic designer, I did not make Enemy deactivated at once   
+            //Because expecting to Enemy's Falling Animation by graphic designer, I would not make Enemy deactivated at once   
             this.gameObject.tag = "Untagged";
             GameObject explosion = (GameObject)Instantiate(DeathEffect, transform.position, Quaternion.identity);
 
@@ -372,12 +396,14 @@ namespace IF
             gameObject.tag = tag;
         }
 
-        protected void OnTriggerStay(Collider collider)
+        virtual protected void OnTriggerStay(Collider collider)
         {
             if (collider.gameObject.tag == "WEAPON_TYPE02_FLAME")
             {
                 CurrentHealthPower -= BalanceManagement.instance.CalcPlayerStrkingPower(TagName, WeaponCtrl.instance.CurrentWeaponType);
             }
+
+            SetHPHuD();
 
             //임시로 넣음
             if (CurrentHealthPower <= 0.0d)
@@ -387,21 +413,34 @@ namespace IF
 
         }
 
-
         /// <summary>
         /// 20180516 SangBin : 
         /// </summary>
-        private void OnParticleCollision(GameObject other)
+        virtual protected void OnParticleCollision(GameObject other)
         {
             //if (collision.gameObject.tag == "WEAPON_TYPE03_PROJECTILE")
             {
                 CurrentHealthPower -= BalanceManagement.instance.CalcPlayerStrkingPower(TagName, WeaponCtrl.instance.CurrentWeaponType); //damage per frame
             }
 
+            SetHPHuD();
+
             //임시로 넣음
             if (CurrentHealthPower <= 0.0d)
             {
                 EnemyKilled();
+            }
+        }
+
+        /// <summary>
+        /// 20180514 SeongJun : Use HP_Displayer
+        /// 20180530 SangBin : add max hp
+        /// </summary>
+        private void SetHPHuD()
+        {
+            if (healthDisplay != null)
+            {
+                healthDisplay.SetHP(CurrentHealthPower, maxHealthPower);
             }
         }
     }

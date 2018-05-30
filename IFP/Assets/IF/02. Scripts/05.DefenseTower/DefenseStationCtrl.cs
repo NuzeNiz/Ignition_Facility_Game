@@ -13,9 +13,13 @@ namespace IF
         /// </summary>
         public static DefenseStationCtrl instance = null;
 
+        /// <summary>
+        /// 20180530 SangBin : 
+        /// </summary>
         public delegate void DS_EventHandler();
         public static event DS_EventHandler AbsorbExp;
         public static event DS_EventHandler WearEnergy;
+        public static event DS_EventHandler DS_Damaged;
 
         #region Fields : DS Statistic
         /// <summary>
@@ -106,6 +110,7 @@ namespace IF
                 defenseStation_HP -= BalanceManagement.instance.EnemyProjectile01damage;
                 //collision.gameObject.GetComponent<TrailRenderer>().enabled = false;
                 collision.gameObject.SetActive(false);
+                DS_Damaged();
             }
 
         }
