@@ -168,10 +168,10 @@ namespace IF
         /// <summary>
         /// 20180530 SangBin :
         /// </summary>
-        private bool skill_01_State = false;
-        private bool skill_02_State = false;
-        private bool skill_03_State = false;
-        private bool skill_04_State = false;
+        private bool skill_01_State = true;
+        private bool skill_02_State = true;
+        private bool skill_03_State = true;
+        private bool skill_04_State = true;
         #endregion
         //--------------------------------------------------------------------------------
 
@@ -181,7 +181,7 @@ namespace IF
             base.Awake();
             tagName = gameObject.tag;
             //CreateProjectileObjectPool();
-            transform.parent = GoogleARCore.IF.TowerBuildController.instance.DefenseStation_Anchor_Tr;
+            //transform.parent = GoogleARCore.IF.TowerBuildController.instance.DefenseStation_Anchor_Tr;
         }
 
         override protected void OnEnable()
@@ -294,7 +294,7 @@ namespace IF
         /// </summary>
         void AvailableSkillCheck()
         {
-            double percentageofHP = currentHP / base.maxHealthPower;
+            double percentageofHP = (currentHP / base.maxHealthPower) * 100.0d ;
 
             isWitchSkillUsed = false;
 

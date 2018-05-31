@@ -174,7 +174,7 @@ namespace IF
             holeSparkPS = transform.GetChild(1).gameObject.GetComponent<ParticleSystem>();
 
             //test
-            currentWeaponType = WeaponTypeEnum.weaponType02;
+            currentWeaponType = WeaponTypeEnum.weaponType03;
         }
 
         /// <summary>
