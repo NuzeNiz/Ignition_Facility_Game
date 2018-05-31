@@ -163,15 +163,21 @@ namespace IF
         /// <summary>
         /// 20180530 SangBin :
         /// </summary>
+        private enum EnemySkillState { available, disavailable, cooling };
+
+
+        /// <summary>
+        /// 20180530 SangBin :
+        /// </summary>
         private bool isWitchSkillUsed = false;
 
         /// <summary>
         /// 20180530 SangBin :
         /// </summary>
-        private bool skill_01_State = true;
-        private bool skill_02_State = true;
-        private bool skill_03_State = true;
-        private bool skill_04_State = true;
+        private EnemySkillState skill_01_State = EnemySkillState.available;
+        private EnemySkillState skill_02_State = EnemySkillState.available;
+        private EnemySkillState skill_03_State = EnemySkillState.available;
+        private EnemySkillState skill_04_State = EnemySkillState.available;
         #endregion
         //--------------------------------------------------------------------------------
 
@@ -302,40 +308,40 @@ namespace IF
             {
                 if (percentageofHP <= 20.0d)
                 {
-                    if (skill_04_State)
+                    if (skill_04_State == EnemySkillState.available)
                         UseSkill(ref skill_04_State, EnemySkill.skill_04);
 
-                    else if (skill_03_State)
+                    else if (skill_03_State == EnemySkillState.available)
                         UseSkill(ref skill_03_State, EnemySkill.skill_03);
 
-                    else if (skill_02_State)
+                    else if (skill_02_State == EnemySkillState.available)
                         UseSkill(ref skill_02_State, EnemySkill.skill_02);
 
-                    else if (skill_01_State)
+                    else if (skill_01_State == EnemySkillState.available)
                         UseSkill(ref skill_01_State, EnemySkill.skill_01);
                 }
                 else if (percentageofHP <= 40.0d)
                 {
-                    if (skill_03_State)
+                    if (skill_03_State == EnemySkillState.available)
                         UseSkill(ref skill_03_State, EnemySkill.skill_03);
 
-                    else if (skill_02_State)
+                    else if (skill_02_State == EnemySkillState.available)
                         UseSkill(ref skill_02_State, EnemySkill.skill_02);
 
-                    else if (skill_01_State)
+                    else if (skill_01_State == EnemySkillState.available)
                         UseSkill(ref skill_01_State, EnemySkill.skill_01);
                 }
                 else if (percentageofHP <= 60.0d)
                 {
-                    if (skill_02_State)
+                    if (skill_02_State == EnemySkillState.available)
                         UseSkill(ref skill_02_State, EnemySkill.skill_02);
 
-                    else if (skill_01_State)
+                    else if (skill_01_State == EnemySkillState.available)
                         UseSkill(ref skill_01_State, EnemySkill.skill_01);
                 }
                 else
                 {
-                    if (skill_01_State)
+                    if (skill_01_State == EnemySkillState.available)
                         UseSkill(ref skill_01_State, EnemySkill.skill_01);
                 }
             }
@@ -393,7 +399,7 @@ namespace IF
         /// <summary>
         /// 20180530 SangBin :
         /// </summary>
-        private void UseSkill(ref bool skill_State, EnemySkill ek)
+        private void UseSkill(ref EnemySkillState skill_State, EnemySkill ek)
         {
             switch (ek)
             {
@@ -414,7 +420,7 @@ namespace IF
                     break;
             }
 
-            skill_State = false;
+            skill_State = EnemySkillState.cooling;
             StartCoroutine(SkillCoolDown(ek));
         }
 
@@ -465,19 +471,19 @@ namespace IF
             switch (ek)
             {
                 case EnemySkill.skill_01:
-                    skill_01_State = true;
+                    skill_01_State = EnemySkillState.available;
                     break;
 
                 case EnemySkill.skill_02:
-                    skill_02_State = true;
+                    skill_02_State = EnemySkillState.available;
                     break;
 
                 case EnemySkill.skill_03:
-                    skill_03_State = true;
+                    skill_03_State = EnemySkillState.available;
                     break;
 
                 case EnemySkill.skill_04:
-                    skill_04_State = true;
+                    skill_04_State = EnemySkillState.available;
                     break;
             }
         }
