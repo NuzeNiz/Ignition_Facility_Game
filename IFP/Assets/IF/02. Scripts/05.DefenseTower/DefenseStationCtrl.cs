@@ -20,6 +20,7 @@ namespace IF
         public static event DS_EventHandler AbsorbExp;
         public static event DS_EventHandler WearEnergy;
         public static event DS_EventHandler DS_Damaged;
+        //public static event DS_EventHandler DS_FallDown;
 
         #region Fields : DS Statistic
         /// <summary>
@@ -58,19 +59,21 @@ namespace IF
             get { return defenseStation_exp; }
         }
 
-        private double defenseStation_Fire_Energy = 0.0d;
+        private int treeState = 0;
+
+        private double defenseStation_Fire_Energy = 50.0d;
         public double DefenseStation_Fire_Energy
         {
             get { return defenseStation_Fire_Energy; }
         }
 
-        private double defenseStation_Water_Energy = 0.0d;
+        private double defenseStation_Water_Energy = 50.0d;
         public double DefenseStation_Water_Energy
         {
             get { return defenseStation_Water_Energy; }
         }
 
-        private double defenseStation_Leaf_Energy = 0.0d;
+        private double defenseStation_Leaf_Energy = 50.0d;
         public double DefenseStation_Leaf_Energy
         {
             get { return defenseStation_Leaf_Energy; }
@@ -111,6 +114,12 @@ namespace IF
                 //collision.gameObject.GetComponent<TrailRenderer>().enabled = false;
                 collision.gameObject.SetActive(false);
                 DS_Damaged();
+
+                if (defenseStation_HP<=0.0d)
+                {
+                    //DS_FallDown();
+                    GameManagement.instance.GameOver();
+                }
             }
 
         }
@@ -175,6 +184,19 @@ namespace IF
 
             //기본 경험치
             defenseStation_exp += expValue;
+
+            if (defenseStation_exp >= 100.0d)
+            {
+                defenseStation_exp = 0.0d;
+                transform.parent.transform.localScale *= 2.0f;
+                treeState++;
+
+                if (treeState == 3)
+                {
+                    GameManagement.instance.GameClear();
+                }
+            }
+
             AbsorbExp();
         }
 

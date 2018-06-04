@@ -379,8 +379,8 @@ namespace IF
         /// </summary>
         private IEnumerator PushObjectPool()
         {
-            yield return new WaitForSeconds(4.0f); //destroy delay
-            //yield return null;
+            //yield return new WaitForSeconds(4.0f); //destroy delay
+            yield return null;
             isDie = false;
             CurrentHealthPower = maxHealthPower;
             currentEnemyState = EnemyState.idle;

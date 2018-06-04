@@ -41,7 +41,7 @@ namespace IF
         /// <summary>
         /// 20180530 SangBin :  Enemy Type04 Current Health Power
         /// </summary>
-        private double currentHP = 500.0d;
+        private double currentHP = 200.0d;
 
         /// <summary>
         /// 20180530 SangBin : Enemy Current Health Power
@@ -251,10 +251,6 @@ namespace IF
         protected override void ActionB()
         {
             base.animator.SetBool("IsBasicAttack", false);
-            base.animator.SetBool("IsSkill01", false);
-            base.animator.SetBool("IsSkill02", false);
-            base.animator.SetBool("IsSkill03", false);
-            base.animator.SetBool("IsSkill04", false);
 
             Vector3 tempV = Vector3.zero;
             tempV.x = PlayerCtrl.instance.PlayerTr.position.x;
@@ -273,6 +269,7 @@ namespace IF
         /// </summary>
         protected override void ActionC()
         {
+
             Vector3 tempV = Vector3.zero;
             tempV.x = PlayerCtrl.instance.PlayerTr.position.x;
             tempV.z = PlayerCtrl.instance.PlayerTr.position.z;
@@ -284,14 +281,20 @@ namespace IF
             GetComponent<Rigidbody>().velocity = Vector3.zero;
             GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
 
+            animator.SetBool("IsBasicAttack", true);
+            StartCoroutine(ProjectileShot(basicAttack_shot_Effect));
+
             AvailableSkillCheck();
 
-            if (!isWitchSkillUsed)
-            {
-                //StartCoroutine(ProjectileShooting(base.directionVector_NormalizedEtoP));
-                StartCoroutine(ProjectileShot(basicAttack_shot_Effect));
-                animator.SetBool("IsBasicAttack", true);
-            }
+           
+
+
+            //if (!isWitchSkillUsed)
+            //{
+            //    //StartCoroutine(ProjectileShooting(base.directionVector_NormalizedEtoP));
+            //    StartCoroutine(ProjectileShot(basicAttack_shot_Effect));
+            //    animator.SetBool("IsBasicAttack", true);
+            //}
 
         }
 
@@ -353,9 +356,10 @@ namespace IF
         /// </summary>
         private IEnumerator UseSkill_01()
         {
-            animator.SetBool("IsSkill01", true);
+
             isWitchSkillUsed = true;
 
+            base.animator.SetBool("IsSkill01", false);
 
             yield break;
         }
@@ -365,9 +369,10 @@ namespace IF
         /// </summary>
         private IEnumerator UseSkill_02()
         {
-            animator.SetBool("IsSkill02", true);
+
             isWitchSkillUsed = true;
 
+            base.animator.SetBool("IsSkill02", false);
 
             yield break;
         }
@@ -377,9 +382,10 @@ namespace IF
         /// </summary>
         private IEnumerator UseSkill_03()
         {
-            animator.SetBool("IsSkill03", true);
+
             isWitchSkillUsed = true;
 
+            base.animator.SetBool("IsSkill03", false);
 
             yield break;
         }
@@ -389,10 +395,10 @@ namespace IF
         /// </summary>
         private IEnumerator UseSkill_04()
         {
-            animator.SetBool("IsSkill04", true);
+
             isWitchSkillUsed = true;
 
-
+            base.animator.SetBool("IsSkill04", false);
             yield break;
         }
 
@@ -404,18 +410,22 @@ namespace IF
             switch (ek)
             {
                 case EnemySkill.skill_01:
+                    animator.SetBool("IsSkill01", true);
                     StartCoroutine(UseSkill_01());
                     break;
 
                 case EnemySkill.skill_02:
+                    animator.SetBool("IsSkill02", true);
                     StartCoroutine(UseSkill_02());
                     break;
 
                 case EnemySkill.skill_03:
+                    animator.SetBool("IsSkill03", true);
                     StartCoroutine(UseSkill_03());
                     break;
 
                 case EnemySkill.skill_04:
+                    animator.SetBool("IsSkill04", true);
                     StartCoroutine(UseSkill_04());
                     break;
             }

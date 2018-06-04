@@ -17,6 +17,8 @@ TagManager:
   - ENEMY_TYPE04_BOSS
   - ENEMY_TYPE01_BOSS_PROJECTILE
   - ENEMY_BEE
+  - ENEMY_TYPE02
+  - ENEMY_TYPE03
   layers:
   - Default
   - TransparentFX

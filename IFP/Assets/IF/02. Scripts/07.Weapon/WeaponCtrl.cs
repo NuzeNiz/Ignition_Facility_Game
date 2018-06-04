@@ -174,7 +174,7 @@ namespace IF
             holeSparkPS = transform.GetChild(1).gameObject.GetComponent<ParticleSystem>();
 
             //test
-            currentWeaponType = WeaponTypeEnum.weaponType03;
+            currentWeaponType = WeaponTypeEnum.weaponType04;
         }
 
         /// <summary>
@@ -328,6 +328,7 @@ namespace IF
         /// </summary>
         public void SwitchWeapon(WeaponCtrl.WeaponTypeEnum selectedWeapon)
         {
+            StopFlame();
             currentWeaponType = selectedWeapon;
             StartCoroutine(MakeSwitchingEffect());
         }

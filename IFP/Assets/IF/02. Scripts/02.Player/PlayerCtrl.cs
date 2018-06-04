@@ -88,8 +88,12 @@ namespace IF
         #endregion
 
 
+        /// <summary>
+        /// 20180530 SangBin : 
+        /// </summary>
         public delegate void PlayerEventHandler();
         public static event PlayerEventHandler PlayerDamaged;
+        //public static event PlayerEventHandler Player_FallDown;
         //-----------------------------------------------------------------------------------------------------------------------------
 
         private void Awake()
@@ -210,6 +214,11 @@ namespace IF
 
                 //collision.gameObject.GetComponent<TrailRenderer>().enabled = false;
                 collision.gameObject.SetActive(false);
+
+                if (playerHP <= 0.0d)
+                {
+                    GameManagement.instance.GameOver();
+                }
             }
         }
 
@@ -283,6 +292,11 @@ namespace IF
             //playerHP -= BalanceManagement.instance.EnemyProjectile01damage;
             playerHP -= 2.0d;
             PlayerDamaged();
+
+            if (playerHP <= 0.0d)
+            {
+                GameManagement.instance.GameOver();
+            }
         }
     }
 }

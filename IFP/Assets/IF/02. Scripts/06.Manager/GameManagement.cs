@@ -57,12 +57,12 @@ namespace IF
         /// <summary>
         /// 20180403 SangBin : Enemy Generation period
         /// </summary>
-        private float enemyGenerationPeriod = 2.0f;
+        private float enemyGenerationPeriod = 1.0f;
 
         /// <summary>
         /// 20180403 SangBin : Contraints of the number of Enemy
         /// </summary>
-        private int maxEnemy = 3;
+        private int maxEnemy = 10;
 
         /// <summary>
         /// 20180403 SangBin : This Level Cleared or not
@@ -140,6 +140,9 @@ namespace IF
         {
             CreateEnemyObjectPool();
 
+
+            //if(GameObject.Find("EnemySpawnPoints"))
+                GameObject.Find("EnemySpawnPoints").gameObject.transform.SetPositionAndRotation(DefenseStationCtrl.instance.DefenseStationTR.position, DefenseStationCtrl.instance.DefenseStationTR.rotation);
             tempSpawnpoints = GameObject.Find("EnemySpawnPoints").GetComponentsInChildren<Transform>();
 
             if (tempSpawnpoints.Length > 0)
@@ -154,10 +157,10 @@ namespace IF
 
         private void Update()
         {
-            if(PlayerCtrl.instance.PlayerHP <= 0.0d || DefenseStationCtrl.instance.DefenseStation_HP <= 0.0d)
-            {
-                GameOver();
-            }
+            //if(PlayerCtrl.instance.PlayerHP <= 0.0d || DefenseStationCtrl.instance.DefenseStation_HP <= 0.0d)
+            //{
+            //    GameOver();
+            //}
         }
 
         /// <summary>
@@ -171,11 +174,11 @@ namespace IF
                 enemy_type01.name = "Enemy_type01_" + i.ToString();
                 enemy_type01.SetActive(false);
 
-                GameObject enemy_type02 = (GameObject)Instantiate(enemyPrefab_type01);
+                GameObject enemy_type02 = (GameObject)Instantiate(enemyPrefab_type02);
                 enemy_type02.name = "Enemy_type01_" + i.ToString();
                 enemy_type02.SetActive(false);
 
-                GameObject enemy_type03 = (GameObject)Instantiate(enemyPrefab_type01);
+                GameObject enemy_type03 = (GameObject)Instantiate(enemyPrefab_type03);
                 enemy_type03.name = "Enemy_type01_" + i.ToString();
                 enemy_type03.SetActive(false);
 
@@ -255,9 +258,18 @@ namespace IF
         /// <summary>
         /// 20180403 SangBin : GameOver
         /// </summary>
-        void GameOver()
+        public void GameOver()
         {
             SceneManager.LoadScene("GameScene C");
+        }
+
+
+        /// <summary>
+        /// 20180604 SangBin : GameOver
+        /// </summary>
+        public void GameClear()
+        {
+            SceneManager.LoadScene("GameScene D");
         }
 
         /// <summary>
@@ -332,7 +344,10 @@ namespace IF
                 {
                     if (!butterFly.activeSelf)
                     {
-                        butterFly.transform.position = IF.DefenseStationCtrl.instance.DefenseStationTR.position + (Vector3.right * 3) + (Vector3.up * 2);
+                        if(DefenseStationCtrl.instance.enabled)
+                            butterFly.transform.position = IF.DefenseStationCtrl.instance.DefenseStationTR.position + (Vector3.right * 3) + (Vector3.up * 2);
+                        else
+                            butterFly.transform.position = PlayerCtrl.instance.PlayerTr.position + (Vector3.right * 3) + (Vector3.up * 2);
                         butterFly.SetActive(true);
                         break;
                     }
