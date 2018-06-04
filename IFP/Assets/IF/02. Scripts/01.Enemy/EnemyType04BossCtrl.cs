@@ -281,11 +281,13 @@ namespace IF
             GetComponent<Rigidbody>().velocity = Vector3.zero;
             GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
 
-            animator.SetBool("IsBasicAttack", true);
-            StartCoroutine(ProjectileShot(basicAttack_shot_Effect));
+            if (!isWitchSkillUsed)
+            {
+                animator.SetBool("IsBasicAttack", true);
+                StartCoroutine(ProjectileShot(basicAttack_shot_Effect));
 
-            AvailableSkillCheck();
-
+                AvailableSkillCheck();
+            }
            
 
 
@@ -304,8 +306,6 @@ namespace IF
         void AvailableSkillCheck()
         {
             double percentageofHP = (currentHP / base.maxHealthPower) * 100.0d ;
-
-            isWitchSkillUsed = false;
 
             if(percentageofHP<=80.0d)
             {
@@ -356,8 +356,9 @@ namespace IF
         /// </summary>
         private IEnumerator UseSkill_01()
         {
-
-            isWitchSkillUsed = true;
+            animator.SetBool("IsSkill01", true);
+            yield return new WaitForSeconds(3.2f);
+            isWitchSkillUsed = false;
 
             base.animator.SetBool("IsSkill01", false);
 
@@ -369,8 +370,9 @@ namespace IF
         /// </summary>
         private IEnumerator UseSkill_02()
         {
-
-            isWitchSkillUsed = true;
+            animator.SetBool("IsSkill02", true);
+            yield return new WaitForSeconds(3.2f);
+            isWitchSkillUsed = false;
 
             base.animator.SetBool("IsSkill02", false);
 
@@ -382,8 +384,9 @@ namespace IF
         /// </summary>
         private IEnumerator UseSkill_03()
         {
-
-            isWitchSkillUsed = true;
+            animator.SetBool("IsSkill03", true);
+            yield return new WaitForSeconds(5.2f);
+            isWitchSkillUsed = false;
 
             base.animator.SetBool("IsSkill03", false);
 
@@ -395,8 +398,9 @@ namespace IF
         /// </summary>
         private IEnumerator UseSkill_04()
         {
-
-            isWitchSkillUsed = true;
+            animator.SetBool("IsSkill04", true);
+            yield return new WaitForSeconds(3.2f);
+            isWitchSkillUsed = false;
 
             base.animator.SetBool("IsSkill04", false);
             yield break;
@@ -407,25 +411,28 @@ namespace IF
         /// </summary>
         private void UseSkill(ref EnemySkillState skill_State, EnemySkill ek)
         {
+            //animator.SetBool("IsBasicAttack", false);
+            isWitchSkillUsed = true;
+
             switch (ek)
             {
                 case EnemySkill.skill_01:
-                    animator.SetBool("IsSkill01", true);
+
                     StartCoroutine(UseSkill_01());
                     break;
 
                 case EnemySkill.skill_02:
-                    animator.SetBool("IsSkill02", true);
+
                     StartCoroutine(UseSkill_02());
                     break;
 
                 case EnemySkill.skill_03:
-                    animator.SetBool("IsSkill03", true);
+
                     StartCoroutine(UseSkill_03());
                     break;
 
                 case EnemySkill.skill_04:
-                    animator.SetBool("IsSkill04", true);
+
                     StartCoroutine(UseSkill_04());
                     break;
             }
@@ -445,19 +452,19 @@ namespace IF
             switch (ek)
             {
                 case EnemySkill.skill_01:
-                    coolTime = 4.0f;
+                    coolTime = 14.0f;
                     break;
 
                 case EnemySkill.skill_02:
-                    coolTime = 6.0f;
+                    coolTime = 16.0f;
                     break;
 
                 case EnemySkill.skill_03:
-                    coolTime = 8.0f;
+                    coolTime = 18.0f;
                     break;
 
                 case EnemySkill.skill_04:
-                    coolTime = 10.0f;
+                    coolTime = 20.0f;
                     break;
             }
 

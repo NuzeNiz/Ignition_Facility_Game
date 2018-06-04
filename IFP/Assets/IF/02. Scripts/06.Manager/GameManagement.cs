@@ -161,6 +161,10 @@ namespace IF
             //{
             //    GameOver();
             //}
+            if (Input.GetKey(KeyCode.Escape))
+            {
+                Application.Quit();
+            }
         }
 
         /// <summary>
