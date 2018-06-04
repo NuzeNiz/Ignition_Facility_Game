@@ -12,7 +12,7 @@ PlayerSettings:
   useOnDemandResources: 0
   accelerometerFrequency: 60
   companyName: Ignition Facility
-  productName: Elementary Engineer
+  productName: Elementary Guardian
   defaultCursor: {fileID: 0}
   cursorHotspot: {x: 0, y: 0}
   m_SplashScreenBackgroundColor: {r: 0.13725491, g: 0.12156863, b: 0.1254902, a: 1}
@@ -253,14 +253,14 @@ PlayerSettings:
   m_AndroidBanners:
   - width: 320
     height: 180
-    banner: {fileID: 2800000, guid: 067075c98c3db4c7d9ba9b50cba2f57e, type: 3}
+    banner: {fileID: 2800000, guid: 6b8c088068c20ce4483774fc4da1792c, type: 3}
   androidGamepadSupportLevel: 0
   resolutionDialogBanner: {fileID: 0}
   m_BuildTargetIcons:
   - m_BuildTarget: Android
     m_Icons:
     - serializedVersion: 2
-      m_Icon: {fileID: 2800000, guid: 067075c98c3db4c7d9ba9b50cba2f57e, type: 3}
+      m_Icon: {fileID: 2800000, guid: 6b8c088068c20ce4483774fc4da1792c, type: 3}
       m_Width: 192
       m_Height: 192
       m_Kind: 0
@@ -292,7 +292,7 @@ PlayerSettings:
   - m_BuildTarget: 
     m_Icons:
     - serializedVersion: 2
-      m_Icon: {fileID: 2800000, guid: bfd54eb9c8f5fe14888b2ba764370b4d, type: 3}
+      m_Icon: {fileID: 2800000, guid: 6b8c088068c20ce4483774fc4da1792c, type: 3}
       m_Width: 128
       m_Height: 128
       m_Kind: 0

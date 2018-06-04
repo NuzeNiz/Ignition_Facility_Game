@@ -31,8 +31,8 @@ namespace IF
         void OnDamaged(object[] parameters)
         {
             GameObject explosion = (GameObject)Instantiate(expEffectPrefab, this.gameObject.transform.position, Quaternion.identity);
-            GameLogicManagement.instance.SoundEffect(transform.position, SoundFile);
-            GameLogicManagement.instance.ActivateItem(transform);
+            GameManagement.instance.SoundEffect(transform.position, SoundFile);
+            GameManagement.instance.ActivateItem(transform);
             Destroy(explosion, 2.0f);
 
             gameObject.SetActive(false);
@@ -44,12 +44,25 @@ namespace IF
             if (collider.gameObject.tag == "WEAPON_TYPE02_FLAME")
             {
                 GameObject explosion = (GameObject)Instantiate(expEffectPrefab, this.gameObject.transform.position, Quaternion.identity);
-                GameLogicManagement.instance.SoundEffect(transform.position, SoundFile);
-                GameLogicManagement.instance.ActivateItem(transform);
+                GameManagement.instance.SoundEffect(transform.position, SoundFile);
+                GameManagement.instance.ActivateItem(transform);
                 Destroy(explosion, 2.0f);
 
                 gameObject.SetActive(false);
             }
+        }
+
+        /// <summary>
+        /// 20180516 SangBin : 
+        /// </summary>
+        private void OnParticleCollision(GameObject other)
+        {
+            GameObject explosion = (GameObject)Instantiate(expEffectPrefab, this.gameObject.transform.position, Quaternion.identity);
+            GameManagement.instance.SoundEffect(transform.position, SoundFile);
+            GameManagement.instance.ActivateItem(transform);
+            Destroy(explosion, 2.0f);
+
+            gameObject.SetActive(false);
         }
 
     }

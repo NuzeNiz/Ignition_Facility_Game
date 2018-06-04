@@ -192,7 +192,7 @@ namespace IF
             switch (currentWeaponType)
             {
                 case WeaponTypeEnum.weaponType01 :
-                    parameters[0] = BalanceManagement.instance.PlayerStrkingPower(hitinfo.collider.gameObject.tag, currentWeaponType);
+                    parameters[0] = BalanceManagement.instance.CalcPlayerStrkingPower(hitinfo.collider.gameObject.tag, currentWeaponType);
                     parameters[1] = false;
                     GameObject flare = Instantiate(FlareEffect, hitinfo.collider.gameObject.transform.position, Quaternion.identity);
                     hitinfo.collider.gameObject.SendMessage("OnDamaged", parameters, SendMessageOptions.DontRequireReceiver);
@@ -212,9 +212,9 @@ namespace IF
                     //}
 
                     ///Flame Thrower Attack Way 2 - change to sphere cast
-                    parameters[0] = BalanceManagement.instance.PlayerStrkingPower(hitinfo.collider.gameObject.tag, currentWeaponType);
-                    parameters[1] = false;
-                    hitinfo.collider.gameObject.SendMessage("OnDamaged", parameters, SendMessageOptions.DontRequireReceiver);
+                    //parameters[0] = BalanceManagement.instance.CalcPlayerStrkingPower(hitinfo.collider.gameObject.tag, currentWeaponType);
+                    //parameters[1] = false;
+                    //hitinfo.collider.gameObject.SendMessage("OnDamaged", parameters, SendMessageOptions.DontRequireReceiver);
                     break;
             }
         }
@@ -226,6 +226,13 @@ namespace IF
         {
             switch (currentWeaponType)
             {
+                case WeaponTypeEnum.weaponType02:
+                    if (!transform.GetChild(3).gameObject.activeSelf)
+                    {
+                        transform.GetChild(3).gameObject.SetActive(true);
+                    }
+                    break;
+
                 case WeaponTypeEnum.weaponType03:
                     StartCoroutine(ProjectileShot(weaponType03_shot_Effect));
                     break;
@@ -250,7 +257,7 @@ namespace IF
                     GameObject holeEffect = Instantiate(weaponType01_shot_HoleEffect, holeSpot.position, Quaternion.identity);
                     holeEffect.transform.SetParent(transform);
                     //GameObject muzzleFlash = Instantiate(weaponType01_shot_HoleEffect, shotSpot.position, Quaternion.identity);
-                    GameLogicManagement.instance.SoundEffect(transform.position, weaponType01_shot_sound);
+                    GameManagement.instance.SoundEffect(transform.position, weaponType01_shot_sound);
                     Destroy(holeEffect, 1.5f);
                     //Destroy(muzzleFlash, 1.5f);
                     break;
@@ -289,7 +296,7 @@ namespace IF
         /// </summary>
         public void StopFlame()
         {
-            //transform.GetChild(3).gameObject.SetActive(false);
+            transform.GetChild(3).gameObject.SetActive(false);
             transform.GetChild(2).gameObject.SetActive(false);
         }
 
@@ -329,6 +336,7 @@ namespace IF
         /// </summary>
         public void SwitchWeapon(WeaponCtrl.WeaponTypeEnum selectedWeapon)
         {
+            StopFlame();
             currentWeaponType = selectedWeapon;
             StartCoroutine(MakeSwitchingEffect());
             weaponSubject.Notify();

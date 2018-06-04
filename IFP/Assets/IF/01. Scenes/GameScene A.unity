@@ -270,8 +270,6 @@ MonoBehaviour:
   defenseStation_Prefab: {fileID: 1262427346044128, guid: b7f15dd65bb50934cba57ea5b56e961e,
     type: 2}
   SearchingForPlaneUI: {fileID: 1133631540}
-  groundPlane: {fileID: 1015607651362900, guid: f90acfe6cb368fe4898514e6468f4aad,
-    type: 2}
 --- !u!20 &896679035 stripped
 Camera:
   m_PrefabParentObject: {fileID: 20155940112608238, guid: c10877f7cd5764de18d46d7b777d1faa,
@@ -644,8 +642,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\uBC14\uB2E5\uC744 \uCD94\uC801 \uC911\uC785\uB2C8\uB2E4. \uD770\uC0C9
-    \uADF8\uB9B4\uC5D0 \uB098\uBB34\uB97C \uC124\uCE58\uD558\uC138\uC694!"
+  m_Text: "\uB545\uC5D0 \uC528\uC557\uC744 \uC2EC\uC5B4\uC8FC\uC138\uC694 !"
 --- !u!222 &1764419358
 CanvasRenderer:
   m_ObjectHideFlags: 0

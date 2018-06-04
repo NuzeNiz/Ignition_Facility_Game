@@ -27,6 +27,7 @@ namespace IF
         /// <summary>
         /// 20180403 SangBin : Muzzleflash Renderer for Switching
         /// </summary>
+        [HideInInspector]
         public MeshRenderer muzzleFlash;
 
         /// <summary>
@@ -85,6 +86,14 @@ namespace IF
         /// </summary>
         private float shakeSpeed = 4.0f;
         #endregion
+
+
+        /// <summary>
+        /// 20180530 SangBin : 
+        /// </summary>
+        public delegate void PlayerEventHandler();
+        public static event PlayerEventHandler PlayerDamaged;
+        //public static event PlayerEventHandler Player_FallDown;
         //-----------------------------------------------------------------------------------------------------------------------------
 
         private void Awake()
@@ -99,7 +108,7 @@ namespace IF
             //    DestroyImmediate(this);
             //}
             instance = this;
-            muzzleFlash.enabled = false;
+            //muzzleFlash.enabled = false;
             playerHP = 100.0d;
             playerMaxHP = playerHP;
 
@@ -138,16 +147,16 @@ namespace IF
                     {
                         WeaponCtrl.instance.MakeWeaponShotEffect();
 
-                        //RaycastHit hitinfo;
+                        ////RaycastHit hitinfo;
 
-                        //if (Physics.Raycast(playerTr.position, playerTr.forward, out hitinfo, rayMaxDistance))
-                        if (Physics.SphereCast(playerTr.position, 0.2f, playerTr.forward, out hitinfo, rayMaxDistance))
-                        {
-                            if (hitinfo.collider.gameObject.layer == 8)
-                            {
-                                WeaponCtrl.instance.WeaponFunc(ref hitinfo);
-                            }
-                        }
+                        ////if (Physics.Raycast(playerTr.position, playerTr.forward, out hitinfo, rayMaxDistance))
+                        //if (Physics.SphereCast(playerTr.position, 0.2f, playerTr.forward, out hitinfo, rayMaxDistance))
+                        //{
+                        //    if (hitinfo.collider.gameObject.layer == 8)
+                        //    {
+                                WeaponCtrl.instance.WeaponFunc();
+                        //    }
+                        //}
                     }
                     else if (myTouch.phase == TouchPhase.Ended)
                     {
@@ -199,9 +208,17 @@ namespace IF
             {
                 StartCoroutine(CameraShake());
                 //playerHP -= 2.0d; // test
-                playerHP -= collision.gameObject.GetComponent<EnemyType01ProjectileCtrl>().projectileDamage;
-                collision.gameObject.GetComponent<TrailRenderer>().enabled = false;
+                //playerHP -= collision.gameObject.GetComponent<EnemyProjectileType01Ctrl>().projectileDamage;
+                playerHP -= BalanceManagement.instance.EnemyProjectile01damage;
+                PlayerDamaged();
+
+                //collision.gameObject.GetComponent<TrailRenderer>().enabled = false;
                 collision.gameObject.SetActive(false);
+
+                if (playerHP <= 0.0d)
+                {
+                    GameManagement.instance.GameOver();
+                }
             }
         }
 
@@ -211,7 +228,9 @@ namespace IF
         void Fire()
         {
             //StartCoroutine(this.ShowMuzzleFlash());
-            GameLogicManagement.instance.SoundEffect(playerTr.position, fireSoundFile);
+            GameManagement.instance.SoundEffect(playerTr.position, fireSoundFile);
+
+
         }
 
         /// <summary>
@@ -255,12 +274,29 @@ namespace IF
 
         private IEnumerator SetPositionAndRotation()
         {
-            while (GameLogicManagement.instance.ThisStageAlive)
+            //while (GameManagement.instance.ThisStageAlive)
+            while(true)
             {
                 transform.SetPositionAndRotation(playerTr.position, playerTr.rotation);
                 yield return null;
             }
 
+        }
+
+        /// <summary>
+        /// 20180530 SangBin : 
+        /// </summary>
+        virtual protected void OnParticleCollision(GameObject other)
+        {
+            StartCoroutine(CameraShake());
+            //playerHP -= BalanceManagement.instance.EnemyProjectile01damage;
+            playerHP -= 2.0d;
+            PlayerDamaged();
+
+            if (playerHP <= 0.0d)
+            {
+                GameManagement.instance.GameOver();
+            }
         }
     }
 }

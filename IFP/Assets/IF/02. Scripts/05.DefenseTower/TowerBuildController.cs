@@ -111,8 +111,8 @@ namespace GoogleARCore.IF
         /// <summary>
         /// 20180509 SangBin : Defense Station Ground Prefab
         /// </summary>
-        [SerializeField]
-        private GameObject groundPlane;
+        //[SerializeField]
+        //private GameObject groundPlane;
 
 
         //---------------------------------------------------------------------------------------------
@@ -229,7 +229,7 @@ namespace GoogleARCore.IF
                     planeGridObject.GetComponent<MeshRenderer>().enabled = false;
                     planeGridObject.GetComponent<TrackedPlaneVisualizer>().enabled = false;
                     SceneManager.LoadScene("GameScene B",LoadSceneMode.Additive);
-                    GameObject ground = Instantiate(groundPlane, defenseStation.transform.position, Quaternion.identity);
+                    //GameObject ground = Instantiate(groundPlane, defenseStation.transform.position, Quaternion.identity);
                 }
             }
         }
