@@ -12,7 +12,7 @@ public class ItemWindowOpen : MonoBehaviour, IPointerDownHandler, IPointerUpHand
     [SerializeField]
     private Sprite[] images = new Sprite[4];
 
-    private void Awake()
+    private void Start()
     {
         var image = transform.GetChild(0).GetComponent<Image>();
         ItemWindow.Instance.WeaponSubject.Attach(new WeaponObserver(a => {
