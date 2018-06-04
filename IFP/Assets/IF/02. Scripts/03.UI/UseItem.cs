@@ -12,7 +12,7 @@ public class UseItem : MonoBehaviour{
 
     private ItemSubject subject;
 
-    private void Awake()
+    private void Start()
     {
         subject = ItemWindow.Instance.ItemSubject;
         var button = gameObject.GetComponent<Button>();
