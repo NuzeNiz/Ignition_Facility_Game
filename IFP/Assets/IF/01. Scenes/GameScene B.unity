@@ -224,7 +224,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4793720918017556, guid: 9ba214e044fbd6d45b71b4b026432bec, type: 2}
       propertyPath: m_RootOrder
-      value: 9
+      value: 8
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 9ba214e044fbd6d45b71b4b026432bec, type: 2}
@@ -11054,7 +11054,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -0.29499817, y: -0.38000003}
+  m_AnchoredPosition: {x: -0.29499817, y: -0.37999916}
   m_SizeDelta: {x: 0.59, y: 0.66}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &240034586
@@ -11452,7 +11452,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4153188251961532, guid: 0a9c39c1880557d4fabef95fc0a08797, type: 2}
       propertyPath: m_RootOrder
-      value: 8
+      value: 7
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 0a9c39c1880557d4fabef95fc0a08797, type: 2}
@@ -26290,11 +26290,11 @@ MonoBehaviour:
   textScore: {fileID: 29217125}
   PlayerPos: {fileID: 1253552908}
   playerHP_Bar: {fileID: 1970411260}
-  DefenseStation_Exp_Bar: {fileID: 0}
-  DefenseStation_HP_Bar: {fileID: 0}
-  DefenseStation_Fire_Energy_Bar: {fileID: 0}
-  DefenseStation_Water_Energy_Bar: {fileID: 0}
-  DefenseStation_Leaf_Energy_Bar: {fileID: 0}
+  DefenseStation_Exp_Bar: {fileID: 712031839}
+  DefenseStation_HP_Bar: {fileID: 2021162688}
+  DefenseStation_Fire_Energy_Bar: {fileID: 490573813}
+  DefenseStation_Water_Energy_Bar: {fileID: 1663360352}
+  DefenseStation_Leaf_Energy_Bar: {fileID: 240022316}
 --- !u!114 &739340520
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -26311,7 +26311,8 @@ MonoBehaviour:
     type: 2}
   enemyPrefab_type02: {fileID: 1340308212665734, guid: b06dd95dc5ff3314da57e14ef0210c41,
     type: 2}
-  enemyPrefab_type03: {fileID: 0}
+  enemyPrefab_type03: {fileID: 1037173432539910, guid: 7ba3eec8510d64c4a9e3709edd4d646a,
+    type: 2}
   ThisStageAlive: 1
   itemPrefab_type01: {fileID: 1185642529807098, guid: 217976abe42283549b7beb074f9e1b4c,
     type: 2}
@@ -30875,7 +30876,7 @@ Prefab:
     - target: {fileID: 224618932782403250, guid: 479daf181978cd347a4eee58d7854377,
         type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: -80.25
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 224674992045088504, guid: 479daf181978cd347a4eee58d7854377,
         type: 2}
@@ -30895,7 +30896,7 @@ Prefab:
     - target: {fileID: 224674992045088504, guid: 479daf181978cd347a4eee58d7854377,
         type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: -80.25
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 224054061608255298, guid: 479daf181978cd347a4eee58d7854377,
         type: 2}
@@ -30915,7 +30916,7 @@ Prefab:
     - target: {fileID: 224054061608255298, guid: 479daf181978cd347a4eee58d7854377,
         type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: -80.25
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 224021708874356406, guid: 479daf181978cd347a4eee58d7854377,
         type: 2}
@@ -30935,7 +30936,7 @@ Prefab:
     - target: {fileID: 224021708874356406, guid: 479daf181978cd347a4eee58d7854377,
         type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: -80.25
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 224945247300974568, guid: 479daf181978cd347a4eee58d7854377,
         type: 2}
@@ -31449,7 +31450,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -0.48999986, y: -0.48}
+  m_AnchoredPosition: {x: -0.48999786, y: -0.47999954}
   m_SizeDelta: {x: -0.5200003, y: 0.96}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1237348762
@@ -54073,7 +54074,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -2.59, y: -2.4}
+  m_AnchoredPosition: {x: -2.5899963, y: -2.3999996}
   m_SizeDelta: {x: 102.99, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2021162688

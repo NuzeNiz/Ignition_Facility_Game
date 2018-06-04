@@ -28,7 +28,7 @@ namespace IF
         }
 
         /// <summary>
-        /// 20180403 SangBin : Enemy Projectile Prefab
+        /// 20180403 SangBin : Enemy Projectile Prefab2
         /// </summary>
         [SerializeField]
         private GameObject projectilePrefab;
