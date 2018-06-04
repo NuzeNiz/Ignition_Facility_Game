@@ -31,27 +31,32 @@ public class ItemWindow : MonoBehaviour
         {
             if (a.isNewItemNotify)
             {
-                var newSlot = Instantiate(slotPrefeb);
-                newSlots.Add(newSlot);
-                newSlot.GetComponent<WeaponSlot>().Init(a.NewItem);
-                WeaponSlot.slotsCount++;
-                a.isNewItemNotify = false;
+                var newSlot = WeaponSlot.weaponSlots.Where(slot=> { return slot.gameObject.activeSelf == false; }).First();
+                if (newSlot != null)
+                {
+                    newSlots.Add(newSlot.gameObject);
+                    newSlot.Init(a.NewItem);
+                    a.isNewItemNotify = false;
+                }
             }
         }));
 
-        WeaponSubject.Notify();
+        //WeaponSubject.Notify();
 
         gameObject.SetActive(false);
     }
 
-    private void OnEnable()
-    {
-        newSlots.ForEach(a =>
-        {
-            a.transform.parent = content;
-        });
-        newSlots = new List<GameObject>();
-    }
+    //private void Start()
+    //{
+    //    //WeaponSubject.NotifyNewItem(WeaponCtrl.WeaponTypeEnum.weaponType01);
+    //    //WeaponSubject.NotifyNewItem(WeaponCtrl.WeaponTypeEnum.weaponType02);
+    //    //WeaponSubject.NotifyNewItem(WeaponCtrl.WeaponTypeEnum.weaponType03);
+    //    //WeaponSubject.NotifyNewItem(WeaponCtrl.WeaponTypeEnum.weaponType04);
+
+    //    WeaponSubject.Notify();
+
+    //    gameObject.SetActive(false);
+    //}
 
     public void AddItem(ItemBaseClass item)
     {

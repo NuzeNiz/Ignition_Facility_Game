@@ -303,17 +303,14 @@ namespace IF
             if (PlayerPrefs.HasKey("weaponType02"))
             {
                 weaponDic.Add(1, newType = WeaponTypeEnum.weaponType02);
-                weaponSubject.NotifyNewItem(newType);
             }
             if (PlayerPrefs.HasKey("weaponType03"))
             {
                 weaponDic.Add(2, newType = WeaponTypeEnum.weaponType03);
-                weaponSubject.NotifyNewItem(newType);
             }
             if (PlayerPrefs.HasKey("weaponType04"))
             {
                 weaponDic.Add(3, newType = WeaponTypeEnum.weaponType04);
-                weaponSubject.NotifyNewItem(newType);
             }
         }
 
@@ -334,6 +331,7 @@ namespace IF
         {
             currentWeaponType = selectedWeapon;
             StartCoroutine(MakeSwitchingEffect());
+            weaponSubject.Notify();
         }
 
         /// <summary>

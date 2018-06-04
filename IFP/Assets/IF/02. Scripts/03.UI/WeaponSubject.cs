@@ -15,7 +15,7 @@ public class WeaponSubject : Subject {
     public void SetCurruntWeapon(WeaponCtrl.WeaponTypeEnum item)
     {
         weaponCtrl.SwitchWeapon(item);
-        Notify();
+        //Notify();
     }
 
     public void NotifyNewItem(WeaponCtrl.WeaponTypeEnum item)

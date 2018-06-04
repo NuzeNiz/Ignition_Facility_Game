@@ -6,13 +6,16 @@ using IF;
 
 public class WeaponSlot : MonoBehaviour
 {
-    public static int slotsCount = 0;
+    public static List<WeaponSlot> weaponSlots = new List<WeaponSlot>();
 
+    [SerializeField]
     private WeaponCtrl.WeaponTypeEnum myType;
     private WeaponSubject subject;
 
     private void Awake()
     {
+        weaponSlots.Add(gameObject.GetComponent<WeaponSlot>());
+
         subject = ItemWindow.Instance.WeaponSubject;
 
         subject.Attach(new WeaponObserver(CheckSelectedWeapon));
@@ -20,12 +23,15 @@ public class WeaponSlot : MonoBehaviour
         var button = gameObject.GetComponent<Button>();
         button.onClick.AddListener(() => { subject.SetCurruntWeapon(myType); });
 
-        subject.Notify();
+        //subject.Notify();
+
+        //gameObject.SetActive(false);
     }
 
     public void Init(WeaponCtrl.WeaponTypeEnum type)
     {
-        myType = type;
+        //myType = type;
+        gameObject.SetActive(true);
         CheckSelectedWeapon(subject);
     }
 

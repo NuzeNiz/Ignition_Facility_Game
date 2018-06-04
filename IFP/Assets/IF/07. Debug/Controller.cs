@@ -33,6 +33,32 @@ namespace IF.Debug
         {
             return CLI.Result.Success("Add Weapon");
         }
+
+        [CLI.Bind]
+        public static CLI.Result Change(int i)
+        {
+            var info = string.Format("Last Weapon : {0}\n", WeaponCtrl.instance.CurrentWeaponType);
+
+            switch (i)
+            {
+                case 1:
+                    WeaponCtrl.instance.SwitchWeapon(WeaponCtrl.WeaponTypeEnum.weaponType01);
+                    break;
+                case 2:
+                    WeaponCtrl.instance.SwitchWeapon(WeaponCtrl.WeaponTypeEnum.weaponType02);
+                    break;
+                case 3:
+                    WeaponCtrl.instance.SwitchWeapon(WeaponCtrl.WeaponTypeEnum.weaponType03);
+                    break;
+                case 4:
+                    WeaponCtrl.instance.SwitchWeapon(WeaponCtrl.WeaponTypeEnum.weaponType04);
+                    break;
+            }
+
+            info = info + string.Format("Current Weapon: {0}\n", WeaponCtrl.instance.CurrentWeaponType);
+
+            return CLI.Result.Success(info);
+        }
     }
 
     public static class DItem
