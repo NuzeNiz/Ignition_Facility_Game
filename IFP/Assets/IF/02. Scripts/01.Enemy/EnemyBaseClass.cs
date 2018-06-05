@@ -93,14 +93,14 @@ namespace IF
         /// 20180418 SangBin : Unity AI Baked Navigation --> Coroutine & RigidBody.Addforce
         /// </summary>
         //protected float traceDistEtoP = 10.0f;
-        virtual protected float TraceDistEtoP { get { return 10.0f; } }
+        virtual protected float TraceDistEtoP { get { return 20.0f; } }
 
         /// <summary>
         /// 20180403 SangBin : Unity AI Baked Navigation / Enemy's Enable attack Distance
         /// 20180418 SangBin : Unity AI Baked Navigation --> Coroutine & RigidBody.Addforce
         /// </summary>
         //protected float attackDistEtoP = 2.0f;
-        virtual protected float AttackDistEtoP { get { return 2.0f; } }
+        virtual protected float AttackDistEtoP { get { return 3.0f; } }
         #endregion
 
         #region Fields : Tracking(Enemy To Defense Tower)
@@ -123,7 +123,7 @@ namespace IF
         /// 20180430 SangBin : Enemy's Enable Tracing Distance
         /// </summary>
         //private float traceDistEtoDS = 10.0f;
-        virtual protected float TraceDistEtoDS { get { return 10.0f; } }
+        virtual protected float TraceDistEtoDS { get { return 20.0f; } }
 
         /// <summary>
         /// 20180430 SangBin : Enemy's Enable attack Distance
@@ -379,8 +379,8 @@ namespace IF
         /// </summary>
         private IEnumerator PushObjectPool()
         {
-            //yield return new WaitForSeconds(4.0f); //destroy delay
-            yield return null;
+            yield return new WaitForSeconds(4.0f); //destroy delay
+            //yield return null;
             isDie = false;
             CurrentHealthPower = maxHealthPower;
             currentEnemyState = EnemyState.idle;

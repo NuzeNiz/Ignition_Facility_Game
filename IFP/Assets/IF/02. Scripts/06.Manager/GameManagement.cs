@@ -57,7 +57,7 @@ namespace IF
         /// <summary>
         /// 20180403 SangBin : Enemy Generation period
         /// </summary>
-        private float enemyGenerationPeriod = 1.0f;
+        private float enemyGenerationPeriod = 2.0f;
 
         /// <summary>
         /// 20180403 SangBin : Contraints of the number of Enemy
@@ -237,7 +237,9 @@ namespace IF
                     {
                         int index = Random.Range(1, tempSpawnpoints.Length);
                         enemy.transform.position = tempSpawnpoints[index].position;
-                        enemy.transform.parent = GoogleARCore.IF.TowerBuildController.instance.DefenseStation_Anchor_Tr;
+                        StartCoroutine(OpenGate(tempSpawnpoints[index].GetChild(0).gameObject));
+                            if (DefenseStationCtrl.instance != null)
+                            enemy.transform.parent = GoogleARCore.IF.TowerBuildController.instance.DefenseStation_Anchor_Tr;
                         enemy.SetActive(true);
                         break;
                     }
@@ -257,6 +259,24 @@ namespace IF
                 //    yield return null;
                 //}
             }
+        }
+
+        private IEnumerator OpenGate(GameObject gObject)
+        {
+            if (!gObject.activeSelf)
+            {
+                if (DefenseStationCtrl.instance != null)
+                    gObject.transform.LookAt(DefenseStationCtrl.instance.DefenseStationTR);
+                else if (PlayerCtrl.instance != null)
+                    gObject.transform.LookAt(PlayerCtrl.instance.PlayerTr);
+
+                gObject.transform.localRotation *= Quaternion.Euler(0.0f, 90.0f, 0.0f);
+
+                gObject.SetActive(true);
+                yield return new WaitForSeconds(3.0f);
+                gObject.SetActive(false);
+            }
+            yield break;
         }
 
         /// <summary>
@@ -314,7 +334,8 @@ namespace IF
                 int randIdex = Random.Range(0, maxItem);
                 if (!itemObjectPool[randIdex].activeSelf)
                 {
-                    itemObjectPool[randIdex].transform.parent = GoogleARCore.IF.TowerBuildController.instance.DefenseStation_Anchor_Tr;
+                    if (DefenseStationCtrl.instance != null)
+                        itemObjectPool[randIdex].transform.parent = GoogleARCore.IF.TowerBuildController.instance.DefenseStation_Anchor_Tr;
                     itemObjectPool[randIdex].transform.position = butterflyTransform.position;
                     itemObjectPool[randIdex].SetActive(true);
                     break;
@@ -330,7 +351,8 @@ namespace IF
             for (int i = 0; i < 2; i++)
             {
                 GameObject butterFly = (GameObject)Instantiate(butterFlyPrefab_type01);
-                butterFly.transform.parent = GoogleARCore.IF.TowerBuildController.instance.DefenseStation_Anchor_Tr;
+                if (DefenseStationCtrl.instance != null)
+                    butterFly.transform.parent = GoogleARCore.IF.TowerBuildController.instance.DefenseStation_Anchor_Tr;
                 butterFly.name = "Enemy_Butterfly_" + i.ToString();
                 butterFly.SetActive(false);
                 butterFlyObjectPool.Add(butterFly);
@@ -348,7 +370,7 @@ namespace IF
                 {
                     if (!butterFly.activeSelf)
                     {
-                        if(DefenseStationCtrl.instance.enabled)
+                        if (DefenseStationCtrl.instance != null)
                             butterFly.transform.position = IF.DefenseStationCtrl.instance.DefenseStationTR.position + (Vector3.right * 3) + (Vector3.up * 2);
                         else
                             butterFly.transform.position = PlayerCtrl.instance.PlayerTr.position + (Vector3.right * 3) + (Vector3.up * 2);
