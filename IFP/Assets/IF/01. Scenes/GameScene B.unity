@@ -26001,9 +26001,9 @@ MonoBehaviour:
   isSoundEffectMute: 0
   enemyPrefab_type01: {fileID: 1434042642470554, guid: 1c29448882d32f14589a4790f9197116,
     type: 2}
-  enemyPrefab_type02: {fileID: 1434042642470554, guid: 1c29448882d32f14589a4790f9197116,
+  enemyPrefab_type02: {fileID: 1976639372554130, guid: 04973929c99c6e44798eb088c6e91b16,
     type: 2}
-  enemyPrefab_type03: {fileID: 1434042642470554, guid: 1c29448882d32f14589a4790f9197116,
+  enemyPrefab_type03: {fileID: 1336627308807744, guid: 58d79745a25640943975ffaff08a5f4a,
     type: 2}
   ThisStageAlive: 1
   itemPrefab_type01: {fileID: 1185642529807098, guid: 217976abe42283549b7beb074f9e1b4c,
