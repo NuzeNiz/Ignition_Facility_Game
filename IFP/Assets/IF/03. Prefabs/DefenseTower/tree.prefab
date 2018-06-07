@@ -126,6 +126,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: edded5dde8285fa47907234d26301a72, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  levelupEffect: {fileID: 1012529914554864, guid: 5567b574698d0bd41a567060020d99e4,
+    type: 2}
 --- !u!136 &136774572574801232
 CapsuleCollider:
   m_ObjectHideFlags: 1

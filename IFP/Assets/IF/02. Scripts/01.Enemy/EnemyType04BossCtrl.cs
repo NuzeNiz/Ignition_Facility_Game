@@ -203,7 +203,6 @@ namespace IF
         {
             base.EnemyKilled();
 
-            Destroy(gameObject, 3.5f);
             StartCoroutine(GameClear());
         }
 

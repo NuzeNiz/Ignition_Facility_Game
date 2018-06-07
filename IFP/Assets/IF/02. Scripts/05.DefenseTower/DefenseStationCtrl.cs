@@ -22,6 +22,12 @@ namespace IF
         public static event DS_EventHandler DS_Damaged;
         //public static event DS_EventHandler DS_FallDown;
 
+        /// <summary>
+        /// 20180607 SangBin : 
+        /// </summary>
+        [SerializeField]
+        private GameObject levelupEffect;
+
         #region Fields : DS Statistic
         /// <summary>
         /// 20180403 SangBin : Defense Station's Transform
@@ -109,6 +115,7 @@ namespace IF
         {
             if (collision.gameObject.tag == "ENEMY_TYPE01_PROJECTILE")
             {
+                StartCoroutine(TreeShake());
                 //defenseStation_HP -= collision.gameObject.GetComponent<EnemyProjectileType01Ctrl>().projectileDamage;
                 defenseStation_HP -= BalanceManagement.instance.EnemyProjectile01damage;
                 //collision.gameObject.GetComponent<TrailRenderer>().enabled = false;
@@ -122,6 +129,29 @@ namespace IF
                 }
             }
 
+        }
+
+        /// <summary>
+        /// 20180607 SangBin : 
+        /// </summary>
+        private IEnumerator TreeShake()
+        {
+            Vector3 originPos = defenseStationTR.position;
+
+            float elapsedTime = 0.0f;
+
+            while (elapsedTime < 1.0f)
+            {
+                Vector3 randomPoint = originPos + Random.insideUnitSphere * 0.1f;
+
+                defenseStationTR.position = Vector3.Lerp(defenseStationTR.position, randomPoint, Time.deltaTime * 4.0f);
+
+                yield return null;
+
+                elapsedTime += Time.deltaTime;
+            }
+
+            defenseStationTR.position = originPos;
         }
 
         /// <summary>
@@ -187,9 +217,11 @@ namespace IF
 
             if (defenseStation_exp >= 100.0d)
             {
+                GameObject le = Instantiate(levelupEffect, transform.parent.position, Quaternion.identity);
                 defenseStation_exp = 0.0d;
                 transform.parent.transform.localScale *= 2.0f;
                 treeState++;
+                Destroy(le, 6.0f);
 
                 if (treeState == 3)
                 {
@@ -202,7 +234,7 @@ namespace IF
 
         private IEnumerator OnWearEnergy()
         {
-            //시작 어드벤테이지 5초
+            //시작 핸디캡 5초
             yield return new WaitForSeconds(5.0f);
             double wValue = BalanceManagement.instance.DefenseStation_wValue;
 
