@@ -122,6 +122,14 @@ namespace IF
                 return 5.0f;
             }
         }
+
+        protected override float EnemyAttackInterval
+        {
+            get
+            {
+                return 1.2f;
+            }
+        }
         #endregion
 
         #region Fields : Sound Files
@@ -372,11 +380,14 @@ namespace IF
         /// </summary>
         private IEnumerator UseSkill_01()
         {
-            animator.SetBool("IsSkill01", true);
-            yield return new WaitForSeconds(3.2f);
+            animator.SetTrigger("IsSkill01");
+            //animator.SetBool("IsBasicAttack", false);
+            //animator.SetBool("IsSkill01", true);
+            yield return new WaitForSeconds(1.1f);
             isWitchSkillUsed = false;
 
-            base.animator.SetBool("IsSkill01", false);
+            //animator.SetBool("IsSkill01", false);
+            StartCoroutine(base.EnemyAction());
 
             yield break;
         }
@@ -386,11 +397,13 @@ namespace IF
         /// </summary>
         private IEnumerator UseSkill_02()
         {
-            animator.SetBool("IsSkill02", true);
-            yield return new WaitForSeconds(3.2f);
+            animator.SetTrigger("IsSkill02");
+            //animator.SetBool("IsSkill02", true);
+            yield return new WaitForSeconds(1.1f);
             isWitchSkillUsed = false;
 
-            base.animator.SetBool("IsSkill02", false);
+            //animator.SetBool("IsSkill02", false);
+            StartCoroutine(base.EnemyAction());
 
             yield break;
         }
@@ -400,11 +413,13 @@ namespace IF
         /// </summary>
         private IEnumerator UseSkill_03()
         {
-            animator.SetBool("IsSkill03", true);
-            yield return new WaitForSeconds(5.2f);
+            animator.SetTrigger("IsSkill03");
+            //animator.SetBool("IsSkill03", true);
+            yield return new WaitForSeconds(4.1f);
             isWitchSkillUsed = false;
 
-            base.animator.SetBool("IsSkill03", false);
+            //animator.SetBool("IsSkill03", false);
+            StartCoroutine(base.EnemyAction());
 
             yield break;
         }
@@ -414,11 +429,13 @@ namespace IF
         /// </summary>
         private IEnumerator UseSkill_04()
         {
-            animator.SetBool("IsSkill04", true);
-            yield return new WaitForSeconds(3.2f);
+            animator.SetTrigger("IsSkill04");
+            //animator.SetBool("IsSkill04", true);
+            yield return new WaitForSeconds(1.1f);
             isWitchSkillUsed = false;
 
-            base.animator.SetBool("IsSkill04", false);
+            //animator.SetBool("IsSkill04", false);
+            StartCoroutine(base.EnemyAction());
             yield break;
         }
 
@@ -427,6 +444,7 @@ namespace IF
         /// </summary>
         private void UseSkill(ref EnemySkillState skill_State, EnemySkill ek)
         {
+            StopCoroutine(base.EnemyAction());
             //animator.SetBool("IsBasicAttack", false);
             isWitchSkillUsed = true;
 

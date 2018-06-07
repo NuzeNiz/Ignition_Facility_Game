@@ -146,7 +146,7 @@ namespace IF
         }
         virtual protected void OnEnable()
         {
-            StartCoroutine(TracingAction()); //Finite State Machine (or Finite Automaton)
+            StartCoroutine(EnemyAction()); //Finite State Machine (or Finite Automaton)
             StartCoroutine(CheckEnemyState());
             isDamaged = false;
         }
@@ -245,7 +245,7 @@ namespace IF
         /// 20180403 SangBin : Control enemy tracing 
         /// 20180430 SangBin : + Tracing Defense Station
         /// </summary>
-        private IEnumerator TracingAction()
+        protected IEnumerator EnemyAction()
         {
             while (!isDie)
             {
