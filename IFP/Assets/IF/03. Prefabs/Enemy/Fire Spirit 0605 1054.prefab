@@ -323,7 +323,7 @@ GameObject:
   - component: {fileID: 54470104235435398}
   - component: {fileID: 136346157153210156}
   - component: {fileID: 82184220095319006}
-  - component: {fileID: 114245448983004536}
+  - component: {fileID: 114690184480606110}
   m_Layer: 8
   m_Name: Fire Spirit 0605 1054
   m_TagString: ENEMY_TYPE01
@@ -824,7 +824,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1434042642470554}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -5.315}
+  m_LocalPosition: {x: 0, y: 0, z: 3.703899}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 224063233353747988}
@@ -1625,22 +1625,6 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
---- !u!114 &114245448983004536
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1434042642470554}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dd1c056380ab18b4b8628bf737ec3e0b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  healthDisplay: {fileID: 114506052809561912}
-  deathEffectPrefab: {fileID: 138338, guid: cd1ff9e92aad8ac4db78b6ffd5f1eab7, type: 2}
-  projectilePrefab: {fileID: 1070470306168090, guid: 9ba214e044fbd6d45b71b4b026432bec,
-    type: 2}
-  shootingSoundFile: {fileID: 8300000, guid: 12e5152dd914d1743b8fb9cb18c68223, type: 3}
 --- !u!114 &114268171869353778
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1697,6 +1681,22 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
+--- !u!114 &114690184480606110
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1434042642470554}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4b575876835f5b643ad223e72da5c2ee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  healthDisplay: {fileID: 114506052809561912}
+  deathEffectPrefab: {fileID: 123640, guid: 9242b15a276bc5a4babd09239e5fa709, type: 2}
+  projectilePrefab: {fileID: 1070470306168090, guid: 9ba214e044fbd6d45b71b4b026432bec,
+    type: 2}
+  shootingSoundFile: {fileID: 8300000, guid: 12e5152dd914d1743b8fb9cb18c68223, type: 3}
 --- !u!136 &136346157153210156
 CapsuleCollider:
   m_ObjectHideFlags: 1

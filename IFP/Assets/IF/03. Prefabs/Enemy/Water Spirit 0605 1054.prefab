@@ -765,7 +765,7 @@ GameObject:
   - component: {fileID: 54599406690096872}
   - component: {fileID: 136909912359110820}
   - component: {fileID: 82254794209691472}
-  - component: {fileID: 114338826083551198}
+  - component: {fileID: 114257238139825890}
   m_Layer: 8
   m_Name: Water Spirit 0605 1054
   m_TagString: ENEMY_TYPE02
@@ -1604,7 +1604,7 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
---- !u!114 &114338826083551198
+--- !u!114 &114257238139825890
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -1612,11 +1612,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 1976639372554130}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dd1c056380ab18b4b8628bf737ec3e0b, type: 3}
+  m_Script: {fileID: 11500000, guid: 4b575876835f5b643ad223e72da5c2ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   healthDisplay: {fileID: 114761017626270706}
-  deathEffectPrefab: {fileID: 138338, guid: cd1ff9e92aad8ac4db78b6ffd5f1eab7, type: 2}
+  deathEffectPrefab: {fileID: 100672, guid: 7dc0b63f67faaf9479803bcfdff7f71e, type: 2}
   projectilePrefab: {fileID: 1225744683177524, guid: 6bad0a47068f2924b91df640e60d6d9c,
     type: 2}
   shootingSoundFile: {fileID: 8300000, guid: 12e5152dd914d1743b8fb9cb18c68223, type: 3}

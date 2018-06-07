@@ -327,7 +327,7 @@ GameObject:
   - component: {fileID: 54986175309182340}
   - component: {fileID: 136176637595782052}
   - component: {fileID: 82356833683367660}
-  - component: {fileID: 114046358935731854}
+  - component: {fileID: 114631258358301528}
   m_Layer: 8
   m_Name: Leaf Spirit 0605 1054
   m_TagString: ENEMY_TYPE03
@@ -1604,22 +1604,6 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
---- !u!114 &114046358935731854
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1336627308807744}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dd1c056380ab18b4b8628bf737ec3e0b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  healthDisplay: {fileID: 114831544756009122}
-  deathEffectPrefab: {fileID: 138338, guid: cd1ff9e92aad8ac4db78b6ffd5f1eab7, type: 2}
-  projectilePrefab: {fileID: 1945138563759330, guid: bd0b8754db8153e448aeefe390d81306,
-    type: 2}
-  shootingSoundFile: {fileID: 8300000, guid: 12e5152dd914d1743b8fb9cb18c68223, type: 3}
 --- !u!114 &114375835151989644
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1663,6 +1647,22 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
+--- !u!114 &114631258358301528
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1336627308807744}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4b575876835f5b643ad223e72da5c2ee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  healthDisplay: {fileID: 114831544756009122}
+  deathEffectPrefab: {fileID: 136674, guid: 8d3a7fbc62f810c43b8c42fdb2978ef4, type: 2}
+  projectilePrefab: {fileID: 1945138563759330, guid: bd0b8754db8153e448aeefe390d81306,
+    type: 2}
+  shootingSoundFile: {fileID: 8300000, guid: 12e5152dd914d1743b8fb9cb18c68223, type: 3}
 --- !u!114 &114683926989688560
 MonoBehaviour:
   m_ObjectHideFlags: 1

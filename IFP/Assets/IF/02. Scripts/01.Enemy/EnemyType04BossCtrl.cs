@@ -196,6 +196,23 @@ namespace IF
             base.isDamaged = true;
         }
 
+        /// <summary>
+        /// 20180607 SangBin : 
+        /// </summary>
+        protected override void EnemyKilled()
+        {
+            base.EnemyKilled();
+
+            Destroy(gameObject, 3.5f);
+            StartCoroutine(GameClear());
+        }
+
+        private IEnumerator GameClear()
+        {
+            yield return new WaitForSeconds(4.0f);
+            GameManagement.instance.GameClear();
+        }
+
         ///// <summary>
         ///// 20180530 SangBin : Create bullet OP
         ///// </summary>

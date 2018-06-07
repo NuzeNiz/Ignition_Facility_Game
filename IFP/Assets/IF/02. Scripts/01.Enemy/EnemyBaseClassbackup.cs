@@ -8,7 +8,7 @@ namespace IF
     /// 20180502 SangBin : Architecture Enemy Base Class
     /// </summary>
     [RequireComponent(typeof(AudioSource))]
-    abstract public class EnemyBaseClass : MonoBehaviour
+    abstract public class EnemyBaseClassbackup : MonoBehaviour
     {
         #region Fields : Prefabs
         /// <summary>
@@ -355,7 +355,7 @@ namespace IF
         /// <summary>
         /// 20180403 SangBin : Fall down broken enemy without conflict
         /// </summary>
-        virtual protected void EnemyKilled()
+        protected void EnemyKilled()
         {
             //Because expecting to Enemy's Falling Animation by graphic designer, I would not make Enemy deactivated at once   
             this.gameObject.tag = "Untagged";
@@ -368,17 +368,16 @@ namespace IF
             GetComponent<CapsuleCollider>().enabled = false;
             animator.SetTrigger("IsDie");
             GameUIManagement.instance.DisplayScore(50);
-            if(DefenseStationCtrl.instance != null)
-                DefenseStationCtrl.instance.OnAbsorbEnergy(TagName);
+            DefenseStationCtrl.instance.OnAbsorbEnergy(TagName);
 
-            //StartCoroutine(PushObjectPool());
+            StartCoroutine(PushObjectPool());
             Destroy(explosion, 2.0f);
         }
 
         /// <summary>
         /// 20180403 SangBin : Push broken enemy into the object pool and initialize some fields
         /// </summary>
-        protected IEnumerator PushObjectPool()
+        private IEnumerator PushObjectPool()
         {
             yield return new WaitForSeconds(4.0f); //destroy delay
             //yield return null;

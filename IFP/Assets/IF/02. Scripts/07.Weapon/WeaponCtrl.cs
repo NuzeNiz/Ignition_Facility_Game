@@ -194,7 +194,8 @@ namespace IF
                 case WeaponTypeEnum.weaponType01 :
                     parameters[0] = BalanceManagement.instance.CalcPlayerStrkingPower(hitinfo.collider.gameObject.tag, currentWeaponType);
                     parameters[1] = false;
-                    GameObject flare = Instantiate(FlareEffect, hitinfo.collider.gameObject.transform.position, Quaternion.identity);
+
+                    GameObject flare = Instantiate(FlareEffect, hitinfo.collider.gameObject.transform.position + (hitinfo.collider.gameObject.transform.up *0.4f), Quaternion.identity);
                     hitinfo.collider.gameObject.SendMessage("OnDamaged", parameters, SendMessageOptions.DontRequireReceiver);
                     Destroy(flare, 3.0f);
                     break;

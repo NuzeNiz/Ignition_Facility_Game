@@ -140,9 +140,9 @@ namespace IF
         {
             CreateEnemyObjectPool();
 
-
-            //if(GameObject.Find("EnemySpawnPoints"))
+            if(DefenseStationCtrl.instance != null)
                 GameObject.Find("EnemySpawnPoints").gameObject.transform.SetPositionAndRotation(DefenseStationCtrl.instance.DefenseStationTR.position, DefenseStationCtrl.instance.DefenseStationTR.rotation);
+
             tempSpawnpoints = GameObject.Find("EnemySpawnPoints").GetComponentsInChildren<Transform>();
 
             if (tempSpawnpoints.Length > 0)

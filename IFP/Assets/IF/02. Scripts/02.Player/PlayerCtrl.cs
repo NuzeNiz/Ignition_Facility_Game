@@ -17,18 +17,18 @@ namespace IF
         /// <summary>
         /// 20180403 SangBin : Projectile Style Bullet Prefabs
         /// </summary>
-        public GameObject bulletPref;
+        //public GameObject bulletPref;
 
         /// <summary>
         /// 20180403 SangBin : Fire Sound File
         /// </summary>
-        public AudioClip fireSoundFile;
+        //public AudioClip fireSoundFile;
 
         /// <summary>
         /// 20180403 SangBin : Muzzleflash Renderer for Switching
         /// </summary>
         [HideInInspector]
-        public MeshRenderer muzzleFlash;
+        //public MeshRenderer muzzleFlash;
 
         /// <summary>
         /// 20180403 SangBin : Player's Transform Syncronized With The Main First Person Camera
@@ -225,30 +225,30 @@ namespace IF
         /// <summary>
         /// 20180403 SangBin : Player's Shooting
         /// </summary>
-        void Fire()
-        {
-            //StartCoroutine(this.ShowMuzzleFlash());
-            GameManagement.instance.SoundEffect(playerTr.position, fireSoundFile);
+        //void Fire()
+        //{
+        //    //StartCoroutine(this.ShowMuzzleFlash());
+        //    GameManagement.instance.SoundEffect(playerTr.position, fireSoundFile);
 
 
-        }
+        //}
 
         /// <summary>
         /// 20180403 SangBin : Coroutine function for muzzleflash
         /// </summary>
-        IEnumerator ShowMuzzleFlash()
-        {
+        //IEnumerator ShowMuzzleFlash()
+        //{
 
-            float scale = Random.Range(0.3f, 0.5f);
-            muzzleFlash.transform.localScale = Vector3.one * scale;
+        //    float scale = Random.Range(0.3f, 0.5f);
+        //    muzzleFlash.transform.localScale = Vector3.one * scale;
 
-            Quaternion rotate = Quaternion.Euler(0, 0, Random.Range(0, 360));
-            muzzleFlash.transform.localRotation = rotate;
+        //    Quaternion rotate = Quaternion.Euler(0, 0, Random.Range(0, 360));
+        //    muzzleFlash.transform.localRotation = rotate;
 
-            muzzleFlash.enabled = true;
-            yield return new WaitForSeconds(Random.Range(0.05f, 0.3f));
-            muzzleFlash.enabled = false;
-        }
+        //    muzzleFlash.enabled = true;
+        //    yield return new WaitForSeconds(Random.Range(0.05f, 0.3f));
+        //    muzzleFlash.enabled = false;
+        //}
 
         private IEnumerator CameraShake()
         {
