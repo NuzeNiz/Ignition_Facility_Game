@@ -305,15 +305,21 @@ namespace IF
             GetComponent<Rigidbody>().velocity = Vector3.zero;
             GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
 
+            AvailableSkillCheck();
+
             if (!isWitchSkillUsed)
             {
                 animator.SetBool("IsBasicAttack", true);
                 StartCoroutine(ProjectileShot(basicAttack_shot_Effect));
-
-                AvailableSkillCheck();
             }
-           
 
+            //if (!isWitchSkillUsed)
+            //{
+            //    animator.SetBool("IsBasicAttack", true);
+            //    StartCoroutine(ProjectileShot(basicAttack_shot_Effect));
+
+            //    AvailableSkillCheck();
+            //}
 
             //if (!isWitchSkillUsed)
             //{
@@ -336,40 +342,50 @@ namespace IF
                 if (percentageofHP <= 20.0d)
                 {
                     if (skill_04_State == EnemySkillState.available)
-                        UseSkill(ref skill_04_State, EnemySkill.skill_04);
+                        //UseSkill(ref skill_04_State, EnemySkill.skill_04);
+                        UseSkill(EnemySkill.skill_04);
 
                     else if (skill_03_State == EnemySkillState.available)
-                        UseSkill(ref skill_03_State, EnemySkill.skill_03);
+                        //UseSkill(ref skill_03_State, EnemySkill.skill_03);
+                        UseSkill(EnemySkill.skill_03);
 
                     else if (skill_02_State == EnemySkillState.available)
-                        UseSkill(ref skill_02_State, EnemySkill.skill_02);
+                        //UseSkill(ref skill_02_State, EnemySkill.skill_02);
+                        UseSkill(EnemySkill.skill_02);
 
                     else if (skill_01_State == EnemySkillState.available)
-                        UseSkill(ref skill_01_State, EnemySkill.skill_01);
+                        //UseSkill(ref skill_01_State, EnemySkill.skill_01);
+                        UseSkill(EnemySkill.skill_01);
                 }
                 else if (percentageofHP <= 40.0d)
                 {
                     if (skill_03_State == EnemySkillState.available)
-                        UseSkill(ref skill_03_State, EnemySkill.skill_03);
+                        //UseSkill(ref skill_03_State, EnemySkill.skill_03);
+                        UseSkill(EnemySkill.skill_03);
 
                     else if (skill_02_State == EnemySkillState.available)
-                        UseSkill(ref skill_02_State, EnemySkill.skill_02);
+                        //UseSkill(ref skill_02_State, EnemySkill.skill_02);
+                        UseSkill(EnemySkill.skill_02);
 
                     else if (skill_01_State == EnemySkillState.available)
-                        UseSkill(ref skill_01_State, EnemySkill.skill_01);
+                        //UseSkill(ref skill_01_State, EnemySkill.skill_01);
+                        UseSkill(EnemySkill.skill_01);
                 }
                 else if (percentageofHP <= 60.0d)
                 {
                     if (skill_02_State == EnemySkillState.available)
-                        UseSkill(ref skill_02_State, EnemySkill.skill_02);
+                        //UseSkill(ref skill_02_State, EnemySkill.skill_02);
+                        UseSkill(EnemySkill.skill_02);
 
                     else if (skill_01_State == EnemySkillState.available)
-                        UseSkill(ref skill_01_State, EnemySkill.skill_01);
+                        //UseSkill(ref skill_01_State, EnemySkill.skill_01);
+                        UseSkill(EnemySkill.skill_01);
                 }
                 else
                 {
                     if (skill_01_State == EnemySkillState.available)
-                        UseSkill(ref skill_01_State, EnemySkill.skill_01);
+                        //UseSkill(ref skill_01_State, EnemySkill.skill_01);
+                        UseSkill(EnemySkill.skill_01);
                 }
             }
         }
@@ -378,16 +394,17 @@ namespace IF
         /// <summary>
         /// 20180530 SangBin :
         /// </summary>
-        private IEnumerator UseSkill_01()
+        private IEnumerator UseSkill_01(EnemySkill ek)
         {
             animator.SetTrigger("IsSkill01");
             //animator.SetBool("IsBasicAttack", false);
             //animator.SetBool("IsSkill01", true);
             yield return new WaitForSeconds(1.1f);
             isWitchSkillUsed = false;
-
+            //Invoke("TempDelay", 1.1f);
             //animator.SetBool("IsSkill01", false);
-            StartCoroutine(base.EnemyAction());
+            StartCoroutine(SkillCoolDown(ek));
+            //StartCoroutine(base.EnemyAction());
 
             yield break;
         }
@@ -395,15 +412,16 @@ namespace IF
         /// <summary>
         /// 20180530 SangBin :
         /// </summary>
-        private IEnumerator UseSkill_02()
+        private IEnumerator UseSkill_02(EnemySkill ek)
         {
             animator.SetTrigger("IsSkill02");
             //animator.SetBool("IsSkill02", true);
             yield return new WaitForSeconds(1.1f);
             isWitchSkillUsed = false;
-
+            //Invoke("TempDelay", 1.1f);
             //animator.SetBool("IsSkill02", false);
-            StartCoroutine(base.EnemyAction());
+            StartCoroutine(SkillCoolDown(ek));
+            //StartCoroutine(base.EnemyAction());
 
             yield break;
         }
@@ -411,15 +429,16 @@ namespace IF
         /// <summary>
         /// 20180530 SangBin :
         /// </summary>
-        private IEnumerator UseSkill_03()
+        private IEnumerator UseSkill_03(EnemySkill ek)
         {
             animator.SetTrigger("IsSkill03");
             //animator.SetBool("IsSkill03", true);
             yield return new WaitForSeconds(4.1f);
             isWitchSkillUsed = false;
-
+            //Invoke("TempDelay", 4.1f);
             //animator.SetBool("IsSkill03", false);
-            StartCoroutine(base.EnemyAction());
+            StartCoroutine(SkillCoolDown(ek));
+            //StartCoroutine(base.EnemyAction());
 
             yield break;
         }
@@ -427,52 +446,58 @@ namespace IF
         /// <summary>
         /// 20180530 SangBin :
         /// </summary>
-        private IEnumerator UseSkill_04()
+        private IEnumerator UseSkill_04(EnemySkill ek)
         {
             animator.SetTrigger("IsSkill04");
             //animator.SetBool("IsSkill04", true);
             yield return new WaitForSeconds(1.1f);
-            isWitchSkillUsed = false;
 
+            isWitchSkillUsed = false;
+            //Invoke("TempDelay", 1.1f);
             //animator.SetBool("IsSkill04", false);
-            StartCoroutine(base.EnemyAction());
+            StartCoroutine(SkillCoolDown(ek));
+            //StartCoroutine(base.EnemyAction());
             yield break;
         }
 
-        /// <summary>
+        private void TempDelay() { }
+
+        /// <summary>s
         /// 20180530 SangBin :
         /// </summary>
-        private void UseSkill(ref EnemySkillState skill_State, EnemySkill ek)
+        private void UseSkill(EnemySkill ek)
+        //private void UseSkill(ref EnemySkillState skill_State, EnemySkill ek)
         {
-            StopCoroutine(base.EnemyAction());
+            //StopCoroutine(base.EnemyAction());
             //animator.SetBool("IsBasicAttack", false);
             isWitchSkillUsed = true;
+            //skill_State = EnemySkillState.cooling;
 
             switch (ek)
             {
                 case EnemySkill.skill_01:
-
-                    StartCoroutine(UseSkill_01());
+                    skill_01_State = EnemySkillState.cooling;
+                    StartCoroutine(UseSkill_01(ek));
                     break;
 
                 case EnemySkill.skill_02:
-
-                    StartCoroutine(UseSkill_02());
+                    skill_02_State = EnemySkillState.cooling;
+                    StartCoroutine(UseSkill_02(ek));
                     break;
 
                 case EnemySkill.skill_03:
-
-                    StartCoroutine(UseSkill_03());
+                    skill_03_State = EnemySkillState.cooling;
+                    StartCoroutine(UseSkill_03(ek));
                     break;
 
                 case EnemySkill.skill_04:
-
-                    StartCoroutine(UseSkill_04());
+                    skill_04_State = EnemySkillState.cooling;
+                    StartCoroutine(UseSkill_04(ek));
                     break;
             }
 
-            skill_State = EnemySkillState.cooling;
-            StartCoroutine(SkillCoolDown(ek));
+            //skill_State = EnemySkillState.cooling;
+            //StartCoroutine(SkillCoolDown(ek));
         }
 
 
