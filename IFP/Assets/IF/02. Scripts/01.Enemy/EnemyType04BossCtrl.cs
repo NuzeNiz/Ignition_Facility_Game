@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Threading;
 
 namespace IF
 {
@@ -305,13 +306,16 @@ namespace IF
             GetComponent<Rigidbody>().velocity = Vector3.zero;
             GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
 
-            AvailableSkillCheck();
-
             if (!isWitchSkillUsed)
             {
                 animator.SetBool("IsBasicAttack", true);
                 StartCoroutine(ProjectileShot(basicAttack_shot_Effect));
+                AvailableSkillCheck();
             }
+
+
+
+
 
             //if (!isWitchSkillUsed)
             //{
@@ -396,14 +400,19 @@ namespace IF
         /// </summary>
         private IEnumerator UseSkill_01(EnemySkill ek)
         {
+            StopCoroutine(base.EnemyAction());
             animator.SetTrigger("IsSkill01");
             //animator.SetBool("IsBasicAttack", false);
             //animator.SetBool("IsSkill01", true);
+            //Thread.Sleep(1200);
             yield return new WaitForSeconds(1.1f);
             isWitchSkillUsed = false;
             //Invoke("TempDelay", 1.1f);
             //animator.SetBool("IsSkill01", false);
-            StartCoroutine(SkillCoolDown(ek));
+
+            StartCoroutine(base.EnemyAction());
+            //animator.SetBool("IsBasicAttack", true);
+            //StartCoroutine(SkillCoolDown(ek));
             //StartCoroutine(base.EnemyAction());
 
             yield break;
@@ -414,13 +423,18 @@ namespace IF
         /// </summary>
         private IEnumerator UseSkill_02(EnemySkill ek)
         {
+            StopCoroutine(base.EnemyAction());
             animator.SetTrigger("IsSkill02");
             //animator.SetBool("IsSkill02", true);
             yield return new WaitForSeconds(1.1f);
+            //Thread.Sleep(1200);
             isWitchSkillUsed = false;
             //Invoke("TempDelay", 1.1f);
             //animator.SetBool("IsSkill02", false);
-            StartCoroutine(SkillCoolDown(ek));
+
+            StartCoroutine(base.EnemyAction());
+            //animator.SetBool("IsBasicAttack", true);
+            //StartCoroutine(SkillCoolDown(ek));
             //StartCoroutine(base.EnemyAction());
 
             yield break;
@@ -431,13 +445,18 @@ namespace IF
         /// </summary>
         private IEnumerator UseSkill_03(EnemySkill ek)
         {
+            StopCoroutine(base.EnemyAction());
             animator.SetTrigger("IsSkill03");
             //animator.SetBool("IsSkill03", true);
             yield return new WaitForSeconds(4.1f);
+            //Thread.Sleep(4200);
             isWitchSkillUsed = false;
             //Invoke("TempDelay", 4.1f);
             //animator.SetBool("IsSkill03", false);
-            StartCoroutine(SkillCoolDown(ek));
+
+            StartCoroutine(base.EnemyAction());
+            //animator.SetBool("IsBasicAttack", true);
+            //StartCoroutine(SkillCoolDown(ek));
             //StartCoroutine(base.EnemyAction());
 
             yield break;
@@ -448,16 +467,57 @@ namespace IF
         /// </summary>
         private IEnumerator UseSkill_04(EnemySkill ek)
         {
+            StopCoroutine(base.EnemyAction());
             animator.SetTrigger("IsSkill04");
             //animator.SetBool("IsSkill04", true);
+            //Thread.Sleep(1200);
             yield return new WaitForSeconds(1.1f);
 
             isWitchSkillUsed = false;
             //Invoke("TempDelay", 1.1f);
             //animator.SetBool("IsSkill04", false);
-            StartCoroutine(SkillCoolDown(ek));
+
+            StartCoroutine(base.EnemyAction());
+            //animator.SetBool("IsBasicAttack", true);
+            //StartCoroutine(SkillCoolDown(ek));
             //StartCoroutine(base.EnemyAction());
             yield break;
+        }
+
+        private void ThreadBody01()
+        {
+            StopCoroutine(base.EnemyAction());
+            animator.SetTrigger("IsSkill01");
+            Thread.Sleep(1100);
+            isWitchSkillUsed = false;
+            StartCoroutine(base.EnemyAction());
+        }
+
+        private void ThreadBody02()
+        {
+            StopCoroutine(base.EnemyAction());
+            animator.SetTrigger("IsSkill02");
+            Thread.Sleep(1100);
+            isWitchSkillUsed = false;
+            StartCoroutine(base.EnemyAction());
+        }
+
+        private void ThreadBody03()
+        {
+            StopCoroutine(base.EnemyAction());
+            animator.SetTrigger("IsSkill03");
+            Thread.Sleep(4100);
+            isWitchSkillUsed = false;
+            StartCoroutine(base.EnemyAction());
+        }
+
+        private void ThreadBody04()
+        {
+            StopCoroutine(base.EnemyAction());
+            animator.SetTrigger("IsSkill04");
+            Thread.Sleep(1100);
+            isWitchSkillUsed = false;
+            StartCoroutine(base.EnemyAction());
         }
 
         private void TempDelay() { }
@@ -476,22 +536,34 @@ namespace IF
             switch (ek)
             {
                 case EnemySkill.skill_01:
-                    skill_01_State = EnemySkillState.cooling;
+                    //skill_01_State = EnemySkillState.cooling;
+                    skill_01_State = EnemySkillState.disavailable;
+                    //Thread thr1 = new Thread(new ThreadStart(ThreadBody01));
+                   // thr1.Start();
                     StartCoroutine(UseSkill_01(ek));
                     break;
 
                 case EnemySkill.skill_02:
-                    skill_02_State = EnemySkillState.cooling;
+                    //skill_02_State = EnemySkillState.cooling;
+                    skill_02_State = EnemySkillState.disavailable;
+                    //Thread thr2 = new Thread(new ThreadStart(ThreadBody02));
+                    //thr2.Start();
                     StartCoroutine(UseSkill_02(ek));
                     break;
 
                 case EnemySkill.skill_03:
-                    skill_03_State = EnemySkillState.cooling;
+                    //skill_03_State = EnemySkillState.cooling;
+                    skill_03_State = EnemySkillState.disavailable;
+                    //Thread thr3 = new Thread(new ThreadStart(ThreadBody03));
+                    //thr3.Start();
                     StartCoroutine(UseSkill_03(ek));
                     break;
 
                 case EnemySkill.skill_04:
-                    skill_04_State = EnemySkillState.cooling;
+                    //skill_04_State = EnemySkillState.cooling;
+                    skill_04_State = EnemySkillState.disavailable;
+                    //Thread thr4 = new Thread(new ThreadStart(ThreadBody04));
+                    //thr4.Start();
                     StartCoroutine(UseSkill_04(ek));
                     break;
             }
