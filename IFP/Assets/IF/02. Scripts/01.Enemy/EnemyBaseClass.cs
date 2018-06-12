@@ -69,7 +69,7 @@ namespace IF
         /// <summary>
         /// 20180430 SangBin : 
         /// </summary>
-        protected bool isDamaged = false;
+        protected bool isDamaged = true;
         #endregion
 
         #region Fields : Tracking(Enemy To Player)
@@ -93,7 +93,7 @@ namespace IF
         /// 20180418 SangBin : Unity AI Baked Navigation --> Coroutine & RigidBody.Addforce
         /// </summary>
         //protected float traceDistEtoP = 10.0f;
-        virtual protected float TraceDistEtoP { get { return 20.0f; } }
+        virtual protected float TraceDistEtoP { get { return 100.0f; } }
 
         /// <summary>
         /// 20180403 SangBin : Unity AI Baked Navigation / Enemy's Enable attack Distance
@@ -138,6 +138,8 @@ namespace IF
 
         #endregion
 
+
+
         //--------------------------------------------------------------------------------------------------
 
         virtual protected void Awake()
@@ -151,7 +153,7 @@ namespace IF
             isDamaged = false;
         }
 
-        protected void OnDisable()
+        virtual protected void OnDisable()
         {
             ResetTag(TagName);
         }
@@ -221,7 +223,7 @@ namespace IF
                         currentEnemyState = EnemyState.idle;
                     }
                 }
-                else
+                else if (DefenseStationCtrl.instance != null)
                 {
                     Cal_DirectionEtoDS();
 

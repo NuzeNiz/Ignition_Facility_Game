@@ -128,7 +128,7 @@ namespace IF
         {
             get
             {
-                return 1.2f;
+                return 2.5f;
             }
         }
         #endregion
@@ -188,6 +188,32 @@ namespace IF
         private EnemySkillState skill_03_State = EnemySkillState.available;
         private EnemySkillState skill_04_State = EnemySkillState.available;
         #endregion
+
+        #region Fields : Summon
+        /// <summary>
+        /// 20180403 SangBin : Enemy  Prefabs
+        /// </summary>
+        [SerializeField]
+        private GameObject enemyPrefab_type01;
+
+        /// <summary>
+        /// 20180501 SangBin : Enemy  Prefabs
+        /// </summary>
+        [SerializeField]
+        private GameObject enemyPrefab_type02;
+
+        /// <summary>
+        /// 20180501 SangBin : Enemy  Prefabs
+        /// </summary>
+        [SerializeField]
+        private GameObject enemyPrefab_type03;
+
+        private int maxSummon = 5;
+        private int summonCount = 0;
+
+        private List<GameObject> enemyPrefabList = new List<GameObject>();
+
+        #endregion
         //--------------------------------------------------------------------------------
 
         protected override void Awake()
@@ -197,12 +223,30 @@ namespace IF
             tagName = gameObject.tag;
             //CreateProjectileObjectPool();
             //transform.parent = GoogleARCore.IF.TowerBuildController.instance.DefenseStation_Anchor_Tr;
+
+            CreateEnemyObjectPool();
+            //enemyPrefabList.Add(enemyPrefab_type01);
+            //enemyPrefabList.Add(enemyPrefab_type02);
+            //enemyPrefabList.Add(enemyPrefab_type03);
         }
 
         override protected void OnEnable()
         {
             base.OnEnable();
             base.isDamaged = true;
+            ETS_LongRange.ETS_Killed += this.ETS_Killed;
+        }
+
+        protected override void OnDisable()
+        {
+            base.OnDisable();
+            ETS_LongRange.ETS_Killed -= this.ETS_Killed;
+            enemyPrefabList.Clear();
+        }
+
+        private void ETS_Killed()
+        {
+            summonCount--;
         }
 
         /// <summary>
@@ -215,6 +259,9 @@ namespace IF
             StartCoroutine(GameClear());
         }
 
+        /// <summary>
+        /// 20180607 SangBin : 
+        /// </summary>
         private IEnumerator GameClear()
         {
             yield return new WaitForSeconds(4.0f);
@@ -395,6 +442,30 @@ namespace IF
         }
 
 
+
+        /// <summary>
+        /// 20180530 SangBin :
+        /// </summary>
+        //private IEnumerator UseSkill_01(EnemySkill ek)
+        //{
+        //    StopCoroutine(base.EnemyAction());
+        //    animator.SetTrigger("IsSkill01");
+        //    animator.SetBool("IsBasicAttack", false);
+        //    animator.SetBool("IsSkill01", true);
+        //    Thread.Sleep(1200);
+        //    yield return new WaitForSeconds(1.1f);
+        //    isWitchSkillUsed = false;
+        //    Invoke("TempDelay", 1.1f);
+        //    animator.SetBool("IsSkill01", false);
+
+        //    StartCoroutine(base.EnemyAction());
+        //    animator.SetBool("IsBasicAttack", true);
+        //    StartCoroutine(SkillCoolDown(ek));
+        //    StartCoroutine(base.EnemyAction());
+
+        //    yield break;
+        //}
+
         /// <summary>
         /// 20180530 SangBin :
         /// </summary>
@@ -402,18 +473,13 @@ namespace IF
         {
             StopCoroutine(base.EnemyAction());
             animator.SetTrigger("IsSkill01");
-            //animator.SetBool("IsBasicAttack", false);
-            //animator.SetBool("IsSkill01", true);
-            //Thread.Sleep(1200);
+
             yield return new WaitForSeconds(1.1f);
+            StartCoroutine(WitchSkill01());
             isWitchSkillUsed = false;
-            //Invoke("TempDelay", 1.1f);
-            //animator.SetBool("IsSkill01", false);
+
 
             StartCoroutine(base.EnemyAction());
-            //animator.SetBool("IsBasicAttack", true);
-            //StartCoroutine(SkillCoolDown(ek));
-            //StartCoroutine(base.EnemyAction());
 
             yield break;
         }
@@ -425,17 +491,13 @@ namespace IF
         {
             StopCoroutine(base.EnemyAction());
             animator.SetTrigger("IsSkill02");
-            //animator.SetBool("IsSkill02", true);
+
             yield return new WaitForSeconds(1.1f);
-            //Thread.Sleep(1200);
+
             isWitchSkillUsed = false;
-            //Invoke("TempDelay", 1.1f);
-            //animator.SetBool("IsSkill02", false);
 
             StartCoroutine(base.EnemyAction());
-            //animator.SetBool("IsBasicAttack", true);
-            //StartCoroutine(SkillCoolDown(ek));
-            //StartCoroutine(base.EnemyAction());
+
 
             yield break;
         }
@@ -447,17 +509,12 @@ namespace IF
         {
             StopCoroutine(base.EnemyAction());
             animator.SetTrigger("IsSkill03");
-            //animator.SetBool("IsSkill03", true);
+
             yield return new WaitForSeconds(4.1f);
-            //Thread.Sleep(4200);
+
             isWitchSkillUsed = false;
-            //Invoke("TempDelay", 4.1f);
-            //animator.SetBool("IsSkill03", false);
 
             StartCoroutine(base.EnemyAction());
-            //animator.SetBool("IsBasicAttack", true);
-            //StartCoroutine(SkillCoolDown(ek));
-            //StartCoroutine(base.EnemyAction());
 
             yield break;
         }
@@ -469,21 +526,19 @@ namespace IF
         {
             StopCoroutine(base.EnemyAction());
             animator.SetTrigger("IsSkill04");
-            //animator.SetBool("IsSkill04", true);
-            //Thread.Sleep(1200);
+
             yield return new WaitForSeconds(1.1f);
 
             isWitchSkillUsed = false;
-            //Invoke("TempDelay", 1.1f);
-            //animator.SetBool("IsSkill04", false);
 
             StartCoroutine(base.EnemyAction());
-            //animator.SetBool("IsBasicAttack", true);
-            //StartCoroutine(SkillCoolDown(ek));
-            //StartCoroutine(base.EnemyAction());
+
             yield break;
         }
 
+        /// <summary>s
+        /// 20180530 SangBin : test
+        /// </summary>
         private void ThreadBody01()
         {
             StopCoroutine(base.EnemyAction());
@@ -493,6 +548,9 @@ namespace IF
             StartCoroutine(base.EnemyAction());
         }
 
+        /// <summary>s
+        /// 20180530 SangBin : test
+        /// </summary>
         private void ThreadBody02()
         {
             StopCoroutine(base.EnemyAction());
@@ -502,6 +560,9 @@ namespace IF
             StartCoroutine(base.EnemyAction());
         }
 
+        /// <summary>s
+        /// 20180530 SangBin : test
+        /// </summary>
         private void ThreadBody03()
         {
             StopCoroutine(base.EnemyAction());
@@ -511,6 +572,9 @@ namespace IF
             StartCoroutine(base.EnemyAction());
         }
 
+        /// <summary>s
+        /// 20180530 SangBin : test
+        /// </summary>
         private void ThreadBody04()
         {
             StopCoroutine(base.EnemyAction());
@@ -528,8 +592,7 @@ namespace IF
         private void UseSkill(EnemySkill ek)
         //private void UseSkill(ref EnemySkillState skill_State, EnemySkill ek)
         {
-            //StopCoroutine(base.EnemyAction());
-            //animator.SetBool("IsBasicAttack", false);
+
             isWitchSkillUsed = true;
             //skill_State = EnemySkillState.cooling;
 
@@ -634,6 +697,93 @@ namespace IF
                     skill_04_State = EnemySkillState.available;
                     break;
             }
+        }
+
+        void CreateEnemyObjectPool()
+        {
+            for (int i = 0; i < 2; i++)
+            {
+                GameObject enemy_type01 = (GameObject)Instantiate(enemyPrefab_type01);
+                enemy_type01.name = "Enemy_type01_" + i.ToString();
+                enemy_type01.SetActive(false);
+
+                GameObject enemy_type02 = (GameObject)Instantiate(enemyPrefab_type02);
+                enemy_type02.name = "Enemy_type01_" + i.ToString();
+                enemy_type02.SetActive(false);
+
+                GameObject enemy_type03 = (GameObject)Instantiate(enemyPrefab_type03);
+                enemy_type03.name = "Enemy_type01_" + i.ToString();
+                enemy_type03.SetActive(false);
+
+                //GameObject Enemy_Moth = (GameObject)Instantiate(enemyPrefab_type02);
+                //Enemy_Moth.name = "Enemy_Moth_" + i.ToString();
+                //Enemy_Moth.transform.GetChild(0).gameObject.SetActive(false);
+                //Enemy_Moth.SetActive(false);
+
+                enemyPrefabList.Add(enemy_type01);
+                enemyPrefabList.Add(enemy_type02);
+                enemyPrefabList.Add(enemy_type03);
+            }
+        }
+
+        private IEnumerator WitchSkill01()
+        {
+            summonCount = 0;
+            while (summonCount < maxSummon)
+            {
+                foreach (GameObject enemy in enemyPrefabList)
+                {
+                    //GameObject enemy = Instantiate(enemyPrefabList[Random.Range(0,enemyPrefabList.Count-1)], tempGate.transform.position, Quaternion.identity);
+                    //GameObject enemy = Instantiate(enemyPrefab_type01, tempGate.transform.position, Quaternion.identity);
+                    //enemy.SetActive(true);
+
+                    if (!enemy.activeSelf)
+                    {
+                        Transform tempGatTR = transform.GetChild(0).GetChild(Random.Range(0, 9)).transform;
+
+                        tempGatTR.LookAt(PlayerCtrl.instance.PlayerTr);
+
+                        if (!tempGatTR.GetChild(0).gameObject.activeSelf)
+                        {
+                            tempGatTR.GetChild(0).gameObject.SetActive(true);
+                        }
+
+                        enemy.transform.position = tempGatTR.position;
+                        //enemy.transform.parent = transform;
+
+                        enemy.SetActive(true);
+
+                        StartCoroutine(CloseGate(tempGatTR.GetChild(0).gameObject));
+                        summonCount++;
+                        break;
+                    }
+                }
+
+                yield return new WaitForSeconds(0.6f);
+            }
+            yield break;
+        }
+
+        private IEnumerator CloseGate(GameObject tempGate)
+        {
+            yield return new WaitForSeconds(3.0f);
+            if(tempGate.activeSelf)
+                tempGate.SetActive(false);
+        }
+
+        private void WitchSkill02()
+        {
+
+        }
+
+        private void WitchSkill03()
+        {
+
+        }
+
+        private void WitchSkill04()
+        {
+
         }
     }
 }

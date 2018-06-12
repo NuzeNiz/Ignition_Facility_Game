@@ -138,17 +138,22 @@ namespace IF
 
         private void Start()
         {
-            CreateEnemyObjectPool();
 
-            if(DefenseStationCtrl.instance != null)
+            if (DefenseStationCtrl.instance != null)
+            {
+                CreateEnemyObjectPool();
+
                 GameObject.Find("EnemySpawnPoints").gameObject.transform.SetPositionAndRotation(DefenseStationCtrl.instance.DefenseStationTR.position, DefenseStationCtrl.instance.DefenseStationTR.rotation);
 
-            tempSpawnpoints = GameObject.Find("EnemySpawnPoints").GetComponentsInChildren<Transform>();
+                tempSpawnpoints = GameObject.Find("EnemySpawnPoints").GetComponentsInChildren<Transform>();
 
-            if (tempSpawnpoints.Length > 0)
-            {
-                StartCoroutine(this.ActivateEnemy());
+                if (tempSpawnpoints.Length > 0)
+                {
+                    StartCoroutine(this.ActivateEnemy());
+                }
+
             }
+
 
             CreateButterFlyObjectPool();
             CreateItemObjectPool();
@@ -179,11 +184,11 @@ namespace IF
                 enemy_type01.SetActive(false);
 
                 GameObject enemy_type02 = (GameObject)Instantiate(enemyPrefab_type02);
-                enemy_type02.name = "Enemy_type01_" + i.ToString();
+                enemy_type02.name = "Enemy_type02_" + i.ToString();
                 enemy_type02.SetActive(false);
 
                 GameObject enemy_type03 = (GameObject)Instantiate(enemyPrefab_type03);
-                enemy_type03.name = "Enemy_type01_" + i.ToString();
+                enemy_type03.name = "Enemy_type03_" + i.ToString();
                 enemy_type03.SetActive(false);
 
                 //GameObject Enemy_Moth = (GameObject)Instantiate(enemyPrefab_type02);

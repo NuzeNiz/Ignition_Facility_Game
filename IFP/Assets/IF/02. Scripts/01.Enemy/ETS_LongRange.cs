@@ -107,6 +107,12 @@ namespace IF
         private AudioClip shootingSoundFile;
         #endregion
 
+        /// <summary>
+        /// 20180612 SangBin : 
+        /// </summary>
+        public delegate void ETS_EventHandler();
+        public static event ETS_EventHandler ETS_Killed;
+
         //------------------------------------------------------------------------------------------------------------------------
 
         override protected void Awake()
@@ -134,9 +140,15 @@ namespace IF
         /// </summary>
         protected override void EnemyKilled()
         {
+            ETS_Killed();
             base.EnemyKilled();
-
             StartCoroutine(base.PushObjectPool());
+            //if (DefenseStationCtrl.instance != null)
+            //    StartCoroutine(base.PushObjectPool());
+            //else
+            //{
+            //    Destroy(this, 4.0f);
+            //}
         }
 
         /// <summary>
