@@ -1,0 +1,42 @@
+<pins>
+    <pin>
+        <id>0001</id>
+        <type>group</type>
+        <latitude>37.71275517</latitude>
+        <longitude>126.88987325</longitude>
+        <childs>
+            <pin>
+                <id> 0002</id>
+                <type>location</type>
+                <latitude>37.7131538</latitude>
+                <longitude>126.889557</longitude>
+                <childs>
+                </childs>
+            </pin>
+            <pin>
+                <id>0003</id>
+                <type>location</type>
+                <latitude>37.7128944</latitude>
+                <longitude>126.889343</longitude>
+                <childs>
+                </childs>
+            </pin>
+            <pin>
+                <id>0004</id>
+                <type>location</type>
+                <latitude>37.712368</latitude>
+                <longitude>126.890205</longitude>
+                <childs>
+                </childs>
+            </pin>
+            <pin>
+                <id>0005</id>
+                <type>location</type>
+                <latitude>37.7126045</latitude>
+                <longitude>126.890388</longitude>
+                <childs>
+                </childs>
+            </pin>
+        </childs>
+    </pin>
+</pins>
