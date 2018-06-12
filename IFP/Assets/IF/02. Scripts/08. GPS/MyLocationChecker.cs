@@ -1,60 +1,109 @@
-﻿using System.Collections;
+﻿using System;
+using System.Threading;
+using System.Threading.Tasks;
+using System.Xml.Linq;
+using System.Linq;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class MyLocationChecker : MonoBehaviour {
+public class MyLocationChecker : MonoBehaviour
+{
 
-    [SerializeField]
-    private Button locationModBtn;
-    private Image btnImage;
+    public bool isInLocation { get; private set; }
+    public bool isInGroup { get; private set; }
 
-    private Color originColor;
+    private readonly float groupDistance = 0.000872629430946f;
+    private readonly float locationDistance = 0.00016814009039972156f;
 
-    private float[] coord = new float[2];
-    private float distance = 0.00016814009039972156f;
+    private float[] myPosition = { 0.0f, 0.0f };
+
+    private Thread locationChecker;
+    private CancellationTokenSource cts;
 
     private void Awake()
     {
-        btnImage = locationModBtn.GetComponent<Image>();
-        originColor = btnImage.color;
-
-        //coord[0] = 37.7131538f;
-        //coord[1] = 126.889557f;
-
-        coord[0] = 37.71359f;
-        coord[1] = 126.890091f;
+        var tAsset = Resources.Load("data") as TextAsset;
+        var xDoc = XElement.Parse(tAsset.text);
 
         Input.location.Start();
+
+        cts = new CancellationTokenSource();
+
+        locationChecker = new Thread(() =>
+          {
+              IEnumerable<XElement> xElement = xDoc.Elements("pin");
+
+              try
+              {
+                  while (true)
+                  {
+                      cts.Token.ThrowIfCancellationRequested();
+                      var selected = xElement.Where(xe =>
+                      {
+                          float[] pos = { float.Parse(xe.Element("latitude").Value), float.Parse(xe.Element("longitude").Value) };
+                          var dis = DistanceCalc(myPosition, pos);
+                          var type = xe.Element("type").Value;
+                          if (type == "group")
+                          {
+                              return dis <= groupDistance;
+                          }
+                          else
+                          {
+                              return dis <= locationDistance;
+                          }
+                      }).FirstOrDefault();
+
+                      if (selected != null)
+                      {
+                          var type = selected.Element("type").Value;
+                          if (type == "group")
+                          {
+                              xElement = selected.Elements("childs");
+                              isInGroup = true;
+                          }
+                          else if (type == "location")
+                          {
+                              isInLocation = true;
+                          }
+                      }
+                      else
+                      {
+                          xElement = xDoc.Elements("pin");
+                          isInGroup = false;
+                          isInLocation = false;
+                      }
+                  }
+              }
+              catch
+              {
+                  Debug.Log("stop!!");
+              }
+          });
+        locationChecker.Start();
+
     }
 
-    // Update is called once per frame
-    void Update()
+    private void Update()
     {
-        if (Input.location.status == LocationServiceStatus.Running)
-        {
-            var latitude = Input.location.lastData.latitude;
-            var longitude = Input.location.lastData.longitude;
+        myPosition[0] = Input.location.lastData.latitude;
+        myPosition[1] = Input.location.lastData.longitude;
+    }
 
-            var a = coord[0] - latitude;
-            a = a * a;
-            var b = coord[1] - longitude;
-            b = b * b;
-            var currentDistance = Mathf.Sqrt(a + b);
+    float DistanceCalc(float[] a, float[] b)
+    {
+        float[] c = { a[0] - b[0], a[1] - b[1] };
+        var cDis = Math.Sqrt(c[0] * c[0] + c[1] * c[1]);
 
-            if (currentDistance < distance)
-            {
-                btnImage.color = new Color(1.0f, 1.0f, 1.0f);
-            }
-            else
-            {
-                btnImage.color = originColor;
-            }
-        }
+        return (float)cDis;
     }
 
     private void OnDisable()
     {
         Input.location.Stop();
+        cts.Cancel();
+        cts.Dispose();
+        locationChecker.Join();
     }
 }
