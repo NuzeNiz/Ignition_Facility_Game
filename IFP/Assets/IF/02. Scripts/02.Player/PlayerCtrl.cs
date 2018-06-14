@@ -4,7 +4,7 @@ using UnityEngine;
 
 using UnityEngine.UI;
 
-namespace IF
+namespace IFP
 {
     [RequireComponent(typeof(AudioSource))]
     public class PlayerCtrl : MonoBehaviour
@@ -290,7 +290,7 @@ namespace IF
         {
             StartCoroutine(CameraShake());
             //playerHP -= BalanceManagement.instance.EnemyProjectile01damage;
-            playerHP -= 2.0d;
+            playerHP -= 1.0d;
             PlayerDamaged();
 
             if (playerHP <= 0.0d)

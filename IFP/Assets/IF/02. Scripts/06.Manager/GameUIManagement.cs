@@ -4,7 +4,7 @@ using UnityEngine;
 
 using UnityEngine.UI;
 
-namespace IF
+namespace IFP
 {
     public class GameUIManagement : MonoBehaviour
     {

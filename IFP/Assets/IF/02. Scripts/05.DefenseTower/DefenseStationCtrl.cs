@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace IF
+namespace IFP
 {
     public class DefenseStationCtrl : MonoBehaviour
     {
@@ -212,8 +212,11 @@ namespace IF
                     break;
             }
 
-            //기본 경험치
-            defenseStation_exp += expValue;
+
+            if(defenseStation_Fire_Energy>10.0d && defenseStation_Water_Energy>10.0d && defenseStation_Leaf_Energy>10.0d)
+                //기본 경험치
+                defenseStation_exp += expValue;
+
 
             if (defenseStation_exp >= 100.0d)
             {

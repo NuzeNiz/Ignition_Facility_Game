@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace IF
+namespace IFP
 {
     /// <summary>
     /// 20180502 SangBin : Architecture Enemy Base Class

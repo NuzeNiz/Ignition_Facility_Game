@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace IF
+namespace IFP
 {
     public class HPDisplayer : MonoBehaviour
     {

@@ -3,23 +3,28 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class StartMenuManagement : MonoBehaviour
-{
-    /// <summary>
-    /// 20180403 SangBin : Start button event handler
-    /// </summary>
-    public void OnclickStartBtn()
+namespace IFP {
+    public class StartMenuManagement : MonoBehaviour
     {
-        SceneManager.LoadScene("GameScene A");
-    }
+        /// <summary>
+        /// 20180403 SangBin : Start button event handler
+        /// </summary>
+        public void OnclickStartBtn()
+        {
+            TempStageManagement.instance.CurrentStageLevel = 2;
+            SceneManager.LoadScene("GameScene A");
+        }
 
-    public void OnclickQuitBtn()
-    {
-        Application.Quit();
-    }
+        public void OnclickQuitBtn()
+        {
+            Application.Quit();
+        }
 
-    public void OnclickTempBtn()
-    {
-        SceneManager.LoadScene("StoryMode Chapter 3");
+        public void OnclickTempBtn()
+        {
+            TempStageManagement.instance.CurrentStageLevel = 5;
+            //SceneManager.LoadScene("StoryMode Chapter 3");
+            SceneManager.LoadScene("GameScene A");
+        }
     }
 }

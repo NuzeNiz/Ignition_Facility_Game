@@ -2,7 +2,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
-using IF;
+using IFP;
 
 /// <summary>
 /// 20180423 SeongJun : Open item window button

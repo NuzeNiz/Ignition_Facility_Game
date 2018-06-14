@@ -4,7 +4,7 @@ using UnityEngine;
 
 using UnityEngine.AI;
 
-namespace IF
+namespace IFP
 {
     [RequireComponent(typeof(AudioSource))]
     public class MothCtrl1 : MonoBehaviour

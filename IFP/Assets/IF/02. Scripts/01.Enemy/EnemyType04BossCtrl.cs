@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Threading;
 
-namespace IF
+namespace IFP
 {
     public class EnemyType04BossCtrl : EnemyBaseClass
     {
@@ -120,7 +120,7 @@ namespace IF
         {
             get
             {
-                return 5.0f;
+                return 6.0f;
             }
         }
 
@@ -128,7 +128,7 @@ namespace IF
         {
             get
             {
-                return 2.5f;
+                return 3.0f;
             }
         }
         #endregion
@@ -189,7 +189,7 @@ namespace IF
         private EnemySkillState skill_04_State = EnemySkillState.available;
         #endregion
 
-        #region Fields : Summon
+        #region Fields : Skill
         /// <summary>
         /// 20180403 SangBin : Enemy  Prefabs
         /// </summary>
@@ -208,11 +208,22 @@ namespace IF
         [SerializeField]
         private GameObject enemyPrefab_type03;
 
+        /// <summary>
+        /// 20180612 SangBin : 
+        /// </summary>
         private int maxSummon = 5;
         private int summonCount = 0;
 
+        /// <summary>
+        /// 20180612 SangBin : 
+        /// </summary>
         private List<GameObject> enemyPrefabList = new List<GameObject>();
 
+        /// <summary>
+        /// 20180612 SangBin : 
+        /// </summary>
+        [SerializeField]
+        private GameObject teleportEffect;
         #endregion
         //--------------------------------------------------------------------------------
 
@@ -230,17 +241,27 @@ namespace IF
             //enemyPrefabList.Add(enemyPrefab_type03);
         }
 
+        private void Start()
+        {
+            Vector3 tempV;
+            tempV.x = transform.position.x;
+            tempV.y = DefenseStationCtrl.instance.transform.position.y;
+            tempV.z = transform.position.z;
+
+            transform.SetPositionAndRotation(tempV, Quaternion.identity);
+        }
+
         override protected void OnEnable()
         {
             base.OnEnable();
             base.isDamaged = true;
-            ETS_LongRange.ETS_Killed += this.ETS_Killed;
+           // ETS_LongRange.ETS_Killed += this.ETS_Killed;
         }
 
         protected override void OnDisable()
         {
             base.OnDisable();
-            ETS_LongRange.ETS_Killed -= this.ETS_Killed;
+            //ETS_LongRange.ETS_Killed -= this.ETS_Killed;
             enemyPrefabList.Clear();
         }
 
@@ -266,6 +287,13 @@ namespace IF
         {
             yield return new WaitForSeconds(4.0f);
             GameManagement.instance.GameClear();
+        }
+
+        new private void OnDamaged(object[] parameters)
+        {
+            //if(summonCount<=0)
+            if(summonCount <= 0 && !transform.GetChild(1).gameObject.activeSelf)
+                base.OnDamaged(parameters);
         }
 
         ///// <summary>
@@ -492,8 +520,11 @@ namespace IF
             StopCoroutine(base.EnemyAction());
             animator.SetTrigger("IsSkill02");
 
-            yield return new WaitForSeconds(1.1f);
-
+            yield return new WaitForSeconds(0.5f);
+            GameObject teleportEff = Instantiate(teleportEffect, transform.position, Quaternion.identity);
+            Destroy(teleportEff, 2.3f);
+            yield return new WaitForSeconds(0.6f);
+            WitchSkill02();
             isWitchSkillUsed = false;
 
             StartCoroutine(base.EnemyAction());
@@ -512,6 +543,7 @@ namespace IF
 
             yield return new WaitForSeconds(4.1f);
 
+            WitchSkill03();
             isWitchSkillUsed = false;
 
             StartCoroutine(base.EnemyAction());
@@ -751,9 +783,14 @@ namespace IF
                         enemy.transform.position = tempGatTR.position;
                         //enemy.transform.parent = transform;
 
-                        enemy.SetActive(true);
+                        //enemy.SetActive(true);
 
                         StartCoroutine(CloseGate(tempGatTR.GetChild(0).gameObject));
+                        enemy.GetComponent<ETS_LongRange>().BDamaged();
+                        enemy.GetComponent<ETS_LongRange>().ETS_Killed += this.ETS_Killed;
+
+                        enemy.SetActive(true);
+
                         summonCount++;
                         break;
                     }
@@ -773,12 +810,26 @@ namespace IF
 
         private void WitchSkill02()
         {
+            //GameObject teleportEff = Instantiate(teleportEffect, transform.position, Quaternion.identity);
+            //Destroy(teleportEff, 2.3f);
+
+            Vector3 tempPlayerPos = PlayerCtrl.instance.PlayerTr.position;
+            tempPlayerPos.y = transform.position.y;
+
+            Vector3 directionVectorEtoP = tempPlayerPos - transform.position;
+            transform.position += directionVectorEtoP * 2.0f;
+
+            GameObject teleportEff2 = Instantiate(teleportEffect, transform.position, Quaternion.identity);
+            Destroy(teleportEff2, 2.3f);
 
         }
 
         private void WitchSkill03()
         {
-
+            if (!transform.GetChild(1).gameObject.activeSelf)
+            {
+                transform.GetChild(1).gameObject.SetActive(true);
+            }
         }
 
         private void WitchSkill04()

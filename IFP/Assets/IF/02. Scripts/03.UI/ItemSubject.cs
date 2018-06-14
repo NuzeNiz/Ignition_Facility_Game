@@ -2,7 +2,7 @@
 using System.Linq;
 using System.Collections.Generic;
 using UnityEngine;
-using IF;
+using IFP;
 
 public class ItemSubject : Subject
 {

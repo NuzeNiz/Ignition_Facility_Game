@@ -5,7 +5,7 @@ using UnityEngine;
 
 using UnityEngine.AI;
 
-namespace IF
+namespace IFP
 {
     public class EnemyType01Ctrl : EnemyBaseClass
     {

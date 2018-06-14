@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace IF
+namespace IFP
 {
     public class EnemyProjectileType01Ctrl : MonoBehaviour
     {

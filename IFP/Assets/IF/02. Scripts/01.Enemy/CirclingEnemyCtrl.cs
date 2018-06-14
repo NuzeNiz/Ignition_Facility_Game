@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace IF
+namespace IFP
 {
     [RequireComponent(typeof(AudioSource))]
     public class CirclingEnemyCtrl : MonoBehaviour

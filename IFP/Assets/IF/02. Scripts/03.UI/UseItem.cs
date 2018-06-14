@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
-using IF;
+using IFP;
 
 public class UseItem : MonoBehaviour{
     public Sprite setImage;

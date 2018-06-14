@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace IF
+namespace IFP
 {
     public class BalanceManagement : MonoBehaviour
     {
@@ -109,7 +109,7 @@ namespace IF
         ///// <summary>
         ///// 20180529 SangBin : 
         ///// </summary>
-        private double defenseStation_wValue = 1.0d;
+        private double defenseStation_wValue = 0.5d;
         public double DefenseStation_wValue { get { return defenseStation_wValue; } set { defenseStation_wValue = value; } } 
 
         #endregion

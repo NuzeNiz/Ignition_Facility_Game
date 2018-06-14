@@ -5,7 +5,7 @@ using UnityEngine;
 
 using UnityEngine.AI;
 
-namespace IF
+namespace IFP
 {
     public class ETS_LongRange : EnemyBaseClass
     {
@@ -111,7 +111,7 @@ namespace IF
         /// 20180612 SangBin : 
         /// </summary>
         public delegate void ETS_EventHandler();
-        public static event ETS_EventHandler ETS_Killed;
+        public event ETS_EventHandler ETS_Killed;
 
         //------------------------------------------------------------------------------------------------------------------------
 
@@ -136,11 +136,19 @@ namespace IF
         }
 
         /// <summary>
+        /// 20180614 SangBin : 
+        /// </summary>
+        public void BDamaged()
+        {
+            base.isDamaged = true;
+        }
+
+        /// <summary>
         /// 20180607 SangBin : 
         /// </summary>
         protected override void EnemyKilled()
         {
-            ETS_Killed();
+            //ETS_Killed();
             base.EnemyKilled();
             StartCoroutine(base.PushObjectPool());
             //if (DefenseStationCtrl.instance != null)
@@ -149,6 +157,7 @@ namespace IF
             //{
             //    Destroy(this, 4.0f);
             //}
+            ETS_Killed();
         }
 
         /// <summary>

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using UnityEngine;
 
-namespace IF.Debug
+namespace IFP.Debug
 {
     public class Controller : MonoBehaviour
     {
