@@ -229,10 +229,13 @@ namespace GoogleARCore.IF
                     planeGridObject.GetComponent<MeshRenderer>().enabled = false;
                     planeGridObject.GetComponent<TrackedPlaneVisualizer>().enabled = false;
 
-                    if(IFP.TempStageManagement.instance.CurrentStageLevel == 2)
-                        SceneManager.LoadScene("GameScene B",LoadSceneMode.Additive);
+                    if (IFP.TempStageManagement.instance.CurrentStageLevel == 2)
+                        SceneManager.LoadScene("GameScene B", LoadSceneMode.Additive);
                     else if (IFP.TempStageManagement.instance.CurrentStageLevel == 5)
+                    {
+                        defenseStation.GetComponent<MeshRenderer>().enabled = false;
                         SceneManager.LoadScene("StoryMode Chapter 3", LoadSceneMode.Additive);
+                    }
                     //GameObject ground = Instantiate(groundPlane, defenseStation.transform.position, Quaternion.identity);
                 }
             }

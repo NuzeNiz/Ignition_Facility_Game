@@ -42,7 +42,7 @@ namespace IFP
         /// <summary>
         /// 20180530 SangBin :  Enemy Type04 Current Health Power
         /// </summary>
-        private double currentHP = 200.0d;
+        private double currentHP = 400.0d;
 
         /// <summary>
         /// 20180530 SangBin : Enemy Current Health Power
@@ -245,10 +245,12 @@ namespace IFP
         {
             Vector3 tempV;
             tempV.x = transform.position.x;
-            tempV.y = DefenseStationCtrl.instance.transform.position.y;
+            tempV.y = DefenseStationCtrl.instance.DefenseStationTR.position.y;
             tempV.z = transform.position.z;
 
+
             transform.SetPositionAndRotation(tempV, Quaternion.identity);
+            GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePositionY;
         }
 
         override protected void OnEnable()
@@ -786,10 +788,11 @@ namespace IFP
                         //enemy.SetActive(true);
 
                         StartCoroutine(CloseGate(tempGatTR.GetChild(0).gameObject));
-                        enemy.GetComponent<ETS_LongRange>().BDamaged();
+
                         enemy.GetComponent<ETS_LongRange>().ETS_Killed += this.ETS_Killed;
 
                         enemy.SetActive(true);
+                        enemy.GetComponent<ETS_LongRange>().BDamaged();
 
                         summonCount++;
                         break;

@@ -6,6 +6,9 @@ using UnityEngine.SceneManagement;
 
 public class Logo : MonoBehaviour {
 
+    [SerializeField]
+    private string nextScene;
+
 	// Use this for initialization
 	void Start () {
         StartCoroutine(NextScene());
@@ -20,7 +23,7 @@ public class Logo : MonoBehaviour {
     IEnumerator NextScene()
     {
         yield return new WaitForSeconds(2.5f);
-        SceneManager.LoadScene("StartMenu");
+        SceneManager.LoadScene(nextScene);
     }
 
 

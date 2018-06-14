@@ -368,6 +368,8 @@ namespace IFP
             isDamaged = false;
             currentEnemyState = EnemyState.die;
             GetComponent<CapsuleCollider>().enabled = false;
+            GetComponent<Rigidbody>().velocity = Vector3.zero;
+            GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
             animator.SetTrigger("IsDie");
             GameUIManagement.instance.DisplayScore(50);
             if(DefenseStationCtrl.instance != null)

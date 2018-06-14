@@ -312,7 +312,11 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Ignition Facility
+  m_Text: 'Ignition Facility
+
+    Capstone Design:
+
+    Interactive 3D Project'
 --- !u!222 &894704072
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -495,6 +499,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5350742bd6eceb548a8ab241a8a040bf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  nextScene: GameScene 1
 --- !u!4 &1689745425
 Transform:
   m_ObjectHideFlags: 0
