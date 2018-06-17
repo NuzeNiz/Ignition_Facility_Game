@@ -11177,7 +11177,7 @@ Prefab:
     - target: {fileID: 224618932782403250, guid: 479daf181978cd347a4eee58d7854377,
         type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: -80.25
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 224674992045088504, guid: 479daf181978cd347a4eee58d7854377,
         type: 2}
@@ -11197,7 +11197,7 @@ Prefab:
     - target: {fileID: 224674992045088504, guid: 479daf181978cd347a4eee58d7854377,
         type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: -80.25
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 224054061608255298, guid: 479daf181978cd347a4eee58d7854377,
         type: 2}
@@ -11217,7 +11217,7 @@ Prefab:
     - target: {fileID: 224054061608255298, guid: 479daf181978cd347a4eee58d7854377,
         type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: -80.25
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 224021708874356406, guid: 479daf181978cd347a4eee58d7854377,
         type: 2}
@@ -11237,7 +11237,7 @@ Prefab:
     - target: {fileID: 224021708874356406, guid: 479daf181978cd347a4eee58d7854377,
         type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: -80.25
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 224945247300974568, guid: 479daf181978cd347a4eee58d7854377,
         type: 2}
@@ -19167,6 +19167,9 @@ MonoBehaviour:
     type: 2}
   enemyPrefab_type03: {fileID: 1446934469516604, guid: 212aef55942fc6448852e5e59b896fab,
     type: 2}
+  enemyPrefab_type01Boss: {fileID: 0}
+  enemyPrefab_type02Boss: {fileID: 0}
+  enemyPrefab_type03Boss: {fileID: 0}
   ThisStageAlive: 1
   itemPrefab_type01: {fileID: 1185642529807098, guid: 217976abe42283549b7beb074f9e1b4c,
     type: 2}

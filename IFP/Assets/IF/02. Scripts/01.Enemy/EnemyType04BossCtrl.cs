@@ -42,7 +42,7 @@ namespace IFP
         /// <summary>
         /// 20180530 SangBin :  Enemy Type04 Current Health Power
         /// </summary>
-        private double currentHP = 400.0d;
+        private double currentHP = 1500.0d;
 
         /// <summary>
         /// 20180530 SangBin : Enemy Current Health Power
@@ -416,11 +416,12 @@ namespace IFP
         /// </summary>
         void AvailableSkillCheck()
         {
-            double percentageofHP = (currentHP / base.maxHealthPower) * 100.0d ;
+            //double percentageofHP = (currentHP / base.maxHealthPower) * 100.0d ;
+            double percentageofHP = currentHP / base.maxHealthPower;
 
-            if(percentageofHP<=80.0d)
+            if (percentageofHP<=0.8d)
             {
-                if (percentageofHP <= 20.0d)
+                if (percentageofHP <= 0.2d)
                 {
                     if (skill_04_State == EnemySkillState.available)
                         //UseSkill(ref skill_04_State, EnemySkill.skill_04);
@@ -438,7 +439,7 @@ namespace IFP
                         //UseSkill(ref skill_01_State, EnemySkill.skill_01);
                         UseSkill(EnemySkill.skill_01);
                 }
-                else if (percentageofHP <= 40.0d)
+                else if (percentageofHP <= 0.4d)
                 {
                     if (skill_03_State == EnemySkillState.available)
                         //UseSkill(ref skill_03_State, EnemySkill.skill_03);
@@ -452,7 +453,7 @@ namespace IFP
                         //UseSkill(ref skill_01_State, EnemySkill.skill_01);
                         UseSkill(EnemySkill.skill_01);
                 }
-                else if (percentageofHP <= 60.0d)
+                else if (percentageofHP <= 0.6d)
                 {
                     if (skill_02_State == EnemySkillState.available)
                         //UseSkill(ref skill_02_State, EnemySkill.skill_02);
@@ -791,8 +792,8 @@ namespace IFP
 
                         if(enemy.tag == "ENEMY_TYPE01"|| enemy.tag == "ENEMY_TYPE02")
                             enemy.GetComponent<ETS_LongRange>().ETS_Killed += this.ETS_Killed;
-                        //else if(enemy.tag == "ENEMY_TYPE03")
-
+                        else if(enemy.tag == "ENEMY_TYPE03")
+                            enemy.GetComponent<ETS_ShortRange>().ETS_Killed += this.ETS_Killed;
 
                         enemy.SetActive(true);
                         enemy.GetComponent<EnemyBaseClass>().BDamaged();

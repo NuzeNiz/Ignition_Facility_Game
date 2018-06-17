@@ -21,7 +21,7 @@ GameObject:
   - component: {fileID: 4808622387242174}
   - component: {fileID: 198900634366809382}
   - component: {fileID: 199527712876952038}
-  m_Layer: 12
+  m_Layer: 2
   m_Name: 01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -41,7 +41,7 @@ GameObject:
   - component: {fileID: 135168970440048592}
   - component: {fileID: 114917987709769520}
   - component: {fileID: 54338343764928872}
-  m_Layer: 12
+  m_Layer: 2
   m_Name: Fire Spirit Projectile
   m_TagString: ENEMY_TYPE01_PROJECTILE
   m_Icon: {fileID: 0}
@@ -58,7 +58,7 @@ GameObject:
   - component: {fileID: 4499846990410068}
   - component: {fileID: 198754085166372716}
   - component: {fileID: 199919258812984600}
-  m_Layer: 12
+  m_Layer: 2
   m_Name: bump
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -75,7 +75,7 @@ GameObject:
   - component: {fileID: 4279694507013642}
   - component: {fileID: 198084590683239418}
   - component: {fileID: 199759295866400462}
-  m_Layer: 12
+  m_Layer: 2
   m_Name: 02
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -92,7 +92,7 @@ GameObject:
   - component: {fileID: 4236867386570688}
   - component: {fileID: 198604473871444406}
   - component: {fileID: 199580429452787070}
-  m_Layer: 12
+  m_Layer: 2
   m_Name: SubEmitterBirth_01
   m_TagString: Untagged
   m_Icon: {fileID: 0}

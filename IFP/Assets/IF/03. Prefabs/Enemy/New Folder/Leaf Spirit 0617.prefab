@@ -857,7 +857,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1959924538669618}
   m_LocalRotation: {x: -0.50000036, y: 0.49999967, z: 0.49999967, w: 0.50000036}
-  m_LocalPosition: {x: 0.00022291273, y: 0.113494, z: -0.00043897625}
+  m_LocalPosition: {x: 0.00022291273, y: -0.033706002, z: -0.00043897625}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4547303195864378}
@@ -903,7 +903,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1190413536019570}
   m_LocalRotation: {x: 0.000000021855694, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0, y: -0.025409931, z: -1.7600678e-10}
+  m_LocalPosition: {x: 0, y: -0.17260994, z: -1.7600678e-10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4340769696051004}
@@ -1797,7 +1797,7 @@ CapsuleCollider:
   m_Radius: 0.2
   m_Height: 0.5
   m_Direction: 1
-  m_Center: {x: 0, y: 0.2, z: 0}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!137 &137339093173142014
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 1
@@ -1937,7 +1937,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0.1068, y: 0.3572}
+  m_AnchoredPosition: {x: 0.1068, y: 0.21}
   m_SizeDelta: {x: 0.4527, y: 0.2886}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224997457052660756

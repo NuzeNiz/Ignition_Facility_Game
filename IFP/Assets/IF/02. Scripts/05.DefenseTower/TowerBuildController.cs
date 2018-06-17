@@ -25,6 +25,7 @@ namespace GoogleARCore.IF
     using UnityEngine;
     using UnityEngine.Rendering;
     using UnityEngine.SceneManagement;
+    using System.Collections;
 
 #if UNITY_EDITOR
     using Input = InstantPreviewInput;
@@ -229,19 +230,29 @@ namespace GoogleARCore.IF
                     planeGridObject.GetComponent<MeshRenderer>().enabled = false;
                     planeGridObject.GetComponent<TrackedPlaneVisualizer>().enabled = false;
 
-                    if (IFP.TempStageManagement.instance.CurrentStageLevel == 2)
-                        SceneManager.LoadScene("GameScene B", LoadSceneMode.Additive);
-                    else if (IFP.TempStageManagement.instance.CurrentStageLevel == 5)
-                    {
-                        defenseStation.GetComponent<MeshRenderer>().enabled = false;
-                        SceneManager.LoadScene("StoryMode Chapter 3", LoadSceneMode.Additive);
-                    }
+                    StartCoroutine(StartSceneB());
+                    //if (IFP.TempStageManagement.instance.CurrentStageLevel == 2)
+                        //SceneManager.LoadScene("GameScene B", LoadSceneMode.Additive);
+                    //else if (IFP.TempStageManagement.instance.CurrentStageLevel == 5)
+                    //{
+                    //    defenseStation.GetComponent<MeshRenderer>().enabled = false;
+                    //    SceneManager.LoadScene("StoryMode Chapter 3", LoadSceneMode.Additive);
+                    //}
                     //GameObject ground = Instantiate(groundPlane, defenseStation.transform.position, Quaternion.identity);
                 }
             }
         }
 
-
+        /// <summary>
+        /// 20180617 SangBin : 
+        /// </summary>
+        private IEnumerator StartSceneB()
+        {
+            SceneManager.LoadScene("GameScene B", LoadSceneMode.Additive);
+            transform.GetChild(0).gameObject.SetActive(true);
+            yield return new WaitForSeconds(3.0f);
+            transform.GetChild(0).gameObject.SetActive(false);
+        }
 
 
 

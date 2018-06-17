@@ -65,7 +65,7 @@ namespace IFP
             get { return defenseStation_exp; }
         }
 
-        private int treeState = 0;
+        public int treeState = 0;
 
         private double defenseStation_Fire_Energy = 50.0d;
         public double DefenseStation_Fire_Energy
@@ -234,6 +234,11 @@ namespace IFP
                 treeState++;
                 Destroy(le, 6.0f);
 
+                if(treeState == 2)
+                {
+                    GameManagement.instance.ActivateChapter2Boss();
+                }
+
                 //일단 4단계
                 if (treeState == 3)
                 {
@@ -283,6 +288,38 @@ namespace IFP
 
                 defenseStation_HP -= BalanceManagement.instance.EnemyProjectile01damage;
                 //defenseStation_HP -= 10.0d;
+                DS_Damaged();
+
+                if (defenseStation_HP <= 0.0d)
+                {
+                    GameManagement.instance.GameOver();
+                }
+            }
+            else if (coll.gameObject.tag == "ENEMY_TYPE01_BOSS_SKILL")
+            {
+
+                defenseStation_HP -= 30.0d;
+                DS_Damaged();
+
+                if (defenseStation_HP <= 0.0d)
+                {
+                    GameManagement.instance.GameOver();
+                }
+            }
+        }
+
+
+        /// <summary>
+        /// 20180617 SangBin : 
+        /// </summary>
+        private void OnTriggerStay(Collider coll)
+        {
+            if (coll.gameObject.tag == "ENEMY_TYPE02_BOSS_SKILL")
+            {
+                //StartCoroutine(TreeShake());
+
+                defenseStation_HP -= 0.1d;
+
                 DS_Damaged();
 
                 if (defenseStation_HP <= 0.0d)

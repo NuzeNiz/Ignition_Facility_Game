@@ -24,7 +24,7 @@ GameObject:
   - component: {fileID: 135165268181350274}
   - component: {fileID: 54508646334215828}
   - component: {fileID: 114267636269143924}
-  m_Layer: 12
+  m_Layer: 2
   m_Name: Water Spirit Projectile
   m_TagString: ENEMY_TYPE01_PROJECTILE
   m_Icon: {fileID: 0}
@@ -41,7 +41,7 @@ GameObject:
   - component: {fileID: 4971672835196878}
   - component: {fileID: 198875370326305364}
   - component: {fileID: 199933940611744238}
-  m_Layer: 12
+  m_Layer: 2
   m_Name: 01_bump
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -58,7 +58,7 @@ GameObject:
   - component: {fileID: 4695452347946876}
   - component: {fileID: 198854807865229440}
   - component: {fileID: 199422905557239676}
-  m_Layer: 12
+  m_Layer: 2
   m_Name: SubEmitterBirth_01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -75,7 +75,7 @@ GameObject:
   - component: {fileID: 4597534526662756}
   - component: {fileID: 198919165356275738}
   - component: {fileID: 199319554953495984}
-  m_Layer: 12
+  m_Layer: 2
   m_Name: SubEmitterBirth_02
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -92,7 +92,7 @@ GameObject:
   - component: {fileID: 4034886920693406}
   - component: {fileID: 198209262404882656}
   - component: {fileID: 199348765491211986}
-  m_Layer: 12
+  m_Layer: 2
   m_Name: SubEmitterBirth_02 Distance
   m_TagString: Untagged
   m_Icon: {fileID: 0}

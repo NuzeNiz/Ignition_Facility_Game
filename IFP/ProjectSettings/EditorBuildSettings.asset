@@ -24,8 +24,8 @@ EditorBuildSettings:
     path: Assets/IF/01. Scenes/GameScene C.unity
     guid: 807c5ef7a2924d94b8815c148b88ca4a
   - enabled: 1
-    path: Assets/IF/01. Scenes/StoryMode Chapter 3.unity
-    guid: a1b554492a50d3141aa2c39232a18971
-  - enabled: 1
     path: Assets/IF/01. Scenes/GameScene D.unity
     guid: d880803248ca7f44887cdacab9ff8c0f
+  - enabled: 1
+    path: Assets/IF/01. Scenes/GameScene E.unity
+    guid: a1b554492a50d3141aa2c39232a18971

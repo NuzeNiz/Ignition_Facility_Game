@@ -21,6 +21,8 @@ TagManager:
   - ENEMY_TYPE03
   - TREE
   - ENEMY_TYPE03_BOX
+  - ENEMY_TYPE02_BOSS_SKILL
+  - ENEMY_TYPE01_BOSS_SKILL
   layers:
   - Default
   - TransparentFX

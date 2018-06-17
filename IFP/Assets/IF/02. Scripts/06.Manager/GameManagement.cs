@@ -50,6 +50,25 @@ namespace IFP
         private GameObject enemyPrefab_type03;
 
         /// <summary>
+        /// 20180403 SangBin : Enemy Bee Prefabs
+        /// </summary>
+        [SerializeField]
+        private GameObject enemyPrefab_type01Boss;
+
+        /// <summary>
+        /// 20180501 SangBin : Enemy Moth Prefabs
+        /// </summary>
+        [SerializeField]
+        private GameObject enemyPrefab_type02Boss;
+
+        /// <summary>
+        /// 20180501 SangBin : Enemy Moth Prefabs
+        /// </summary>
+        [SerializeField]
+        private GameObject enemyPrefab_type03Boss;
+
+
+        /// <summary>
         /// 20180403 SangBin : Enemy Object Pool List
         /// </summary>
         private List<GameObject> enemyObjectPool = new List<GameObject>();
@@ -384,6 +403,26 @@ namespace IFP
                     }
                 }
                 yield return new WaitForSeconds(5.0f);
+            }
+        }
+
+        public void ActivateChapter2Boss()
+        {
+            Vector3 tempV = PlayerCtrl.instance.PlayerTr.forward;
+            tempV.y = 0.0f;
+            tempV *= 10.0f;
+
+            if (TempStageManagement.instance.CurrentStageLevel == 2)
+            {
+                GameObject Boss = Instantiate(enemyPrefab_type01Boss, (PlayerCtrl.instance.PlayerTr.position + tempV), Quaternion.identity);
+            }
+            else if (TempStageManagement.instance.CurrentStageLevel == 3)
+            {
+                GameObject Boss = Instantiate(enemyPrefab_type02Boss, (PlayerCtrl.instance.PlayerTr.position + tempV), Quaternion.identity);
+            }
+            else if (TempStageManagement.instance.CurrentStageLevel == 4)
+            {
+                GameObject Boss = Instantiate(enemyPrefab_type03Boss, (PlayerCtrl.instance.PlayerTr.position + tempV), Quaternion.identity);
             }
         }
     }

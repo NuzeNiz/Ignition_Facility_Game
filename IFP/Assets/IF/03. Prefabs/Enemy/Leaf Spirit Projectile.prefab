@@ -21,7 +21,7 @@ GameObject:
   - component: {fileID: 4895571063681308}
   - component: {fileID: 198409947319719554}
   - component: {fileID: 199248884591607818}
-  m_Layer: 12
+  m_Layer: 2
   m_Name: 02
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -38,7 +38,7 @@ GameObject:
   - component: {fileID: 4098649585631390}
   - component: {fileID: 198978794364954776}
   - component: {fileID: 199041557882739354}
-  m_Layer: 12
+  m_Layer: 2
   m_Name: 01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -55,7 +55,7 @@ GameObject:
   - component: {fileID: 4311210615939912}
   - component: {fileID: 198069332755670656}
   - component: {fileID: 199102819813381972}
-  m_Layer: 12
+  m_Layer: 2
   m_Name: 03
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -75,7 +75,7 @@ GameObject:
   - component: {fileID: 135970977313097120}
   - component: {fileID: 114612976560492076}
   - component: {fileID: 54100808932516860}
-  m_Layer: 12
+  m_Layer: 2
   m_Name: Leaf Spirit Projectile
   m_TagString: ENEMY_TYPE01_PROJECTILE
   m_Icon: {fileID: 0}

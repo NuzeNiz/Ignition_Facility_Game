@@ -11,7 +11,7 @@ namespace IFP {
         /// </summary>
         public void OnclickStartBtn()
         {
-            TempStageManagement.instance.CurrentStageLevel = 2;
+            TempStageManagement.instance.CurrentStageLevel = 10;
             SceneManager.LoadScene("GameScene A");
         }
 
@@ -24,12 +24,47 @@ namespace IFP {
         }
 
         /// <summary>
-        /// 20180614 SangBin :
+        /// 20180617 SangBin :
         /// </summary>
-        public void OnclickTempBtn()
+        public void OnClickChpater1()
         {
-            TempStageManagement.instance.CurrentStageLevel = 5;
-            SceneManager.LoadScene("StoryMode Chapter 3");
+            TempStageManagement.instance.CurrentStageLevel = 1;
+        }
+
+        /// <summary>
+        /// 20180617 SangBin :
+        /// </summary>
+        public void OnClickChpater2_1()
+        {
+            TempStageManagement.instance.CurrentStageLevel = 2;
+            SceneManager.LoadScene("GameScene A");
+        }
+
+        /// <summary>
+        /// 20180617 SangBin :
+        /// </summary>
+        public void OnClickChpater2_2()
+        {
+            TempStageManagement.instance.CurrentStageLevel = 3;
+            SceneManager.LoadScene("GameScene A");
+        }
+
+        /// <summary>
+        /// 20180617 SangBin :
+        /// </summary>
+        public void OnClickChpater2_3()
+        {
+            TempStageManagement.instance.CurrentStageLevel = 4;
+            SceneManager.LoadScene("GameScene A");
+        }
+
+        /// <summary>
+        /// 20180617 SangBin :
+        /// </summary>
+        public void OnClickChapter3()
+        {
+            //TempStageManagement.instance.CurrentStageLevel = 5;
+            SceneManager.LoadScene("GameScene E");
             //SceneManager.LoadScene("GameScene A");
         }
     }
