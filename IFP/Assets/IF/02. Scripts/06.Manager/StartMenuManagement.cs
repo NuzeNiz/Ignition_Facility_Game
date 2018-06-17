@@ -15,16 +15,22 @@ namespace IFP {
             SceneManager.LoadScene("GameScene A");
         }
 
+        /// <summary>
+        /// 20180614 SangBin :
+        /// </summary>
         public void OnclickQuitBtn()
         {
             Application.Quit();
         }
 
+        /// <summary>
+        /// 20180614 SangBin :
+        /// </summary>
         public void OnclickTempBtn()
         {
             TempStageManagement.instance.CurrentStageLevel = 5;
-            //SceneManager.LoadScene("StoryMode Chapter 3");
-            SceneManager.LoadScene("GameScene A");
+            SceneManager.LoadScene("StoryMode Chapter 3");
+            //SceneManager.LoadScene("GameScene A");
         }
     }
 }

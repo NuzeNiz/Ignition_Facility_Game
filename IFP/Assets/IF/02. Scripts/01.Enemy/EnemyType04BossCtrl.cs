@@ -243,14 +243,14 @@ namespace IFP
 
         private void Start()
         {
-            Vector3 tempV;
-            tempV.x = transform.position.x;
-            tempV.y = DefenseStationCtrl.instance.DefenseStationTR.position.y;
-            tempV.z = transform.position.z;
+            //Vector3 tempV;
+            //tempV.x = transform.position.x;
+            //tempV.y = DefenseStationCtrl.instance.DefenseStationTR.position.y;
+            //tempV.z = transform.position.z;
 
 
-            transform.SetPositionAndRotation(tempV, Quaternion.identity);
-            GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePositionY;
+            //transform.SetPositionAndRotation(tempV, Quaternion.identity);
+            //GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePositionY;
         }
 
         override protected void OnEnable()
@@ -789,10 +789,13 @@ namespace IFP
 
                         StartCoroutine(CloseGate(tempGatTR.GetChild(0).gameObject));
 
-                        enemy.GetComponent<ETS_LongRange>().ETS_Killed += this.ETS_Killed;
+                        if(enemy.tag == "ENEMY_TYPE01"|| enemy.tag == "ENEMY_TYPE02")
+                            enemy.GetComponent<ETS_LongRange>().ETS_Killed += this.ETS_Killed;
+                        //else if(enemy.tag == "ENEMY_TYPE03")
+
 
                         enemy.SetActive(true);
-                        enemy.GetComponent<ETS_LongRange>().BDamaged();
+                        enemy.GetComponent<EnemyBaseClass>().BDamaged();
 
                         summonCount++;
                         break;

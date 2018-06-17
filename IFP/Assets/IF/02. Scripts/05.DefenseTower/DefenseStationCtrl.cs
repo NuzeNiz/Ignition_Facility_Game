@@ -132,6 +132,14 @@ namespace IFP
         }
 
         /// <summary>
+        /// 20180617 SangBin : 
+        /// </summary>
+        public DefenseStationCtrl Instance()
+        {
+            return instance;
+        }
+
+        /// <summary>
         /// 20180607 SangBin : 
         /// </summary>
         private IEnumerator TreeShake()
@@ -226,6 +234,7 @@ namespace IFP
                 treeState++;
                 Destroy(le, 6.0f);
 
+                //일단 4단계
                 if (treeState == 3)
                 {
                     GameManagement.instance.GameClear();

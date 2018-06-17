@@ -19,6 +19,7 @@ TagManager:
   - ENEMY_BEE
   - ENEMY_TYPE02
   - ENEMY_TYPE03
+  - TREE
   layers:
   - Default
   - TransparentFX

@@ -8,7 +8,7 @@ namespace IFP
     /// 20180502 SangBin : Architecture Enemy Base Class
     /// </summary>
     [RequireComponent(typeof(AudioSource))]
-    abstract public class EnemyBaseClassbackup : MonoBehaviour
+    abstract public class EnemyBaseClassBackup : MonoBehaviour
     {
         #region Fields : Prefabs
         /// <summary>
@@ -69,7 +69,7 @@ namespace IFP
         /// <summary>
         /// 20180430 SangBin : 
         /// </summary>
-        protected bool isDamaged = false;
+        protected bool isDamaged = true;
         #endregion
 
         #region Fields : Tracking(Enemy To Player)
@@ -93,7 +93,7 @@ namespace IFP
         /// 20180418 SangBin : Unity AI Baked Navigation --> Coroutine & RigidBody.Addforce
         /// </summary>
         //protected float traceDistEtoP = 10.0f;
-        virtual protected float TraceDistEtoP { get { return 20.0f; } }
+        virtual protected float TraceDistEtoP { get { return 100.0f; } }
 
         /// <summary>
         /// 20180403 SangBin : Unity AI Baked Navigation / Enemy's Enable attack Distance
@@ -138,6 +138,8 @@ namespace IFP
 
         #endregion
 
+
+
         //--------------------------------------------------------------------------------------------------
 
         virtual protected void Awake()
@@ -146,12 +148,12 @@ namespace IFP
         }
         virtual protected void OnEnable()
         {
-            StartCoroutine(TracingAction()); //Finite State Machine (or Finite Automaton)
+            StartCoroutine(EnemyAction()); //Finite State Machine (or Finite Automaton)
             StartCoroutine(CheckEnemyState());
             isDamaged = false;
         }
 
-        protected void OnDisable()
+        virtual protected void OnDisable()
         {
             ResetTag(TagName);
         }
@@ -195,6 +197,14 @@ namespace IFP
         }
 
         /// <summary>
+        /// 20180614 SangBin : 
+        /// </summary>
+        public void BDamaged()
+        {
+            isDamaged = true;
+        }
+
+        /// <summary>
         /// 20180403 SangBin : Check enemy action state by distance to target from enemy
         /// 20180430 SangBin : + target(Defense Station) 
         /// </summary>
@@ -221,7 +231,7 @@ namespace IFP
                         currentEnemyState = EnemyState.idle;
                     }
                 }
-                else
+                else if (DefenseStationCtrl.instance != null)
                 {
                     Cal_DirectionEtoDS();
 
@@ -245,7 +255,7 @@ namespace IFP
         /// 20180403 SangBin : Control enemy tracing 
         /// 20180430 SangBin : + Tracing Defense Station
         /// </summary>
-        private IEnumerator TracingAction()
+        protected IEnumerator EnemyAction()
         {
             while (!isDie)
             {
@@ -355,7 +365,7 @@ namespace IFP
         /// <summary>
         /// 20180403 SangBin : Fall down broken enemy without conflict
         /// </summary>
-        protected void EnemyKilled()
+        virtual protected void EnemyKilled()
         {
             //Because expecting to Enemy's Falling Animation by graphic designer, I would not make Enemy deactivated at once   
             this.gameObject.tag = "Untagged";
@@ -366,18 +376,21 @@ namespace IFP
             isDamaged = false;
             currentEnemyState = EnemyState.die;
             GetComponent<CapsuleCollider>().enabled = false;
+            GetComponent<Rigidbody>().velocity = Vector3.zero;
+            GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
             animator.SetTrigger("IsDie");
             GameUIManagement.instance.DisplayScore(50);
-            DefenseStationCtrl.instance.OnAbsorbEnergy(TagName);
+            if(DefenseStationCtrl.instance != null)
+                DefenseStationCtrl.instance.OnAbsorbEnergy(TagName);
 
-            StartCoroutine(PushObjectPool());
+            //StartCoroutine(PushObjectPool());
             Destroy(explosion, 2.0f);
         }
 
         /// <summary>
         /// 20180403 SangBin : Push broken enemy into the object pool and initialize some fields
         /// </summary>
-        private IEnumerator PushObjectPool()
+        protected IEnumerator PushObjectPool()
         {
             yield return new WaitForSeconds(4.0f); //destroy delay
             //yield return null;

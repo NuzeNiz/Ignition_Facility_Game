@@ -135,13 +135,7 @@ namespace IFP
                 base.isDamaged = true;
         }
 
-        /// <summary>
-        /// 20180614 SangBin : 
-        /// </summary>
-        public void BDamaged()
-        {
-            base.isDamaged = true;
-        }
+
 
         /// <summary>
         /// 20180607 SangBin : 
@@ -187,7 +181,7 @@ namespace IFP
         {
             for (int i = 0; i < maxStinger; i++)
             {
-                GameObject projectileObj = Instantiate(projectilePrefab, gameObject.transform.position + (gameObject.transform.up * 0.1f), gameObject.transform.rotation, GoogleARCore.IF.TowerBuildController.instance.DefenseStation_Anchor_Tr);
+                GameObject projectileObj = Instantiate(projectilePrefab, gameObject.transform.position + (gameObject.transform.up * 0.1f), gameObject.transform.rotation);
                 projectileObj.name = this.gameObject.name + projectileObj.tag + "_" + i.ToString();
                 projectileObj.SetActive(false);
                 projectileObjectPool.Add(projectileObj);

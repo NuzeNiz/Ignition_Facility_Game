@@ -139,12 +139,16 @@ namespace IFP
         #endregion
 
 
-
+        DefenseStationCtrl defenseStation = null;
         //--------------------------------------------------------------------------------------------------
 
         virtual protected void Awake()
         {
             maxHealthPower = CurrentHealthPower;
+            if (GameObject.FindWithTag("TREE"))
+            {
+                defenseStation = DefenseStationCtrl.instance.Instance();
+            }
         }
         virtual protected void OnEnable()
         {
@@ -197,6 +201,14 @@ namespace IFP
         }
 
         /// <summary>
+        /// 20180614 SangBin : 
+        /// </summary>
+        public void BDamaged()
+        {
+            isDamaged = true;
+        }
+
+        /// <summary>
         /// 20180403 SangBin : Check enemy action state by distance to target from enemy
         /// 20180430 SangBin : + target(Defense Station) 
         /// </summary>
@@ -223,7 +235,7 @@ namespace IFP
                         currentEnemyState = EnemyState.idle;
                     }
                 }
-                else if (DefenseStationCtrl.instance != null)
+                else if (defenseStation != null)
                 {
                     Cal_DirectionEtoDS();
 
@@ -317,7 +329,7 @@ namespace IFP
         /// </summary>
         virtual protected void ActionD()
         {
-            transform.LookAt(DefenseStationCtrl.instance.DefenseStationTR);
+            transform.LookAt(defenseStation.DefenseStationTR);
             GetComponent<Rigidbody>().AddForce(directionVector_NormalizedEtoDS * MovingSpeed, ForceMode.Force);
             animator.SetBool("IsAttack", false); // later
             animator.SetBool("IsTrace", true); // later
@@ -328,7 +340,7 @@ namespace IFP
         /// </summary>
         virtual protected void ActionE()
         {
-            transform.LookAt(DefenseStationCtrl.instance.DefenseStationTR);
+            transform.LookAt(defenseStation.DefenseStationTR);
             GetComponent<Rigidbody>().velocity = Vector3.zero;
             GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
             animator.SetBool("IsAttack", true); // later
@@ -349,7 +361,7 @@ namespace IFP
         /// </summary>
         private void Cal_DirectionEtoDS()
         {
-            directionVectorEtoDS = DefenseStationCtrl.instance.DefenseStationTR.position - transform.position;
+            directionVectorEtoDS = defenseStation.DefenseStationTR.position - transform.position;
             distanceEtoDS = directionVectorEtoDS.magnitude;
             directionVector_NormalizedEtoDS = Vector3.Normalize(directionVectorEtoDS);
         }
@@ -372,8 +384,8 @@ namespace IFP
             GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
             animator.SetTrigger("IsDie");
             GameUIManagement.instance.DisplayScore(50);
-            if(DefenseStationCtrl.instance != null)
-                DefenseStationCtrl.instance.OnAbsorbEnergy(TagName);
+            if(defenseStation != null)
+                defenseStation.OnAbsorbEnergy(TagName);
 
             //StartCoroutine(PushObjectPool());
             Destroy(explosion, 2.0f);
