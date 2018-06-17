@@ -20,6 +20,7 @@ TagManager:
   - ENEMY_TYPE02
   - ENEMY_TYPE03
   - TREE
+  - ENEMY_TYPE03_BOX
   layers:
   - Default
   - TransparentFX

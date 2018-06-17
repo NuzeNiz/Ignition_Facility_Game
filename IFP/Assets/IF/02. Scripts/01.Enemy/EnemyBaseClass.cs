@@ -93,7 +93,7 @@ namespace IFP
         /// 20180418 SangBin : Unity AI Baked Navigation --> Coroutine & RigidBody.Addforce
         /// </summary>
         //protected float traceDistEtoP = 10.0f;
-        virtual protected float TraceDistEtoP { get { return 100.0f; } }
+        virtual protected float TraceDistEtoP { get { return 20.0f; } }
 
         /// <summary>
         /// 20180403 SangBin : Unity AI Baked Navigation / Enemy's Enable attack Distance

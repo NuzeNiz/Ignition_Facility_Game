@@ -3654,52 +3654,6 @@ ParticleSystem:
         m_PostInfinity: 2
         m_RotationOrder: 4
     vectorLabel1_3: W
---- !u!1001 &103062975
-Prefab:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 4340769696051004, guid: 212aef55942fc6448852e5e59b896fab, type: 2}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4340769696051004, guid: 212aef55942fc6448852e5e59b896fab, type: 2}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4340769696051004, guid: 212aef55942fc6448852e5e59b896fab, type: 2}
-      propertyPath: m_LocalPosition.z
-      value: -9.538
-      objectReference: {fileID: 0}
-    - target: {fileID: 4340769696051004, guid: 212aef55942fc6448852e5e59b896fab, type: 2}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4340769696051004, guid: 212aef55942fc6448852e5e59b896fab, type: 2}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4340769696051004, guid: 212aef55942fc6448852e5e59b896fab, type: 2}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4340769696051004, guid: 212aef55942fc6448852e5e59b896fab, type: 2}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4340769696051004, guid: 212aef55942fc6448852e5e59b896fab, type: 2}
-      propertyPath: m_RootOrder
-      value: 11
-      objectReference: {fileID: 0}
-    - target: {fileID: 1446934469516604, guid: 212aef55942fc6448852e5e59b896fab, type: 2}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_ParentPrefab: {fileID: 100100000, guid: 212aef55942fc6448852e5e59b896fab, type: 2}
-  m_IsPrefabParent: 0
 --- !u!1 &105789577
 GameObject:
   m_ObjectHideFlags: 0
@@ -22125,6 +22079,52 @@ ParticleSystem:
         m_PostInfinity: 2
         m_RotationOrder: 4
     vectorLabel1_3: W
+--- !u!1001 &684257806
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 4340769696051004, guid: 212aef55942fc6448852e5e59b896fab, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4340769696051004, guid: 212aef55942fc6448852e5e59b896fab, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4340769696051004, guid: 212aef55942fc6448852e5e59b896fab, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: -12.673
+      objectReference: {fileID: 0}
+    - target: {fileID: 4340769696051004, guid: 212aef55942fc6448852e5e59b896fab, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4340769696051004, guid: 212aef55942fc6448852e5e59b896fab, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4340769696051004, guid: 212aef55942fc6448852e5e59b896fab, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4340769696051004, guid: 212aef55942fc6448852e5e59b896fab, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4340769696051004, guid: 212aef55942fc6448852e5e59b896fab, type: 2}
+      propertyPath: m_RootOrder
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 1446934469516604, guid: 212aef55942fc6448852e5e59b896fab, type: 2}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 100100000, guid: 212aef55942fc6448852e5e59b896fab, type: 2}
+  m_IsPrefabParent: 0
 --- !u!1001 &692367799
 Prefab:
   m_ObjectHideFlags: 0

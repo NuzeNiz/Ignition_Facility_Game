@@ -286,7 +286,7 @@ namespace IFP
         /// <summary>
         /// 20180530 SangBin : 
         /// </summary>
-        virtual protected void OnParticleCollision(GameObject other)
+        protected void OnParticleCollision(GameObject other)
         {
             StartCoroutine(CameraShake());
             //playerHP -= BalanceManagement.instance.EnemyProjectile01damage;
@@ -298,5 +298,42 @@ namespace IFP
                 GameManagement.instance.GameOver();
             }
         }
+
+        /// <summary>
+        /// 20180617 SangBin : 
+        /// </summary>
+        private void OnTriggerEnter(Collider coll)
+        {
+            if (coll.gameObject.tag == "ENEMY_TYPE03_BOX")
+            {
+                StartCoroutine(CameraShake());
+
+                playerHP -= BalanceManagement.instance.EnemyProjectile01damage;
+                //playerHP -= 10.0d;
+                PlayerDamaged();
+
+                if (playerHP <= 0.0d)
+                {
+                    GameManagement.instance.GameOver();
+                }
+            }
+        }
+
+        //private void OnTriggerStay(Collider coll)
+        //{
+        //    if (coll.gameObject.tag == "ENEMY_TYPE03_BOX")
+        //    {
+        //        StartCoroutine(CameraShake());
+
+        //        //playerHP -= BalanceManagement.instance.EnemyProjectile01damage;
+        //        playerHP -= 10.0d;
+        //        PlayerDamaged();
+
+        //        if (playerHP <= 0.0d)
+        //        {
+        //            GameManagement.instance.GameOver();
+        //        }
+        //    }
+        //}
     }
 }

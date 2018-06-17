@@ -244,6 +244,10 @@ namespace IFP
             AbsorbExp();
         }
 
+
+        /// <summary>
+        /// 20180529 SangBin : 
+        /// </summary>
         private IEnumerator OnWearEnergy()
         {
             //시작 핸디캡 5초
@@ -266,6 +270,26 @@ namespace IFP
                 yield return new WaitForSeconds(0.5f);
             }
 
+        }
+
+        /// <summary>
+        /// 20180617 SangBin : 
+        /// </summary>
+        private void OnTriggerEnter(Collider coll)
+        {
+            if (coll.gameObject.tag == "ENEMY_TYPE03_BOX")
+            {
+                StartCoroutine(TreeShake());
+
+                defenseStation_HP -= BalanceManagement.instance.EnemyProjectile01damage;
+                //defenseStation_HP -= 10.0d;
+                DS_Damaged();
+
+                if (defenseStation_HP <= 0.0d)
+                {
+                    GameManagement.instance.GameOver();
+                }
+            }
         }
     }
 }
