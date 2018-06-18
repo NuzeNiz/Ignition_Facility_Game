@@ -19,12 +19,18 @@ namespace IFP
 
         //-----------------------------------------------------------------------------------------------------------------------------
 
+        /// <summary>
+        /// 20180403 SangBin :
+        /// </summary>
         void OnEnable()
         {
             GetComponent<Rigidbody>().isKinematic = false;
             StartCoroutine(this.CheckProjectileState());
         }
 
+        /// <summary>
+        /// 20180403 SangBin :
+        /// </summary>
         private void OnDisable()
         {
             //총알 파괴 이펙트 작업 (추후)

@@ -7,11 +7,13 @@ namespace IFP
 {
     public class ItemType01Ctrl : ItemBaseClass
     {
+
+
         /// <summary>
         /// 20180418 SangBin : Item Type
         /// </summary>
         [HideInInspector]
-        override public ItemTypeEnum ItemType { get { return ItemTypeEnum.cinnamon; } }
+        override public ItemTypeEnum ItemType { get { return ItemTypeEnum.boom; } }
 
         /// <summary>
         /// 20180418 SangBin : Sound File when item is collided
@@ -81,6 +83,11 @@ namespace IFP
             }
         }
 
+        /// <summary>
+        /// 20180430 SangBin : (Parabolic Motion : item origin pos -> target point) Time
+        /// </summary>
+        float parabolicTime = 0.0f;
+
         //---------------------------------------------------------------------------------------------------------
         /// <summary>
         /// 20180418 SangBin : Being Hit By Player
@@ -91,7 +98,7 @@ namespace IFP
         }
 
         /// <summary>
-        /// 20180430 SangBin : Item Cinnamon function
+        /// 20180430 SangBin : Item Boom function
         /// 20180516 SeongJun : If item used notify
         /// </summary>
         override public IEnumerator ItemFunction()
@@ -101,13 +108,12 @@ namespace IFP
                 GameManagement.instance.SoundEffect(transform.position, ItemSoundFile);
                 transform.SetPositionAndRotation(PlayerCtrl.instance.PlayerTr.position + (PlayerCtrl.instance.PlayerTr.forward), PlayerCtrl.instance.PlayerTr.rotation);
                 GetComponent<MeshRenderer>().enabled = true;
+
+                //GetComponent<Rigidbody>().velocity = CalcParabolicMotionVelocity(transform, PlayerCtrl.instance.PlayerTr.GetChild(1).gameObject.transform, 45.0f);
+                GetComponent<Rigidbody>().velocity = CalcParabolicMotionVelocity(transform, PlayerCtrl.instance.itemtarget, 45.0f);
                 GetComponent<Rigidbody>().useGravity = true;
-                Vector3 directionVec = PlayerCtrl.instance.PlayerTr.forward + (PlayerCtrl.instance.PlayerTr.up * 0.5f);
-                GetComponent<Rigidbody>().AddForce(directionVec * 300.0f, ForceMode.Force);
 
-
-                yield return new WaitForSeconds(1.0f);
-
+                yield return new WaitForSeconds(parabolicTime);
 
                 GameObject itemEffect = (GameObject)Instantiate(ItemEffectPrefab, transform.position, Quaternion.identity);
                 Destroy(itemEffect, 2.0f);
@@ -131,6 +137,28 @@ namespace IFP
                 //ItemWindow.Instance.ItemSubject.CheakConsumedItem();
             }
             yield break;
+        }
+
+        /// <summary>
+        /// 20180430 SangBin : Calculation Active Item Parabolic Motion Veclocity
+        /// </summary>
+        private Vector3 CalcParabolicMotionVelocity(Transform source, Transform target, float angle)
+        {
+            //타겟점은 출발점과 이미 수평상태
+            Vector3 direction = target.position - source.position; //직 방향
+
+            Vector3 motionDir = direction;
+            motionDir.y = 0; // 혹시나 모르니까 관계를 수평으로 강제
+            float distance = motionDir.magnitude;  //수평거리
+            float radian = angle * Mathf.Deg2Rad;
+            motionDir.y = distance * Mathf.Tan(radian);//던지는 각도를 고려해서 방향 다시 고치기
+
+            float speed = Mathf.Sqrt(distance * Physics.gravity.magnitude / Mathf.Sin(2 * radian));  // 수평 도달 거리를 통한 속력구하기
+
+            parabolicTime = 2 * speed * Mathf.Sin(radian) / Physics.gravity.magnitude; // 도달 시간 계산
+
+            return speed * motionDir.normalized; //속도값 리턴
+
         }
     }
 }

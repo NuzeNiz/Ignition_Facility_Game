@@ -91,7 +91,7 @@ namespace IFP
         /// <summary>
         /// 20180403 SangBin : Contraints of the number of Enemy Projectile
         /// </summary>
-        private int maxStinger = 5;
+        private int maxStinger = 4;
 
         /// <summary>
         /// 20180403 SangBin : Projectile Object Pool List
@@ -108,7 +108,7 @@ namespace IFP
         #endregion
 
         /// <summary>
-        /// 20180612 SangBin : 
+        /// 20180612 SangBin : event handler for witch first skill
         /// </summary>
         public delegate void ETS_EventHandler();
         public event ETS_EventHandler ETS_Killed;
@@ -238,6 +238,9 @@ namespace IFP
 
         }
 
+        /// <summary>
+        /// 20180515 SangBin : 
+        /// </summary>
         protected override void OnTriggerStay(Collider collider)
         {
             base.OnTriggerStay(collider);
@@ -246,6 +249,9 @@ namespace IFP
                 base.isDamaged = true;
         }
 
+        /// <summary>
+        /// 20180515 SangBin : 
+        /// </summary>
         protected override void OnParticleCollision(GameObject other)
         {
             base.OnParticleCollision(other);

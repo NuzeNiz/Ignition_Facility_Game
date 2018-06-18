@@ -85,8 +85,12 @@ namespace IFP
             get { return defenseStation_Leaf_Energy; }
         }
         #endregion
-            //-----------------------------------------------------------------------------------------------------------------------------
 
+        //-----------------------------------------------------------------------------------------------------------------------------
+
+        /// <summary>
+        /// 20180403 SangBin : Singletone Pattern
+        /// </summary>
         private void Awake()
         {
             //if (instance == null)
@@ -103,6 +107,9 @@ namespace IFP
             defenseStation_MAXHP = defenseStation_HP;
         }
 
+        /// <summary>
+        /// 20180403 SangBin : Singletone Pattern
+        /// </summary>
         private void Start()
         {
             StartCoroutine(OnWearEnergy());

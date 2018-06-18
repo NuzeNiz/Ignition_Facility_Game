@@ -112,7 +112,8 @@ namespace IFP
         private double defenseStation_wValue = 0.5d;
         public double DefenseStation_wValue { get { return defenseStation_wValue; } set { defenseStation_wValue = value; } } 
 
-        #endregion
+        #endregion 
+
         //---------------------------------------------------------------------------------------------------------------------------
 
         private void Awake()

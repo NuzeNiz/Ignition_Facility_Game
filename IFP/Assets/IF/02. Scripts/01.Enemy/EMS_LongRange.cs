@@ -91,7 +91,7 @@ namespace IFP
         /// <summary>
         /// 20180403 SangBin : Contraints of the number of Enemy Projectile
         /// </summary>
-        private int maxStinger = 5;
+        private int maxStinger = 4;
 
         /// <summary>
         /// 20180403 SangBin : Projectile Object Pool List
@@ -126,8 +126,11 @@ namespace IFP
         private EnemySkillState skill_03_State = EnemySkillState.available;
         private EnemySkillState skill_04_State = EnemySkillState.available;
         #endregion
-        //------------------------------------------------------------------------------------------------------------------------
+        //------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
+        /// <summary>
+        /// 20180515 SangBin : 
+        /// </summary>
         override protected void Awake()
         {
             base.animator = GetComponent<Animator>();
@@ -148,6 +151,9 @@ namespace IFP
                 base.isDamaged = true;
         }
 
+        /// <summary>
+        /// 20180617 SangBin : 
+        /// </summary>
         override protected void OnEnable()
         {
             transform.GetChild(4).gameObject.SetActive(true);
@@ -269,6 +275,9 @@ namespace IFP
 
         }
 
+        /// <summary>
+        /// 20180515 SangBin : 
+        /// </summary>
         protected override void OnTriggerStay(Collider collider)
         {
             base.OnTriggerStay(collider);
@@ -277,6 +286,9 @@ namespace IFP
                 base.isDamaged = true;
         }
 
+        /// <summary>
+        /// 20180515 SangBin : 
+        /// </summary>
         protected override void OnParticleCollision(GameObject other)
         {
             base.OnParticleCollision(other);

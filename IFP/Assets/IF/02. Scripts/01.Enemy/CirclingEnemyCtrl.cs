@@ -18,15 +18,18 @@ namespace IFP
         /// </summary>
         [SerializeField]
         private GameObject expEffectPrefab;
-        //----------------------------------------------------------
+        //-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
         private void Update()
         {
+            /// <summary>
+            /// 20180427 SangBin :
+            /// </summary>
             transform.RotateAround(DefenseStationCtrl.instance.DefenseStationTR.position, Vector3.up, 40.0f * Time.deltaTime);
         }
 
         /// <summary>
-        /// 20180427 SangBin : Being Hit By Player
+        /// 20180427 SangBin : When this object is Hit By Player
         /// </summary>
         void OnDamaged(object[] parameters)
         {
@@ -38,7 +41,9 @@ namespace IFP
             gameObject.SetActive(false);
         }
 
-        ///임시로 넣음
+        /// <summary>
+        /// 20180427 SangBin : test
+        /// </summary>
         protected void OnTriggerStay(Collider collider)
         {
             if (collider.gameObject.tag == "WEAPON_TYPE02_FLAME")
@@ -53,7 +58,7 @@ namespace IFP
         }
 
         /// <summary>
-        /// 20180516 SangBin : 
+        /// 20180516 SangBin : When this object is Hit By Player
         /// </summary>
         private void OnParticleCollision(GameObject other)
         {

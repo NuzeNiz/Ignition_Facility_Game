@@ -21,6 +21,9 @@ namespace IFP
         /// </summary>
         public int CurrentStageLevel { get { return currentStageLevel; } set { currentStageLevel = value; } }
 
+        /// <summary>
+        /// 20180614 SangBin :
+        /// </summary>
         private void Awake()
         {
             if (instance == null)

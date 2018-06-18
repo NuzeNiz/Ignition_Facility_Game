@@ -55,7 +55,7 @@ namespace IFP
         /// <summary>
         /// 20180502 SangBin :  Enemy Type01 Moving Speed
         /// </summary>
-        private float movingSpeed = 5.0f;
+        private float movingSpeed = 3.0f;
 
         /// <summary>
         /// 20180418 SangBin :  Enemy Type01 Moving Speed
@@ -211,6 +211,9 @@ namespace IFP
             StartCoroutine(Func1());
         }
 
+        /// <summary>
+        /// 20180515 SangBin :
+        /// </summary>
         protected override void OnTriggerStay(Collider collider)
         {
             base.OnTriggerStay(collider);
@@ -219,6 +222,9 @@ namespace IFP
                 base.isDamaged = true;
         }
 
+        /// <summary>
+        /// 20180515 SangBin :
+        /// </summary>
         protected override void OnParticleCollision(GameObject other)
         {
             base.OnParticleCollision(other);

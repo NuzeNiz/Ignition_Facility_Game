@@ -7,8 +7,8 @@ namespace IFP
     public class WitchShield : MonoBehaviour
     {
 
-        private double currentHealthPower = 200.0d;
-        private double maxHealthPower = 200.0d;
+        private double currentHealthPower;
+        private double maxHealthPower;
 
         /// <summary>
         /// 20180514 SeongJun : HP Display in Child
@@ -19,7 +19,8 @@ namespace IFP
         // Use this for initialization
         void Start()
         {
-
+            currentHealthPower = 400.0d;
+            maxHealthPower = currentHealthPower;
         }
 
         // Update is called once per frame

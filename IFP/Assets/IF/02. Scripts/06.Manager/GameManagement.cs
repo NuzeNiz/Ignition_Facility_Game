@@ -140,6 +140,9 @@ namespace IFP
 
         //-----------------------------------------------------------------------------------------------------------------------------
 
+        /// <summary>
+        /// 20180403 SangBin : 
+        /// </summary>
         void Awake()
         {
             //if (instance == null)
@@ -155,6 +158,9 @@ namespace IFP
             maxItem = maxEachItem * itemSort;
         }
 
+        /// <summary>
+        /// 20180403 SangBin : 
+        /// </summary>
         private void Start()
         {
 
@@ -179,6 +185,9 @@ namespace IFP
             StartCoroutine(ActivateButterFly());
         }
 
+        /// <summary>
+        /// 20180403 SangBin : 
+        /// </summary>
         private void Update()
         {
             //if(PlayerCtrl.instance.PlayerHP <= 0.0d || DefenseStationCtrl.instance.DefenseStation_HP <= 0.0d)
@@ -284,7 +293,9 @@ namespace IFP
                 //}
             }
         }
-
+        /// <summary>
+        /// 20180606 SangBin : 
+        /// </summary>
         private IEnumerator OpenGate(GameObject gObject)
         {
             if (!gObject.activeSelf)
@@ -406,6 +417,9 @@ namespace IFP
             }
         }
 
+        /// <summary>
+        /// 20180617 SangBin : 
+        /// </summary>
         public void ActivateChapter2Boss()
         {
             Vector3 tempV = PlayerCtrl.instance.PlayerTr.forward;

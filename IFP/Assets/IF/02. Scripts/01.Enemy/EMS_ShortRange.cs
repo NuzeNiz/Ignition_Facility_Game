@@ -137,6 +137,9 @@ namespace IFP
 
         //------------------------------------------------------------------------------------------------------------------------
 
+        /// <summary>
+        /// 20180515 SangBin : 
+        /// </summary>
         override protected void Awake()
         {
             base.animator = GetComponent<Animator>();
@@ -156,6 +159,9 @@ namespace IFP
                 base.isDamaged = true;
         }
 
+        /// <summary>
+        /// 20180617 SangBin : 
+        /// </summary>
         override protected void OnEnable()
         {
             transform.GetChild(4).gameObject.SetActive(true);
@@ -243,6 +249,9 @@ namespace IFP
             StartCoroutine(Func1());
         }
 
+        /// <summary>
+        /// 20180510 SangBin : 
+        /// </summary>
         protected override void OnTriggerStay(Collider collider)
         {
             base.OnTriggerStay(collider);
@@ -251,6 +260,9 @@ namespace IFP
                 base.isDamaged = true;
         }
 
+        /// <summary>
+        /// 20180510 SangBin : 
+        /// </summary>
         protected override void OnParticleCollision(GameObject other)
         {
             base.OnParticleCollision(other);

@@ -6,7 +6,9 @@ namespace IFP
 {
     public class WeaponCtrl : MonoBehaviour
     {
-
+        /// <summary>
+        /// ???????? : SungJun :
+        /// </summary>
         private WeaponSubject weaponSubject;
 
         #region Fields : Weapon __
@@ -55,6 +57,9 @@ namespace IFP
         [HideInInspector]
         private WeaponTypeEnum currentWeaponType;
 
+        /// <summary>
+        /// 20180514 SangBin : Weapon Type
+        /// </summary>
         public WeaponTypeEnum CurrentWeaponType { get { return currentWeaponType; } set{ currentWeaponType = value; } }
 
         #endregion
@@ -156,6 +161,10 @@ namespace IFP
 
         //----------------------------------------------------------------------------------
 
+        /// <summary>
+        /// 20180515 SangBin : 
+        /// ???????? SungJun : Notify to WeaponSlots
+        /// </summary>
         private void Awake()
         {
             //if (instance == null)
@@ -178,7 +187,7 @@ namespace IFP
             //test
             currentWeaponType = WeaponTypeEnum.weaponType01;
 
-            //Notify to WeaponSlots 
+ 
             weaponSubject = ItemWindow.Instance.WeaponSubject;
             //weaponSubject.NotifyNewItem(WeaponTypeEnum.weaponType01);
         }

@@ -9,6 +9,8 @@ namespace IFP
     [RequireComponent(typeof(AudioSource))]
     public class PlayerCtrl : MonoBehaviour
     {
+        #region Fields : Player Statistic
+
         /// <summary>
         /// 20180403 SangBin : Singletone Pattern
         /// </summary>
@@ -70,6 +72,8 @@ namespace IFP
         /// </summary>
         public double PlayerHP { get { return playerHP; } }
 
+        #endregion
+
         #region Fields : Camera Shaking
         /// <summary>
         /// 20180514 SangBin : Shaking Camera fields
@@ -87,6 +91,10 @@ namespace IFP
         private float shakeSpeed = 4.0f;
         #endregion
 
+        /// <summary>
+        /// 20180430 SangBin : 
+        /// </summary>
+        public Transform itemtarget;
 
         /// <summary>
         /// 20180530 SangBin : 
@@ -96,6 +104,9 @@ namespace IFP
         //public static event PlayerEventHandler Player_FallDown;
         //-----------------------------------------------------------------------------------------------------------------------------
 
+        /// <summary>
+        /// 20180403 SangBin : 
+        /// </summary>
         private void Awake()
         {
             //if (instance == null)
@@ -114,6 +125,9 @@ namespace IFP
 
         }
 
+        /// <summary>
+        /// 20180403 SangBin : 
+        /// </summary>
         private void Start()
         {
             playerTr = GameObject.Find("First Person Camera").GetComponent<Transform>();
@@ -121,6 +135,9 @@ namespace IFP
             StartCoroutine(SetPositionAndRotation());
         }
 
+        /// <summary>
+        /// 20180403 SangBin : 
+        /// </summary>
         void Update() {
             PlayerShoot();
         }
@@ -250,6 +267,9 @@ namespace IFP
         //    muzzleFlash.enabled = false;
         //}
 
+        /// <summary>
+        /// 20180514 SangBin : Shaking Camera
+        /// </summary>
         private IEnumerator CameraShake()
         {
             StopCoroutine(SetPositionAndRotation());
@@ -272,6 +292,9 @@ namespace IFP
             StartCoroutine(SetPositionAndRotation());
         }
 
+        /// <summary>
+        /// 20180514 SangBin : 
+        /// </summary>
         private IEnumerator SetPositionAndRotation()
         {
             //while (GameManagement.instance.ThisStageAlive)

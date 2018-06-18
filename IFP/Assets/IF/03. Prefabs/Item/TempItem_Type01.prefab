@@ -198,6 +198,7 @@ MonoBehaviour:
   collEffectPrefab: {fileID: 153390, guid: 3c2d41265118fc14f8065fbfc45391d0, type: 2}
   itemSoundFile: {fileID: 8300000, guid: 80ef809f0c6a5544cb240d8624200cb4, type: 3}
   itemEffectPrefab: {fileID: 199484, guid: bf27844d805522447933dc21e304c99b, type: 2}
+  target: {fileID: 0}
 --- !u!135 &135952864281671308
 SphereCollider:
   m_ObjectHideFlags: 1
@@ -270,7 +271,7 @@ ParticleSystem:
   moveWithTransform: 1
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 2
-  randomSeed: -742911303
+  randomSeed: 1745074074
   InitialModule:
     serializedVersion: 3
     enabled: 1

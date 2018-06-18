@@ -171,7 +171,7 @@ namespace GoogleARCore.IF
                     // coordinates.
                     planeGridObject = Instantiate(TrackedPlanePrefab, Vector3.zero, Quaternion.identity,
                         transform);
-                    planeGridObject.GetComponent<TrackedPlaneVisualizer>().Initialize(m_NewPlanes[i]); //아마 이 planeobject가 없어지면 설치후 그릴 없엘수 잇겟다
+                    planeGridObject.GetComponent<TrackedPlaneVisualizer>().Initialize(m_NewPlanes[i]); //아마 이 planeobject가 없어지면 설치 후 그릴 없엘 수 있겠
                 }
                 
                 // Disable the snackbar UI when no planes are valid.

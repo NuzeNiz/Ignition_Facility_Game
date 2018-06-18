@@ -80,6 +80,9 @@ namespace IFP
             DisplayScore(0);
         }
 
+        /// <summary>
+        /// 20180529 SangBin : 
+        /// </summary>
         private void OnEnable()
         {
             PlayerCtrl.PlayerDamaged += this.PlayerDamaged;
@@ -88,6 +91,9 @@ namespace IFP
             DefenseStationCtrl.DS_Damaged += this.DS_Damaged;
         }
 
+        /// <summary>
+        /// 20180529 SangBin : 
+        /// </summary>
         private void OnDisable()
         {
             PlayerCtrl.PlayerDamaged -= this.PlayerDamaged;
@@ -139,16 +145,25 @@ namespace IFP
 
         }
 
+        /// <summary>
+        /// 20180529 SangBin : 
+        /// </summary>
         private void PlayerDamaged()
         {
             playerHP_Bar.fillAmount = (float)(PlayerCtrl.instance.PlayerHP / PlayerCtrl.instance.PlayerMaxHP);
         }
 
+        /// <summary>
+        /// 20180529 SangBin : 
+        /// </summary>
         private void AbsorbExp()
         {
             DefenseStation_Exp_Bar.fillAmount = (float)(DefenseStationCtrl.instance.DefenseStation_exp / 100.0d);
         }
 
+        /// <summary>
+        /// 20180529 SangBin : 
+        /// </summary>
         private void WearEnergy()
         {
             DefenseStation_Fire_Energy_Bar.fillAmount = (float)(DefenseStationCtrl.instance.DefenseStation_Fire_Energy / 100.0d);
@@ -156,6 +171,9 @@ namespace IFP
             DefenseStation_Leaf_Energy_Bar.fillAmount = (float)(DefenseStationCtrl.instance.DefenseStation_Leaf_Energy / 100.0d);
         }
 
+        /// <summary>
+        /// 20180529 SangBin : 
+        /// </summary>
         private void DS_Damaged()
         {
             DefenseStation_HP_Bar.fillAmount = (float)(DefenseStationCtrl.instance.DefenseStation_HP / 100.0d);

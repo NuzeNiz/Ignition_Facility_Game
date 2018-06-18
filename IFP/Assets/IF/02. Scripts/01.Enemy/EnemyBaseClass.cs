@@ -138,10 +138,16 @@ namespace IFP
 
         #endregion
 
-
+        /// <summary>
+        /// 20180614 SangBin : 
+        /// </summary>
         DefenseStationCtrl defenseStation = null;
         //--------------------------------------------------------------------------------------------------
 
+        /// <summary>
+        /// 20180430 SangBin
+        /// 20180614 SangBin : 
+        /// </summary>
         virtual protected void Awake()
         {
             maxHealthPower = CurrentHealthPower;
@@ -150,6 +156,10 @@ namespace IFP
                 defenseStation = DefenseStationCtrl.instance.Instance();
             }
         }
+
+        /// <summary>
+        /// 20180430 SangBin
+        /// </summary>
         virtual protected void OnEnable()
         {
             StartCoroutine(EnemyAction()); //Finite State Machine (or Finite Automaton)
@@ -157,6 +167,9 @@ namespace IFP
             isDamaged = false;
         }
 
+        /// <summary>
+        /// 20180430 SangBin
+        /// </summary>
         virtual protected void OnDisable()
         {
             ResetTag(TagName);
@@ -165,6 +178,7 @@ namespace IFP
         /// <summary>
         /// 20180403 SangBin : Damage to enemy
         /// 20180515 SangBin : + Splash Damage to enemy
+        /// ???????? SungJun : Set HUD
         /// </summary>
         protected void OnDamaged(object[] parameters)
         {
@@ -413,6 +427,9 @@ namespace IFP
             gameObject.tag = tag;
         }
 
+        /// <summary>
+        /// 20180516 SangBin : 
+        /// </summary>
         virtual protected void OnTriggerStay(Collider collider)
         {
             if (collider.gameObject.tag == "WEAPON_TYPE02_FLAME")
@@ -422,7 +439,6 @@ namespace IFP
 
             SetHPHuD();
 
-            //임시로 넣음
             if (CurrentHealthPower <= 0.0d)
             {
                 EnemyKilled();
@@ -442,7 +458,6 @@ namespace IFP
 
             SetHPHuD();
 
-            //임시로 넣음
             if (CurrentHealthPower <= 0.0d)
             {
                 EnemyKilled();

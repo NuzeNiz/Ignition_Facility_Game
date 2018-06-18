@@ -12,7 +12,7 @@ namespace IFP
         /// 20180418 SangBin : Item Type Enum
         /// </summary>
         [HideInInspector]
-        public enum ItemTypeEnum { cinnamon, itemType02, itemType03, itemType04 };
+        public enum ItemTypeEnum { boom, itemType02, itemType03, itemType04 };
 
         /// <summary>
         /// 20180418 SangBin : Item Type
@@ -56,19 +56,31 @@ namespace IFP
         private float movingSpeed = 50.0f;
         #endregion
 
+        /// <summary>
+        /// 20180418 SangBin : Item Tag
+        /// </summary>
         string itemTag;
         //-----------------------------------------------------------------------------------------------------------------
 
+        /// <summary>
+        /// 20180418 SangBin :
+        /// </summary>
         protected void Awake()
         {
             itemTag = gameObject.tag;
         }
 
+        /// <summary>
+        /// 20180418 SangBin :
+        /// </summary>
         protected void OnEnable()
         {
             StartCoroutine(TrackingPlayer());
         }
 
+        /// <summary>
+        /// 20180418 SangBin :
+        /// </summary>
         protected void OnDisable()
         {
             StopAllCoroutines();
