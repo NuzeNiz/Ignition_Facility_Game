@@ -34,5 +34,7 @@ public class LocationObserve : MonoBehaviour {
         {
             myImage.color = originColor;
         }
+        var childText = gameObject.transform.GetChild(0).GetComponent<Text>();
+        childText.text = MyLocation.contents;
     }
 }

@@ -14,6 +14,8 @@ public class MyLocationChecker : MonoBehaviour
     public bool isInLocation { get; private set; }
     public bool isInGroup { get; private set; }
 
+    public string contents { get; private set; }
+
     private readonly float groupDistance = 0.000872629430946f;
     private readonly float locationDistance = 0.00016814009039972156f;
 
@@ -21,6 +23,7 @@ public class MyLocationChecker : MonoBehaviour
 
     private Thread locationChecker;
     private CancellationTokenSource cts;
+
 
     private void Awake()
     {
@@ -67,12 +70,14 @@ public class MyLocationChecker : MonoBehaviour
                           {
                               isInLocation = true;
                           }
+                          contents = selected.Element("contents").Value;
                       }
                       else
                       {
                           xElement = xDoc.Elements("pin");
                           isInGroup = false;
                           isInLocation = false;
+                          contents = "none";
                       }
                   }
               }
