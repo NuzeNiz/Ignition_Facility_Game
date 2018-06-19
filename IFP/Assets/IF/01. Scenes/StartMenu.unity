@@ -558,7 +558,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Infinity Competition Mode
+  m_Text: Infinite Competition Mode
 --- !u!222 &454560857
 CanvasRenderer:
   m_ObjectHideFlags: 0
