@@ -57,8 +57,8 @@ namespace IFP
         /// <summary>
         /// 20180501 SangBin : Defense Station's Current Health Power Property
         /// </summary>
-        public double DefenseStation_HP { get { return defenseStation_HP; } }
-
+        public double DefenseStation_HP { get { return defenseStation_HP; } set { defenseStation_HP = value; } }
+         
         private double defenseStation_exp = 0.0d;
         public double DefenseStation_exp
         {

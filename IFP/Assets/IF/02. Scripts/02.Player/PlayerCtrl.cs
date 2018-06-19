@@ -70,7 +70,7 @@ namespace IFP
         /// <summary>
         /// 20180403 SangBin : Player's Current Health Power Property
         /// </summary>
-        public double PlayerHP { get { return playerHP; } }
+        public double PlayerHP { get { return playerHP; } set { playerHP = value; } }
 
         #endregion
 
