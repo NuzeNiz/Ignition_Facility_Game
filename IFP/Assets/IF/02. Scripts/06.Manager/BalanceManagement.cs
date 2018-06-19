@@ -26,7 +26,7 @@ namespace IFP
         /// 20180521 SangBin : Damage Values WeaponType01 to Enemies
         /// </summary>
         #region Fields : WeaponType01 to Enemy
-        private double w1ToE = 25.0d;
+        private double w1ToE = 10.0d;
         //private double w1ToE2 = 25.0d;
         //private double w1ToE3 = 25.0d;
         //private double w1ToE4 = 25.0d;
@@ -39,27 +39,27 @@ namespace IFP
         private double w2ToE1 = 0.6;
         private double w2ToE2 = 0.3; //per frame
         private double w2ToE3 = 1.2;
-        private double w2ToE4 = 0.15d;
+        private double w2ToE4 = 0.4d;
         #endregion
 
         /// <summary>
         /// 20180521 SangBin : Damage Values WeaponType03 to Enemies
         /// </summary>
         #region Fields : WeaponType03 to Enemy
-        private double w3ToE1 = 50.0d;
-        private double w3ToE2 = 25.0d;
-        private double w3ToE3 = 12.5d;
-        private double w3ToE4 = 6.25d;
+        private double w3ToE1 = 40.0d;
+        private double w3ToE2 = 20.0d;
+        private double w3ToE3 = 10.0d;
+        private double w3ToE4 = 14.0d;
         #endregion
 
         /// <summary>
         /// 20180521 SangBin : Damage Values WeaponType04 to Enemies
         /// </summary>
         #region Fields : WeaponType04 to Enemy
-        private double w4ToE1 = 12.5d;
-        private double w4ToE2 = 50.0d;
-        private double w4ToE3 = 25.0d;
-        private double w4ToE4 = 6.25d;
+        private double w4ToE1 = 10.0d;
+        private double w4ToE2 = 40.0d;
+        private double w4ToE3 = 20.0d;
+        private double w4ToE4 = 14.0d;
         #endregion
         #endregion
 
@@ -148,7 +148,7 @@ namespace IFP
                             strikingPower = w1ToE;
                             break;
                         case "ENEMY_TYPE04_BOSS":
-                            strikingPower = w1ToE;
+                            strikingPower = w1ToE/2;
                             break;
                         case "ENEMY_BUTTERFLY":
                             strikingPower = wToIM;

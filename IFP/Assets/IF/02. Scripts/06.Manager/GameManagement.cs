@@ -203,7 +203,7 @@ namespace IFP
         /// <summary>
         /// 20180403 SangBin : Create enemy OP
         /// </summary>
-        void CreateEnemyObjectPool()
+        private void CreateEnemyObjectPool()
         {
             for (int i = 0; i < maxEnemy; i++)
             {
@@ -255,7 +255,7 @@ namespace IFP
         /// <summary>
         /// 20180403 SangBin : Activate enemy with the object pool
         /// </summary>
-        IEnumerator ActivateEnemy()
+        private IEnumerator ActivateEnemy()
         {
             while (ThisStageAlive)
             {
@@ -334,7 +334,7 @@ namespace IFP
         /// <summary>
         /// 20180418 SangBin : Create Item OP
         /// </summary>
-        void CreateItemObjectPool()
+        private void CreateItemObjectPool()
         {
             for (int i = 0; i < maxEachItem; i++)
             {
@@ -381,7 +381,7 @@ namespace IFP
         /// <summary>
         /// 20180427 SangBin : Create ButterFly OP
         /// </summary>
-        void CreateButterFlyObjectPool()
+        private void CreateButterFlyObjectPool()
         {
             for (int i = 0; i < 2; i++)
             {
@@ -397,7 +397,7 @@ namespace IFP
         /// <summary>
         /// 20180427 SangBin : Activate Butterfly with the object pool
         /// </summary>
-        IEnumerator ActivateButterFly()
+        private IEnumerator ActivateButterFly()
         {
             while (ThisStageAlive)
             {

@@ -55,7 +55,7 @@ namespace IFP
         /// <summary>
         /// 20180502 SangBin :  Enemy Type01 Moving Speed
         /// </summary>
-        private float movingSpeed = 5.0f;
+        private float movingSpeed = 2.0f;
 
         /// <summary>
         /// 20180418 SangBin :  Enemy Type01 Moving Speed
@@ -221,7 +221,7 @@ namespace IFP
             base.ActionC();
             //anim.CrossFade(ATTACK, 0.3f);
             //transform.GetChild(1).gameObject.GetComponent<BoxCollider>().enabled = false;
-            StartCoroutine(Func1());
+            StartCoroutine(OffColiider());
 
             AvailableSkillCheck();
         }
@@ -246,7 +246,7 @@ namespace IFP
             base.ActionE();
             //anim.CrossFade(ATTACK, 0.3f);
             //transform.GetChild(1).gameObject.GetComponent<BoxCollider>().enabled = false;
-            StartCoroutine(Func1());
+            StartCoroutine(OffColiider());
         }
 
         /// <summary>
@@ -274,7 +274,7 @@ namespace IFP
         /// <summary>
         /// 20180617 SangBin : 
         /// </summary>
-        private IEnumerator Func1()
+        private IEnumerator OffColiider()
         {
             yield return new WaitForSeconds(0.3f);
             transform.GetChild(1).gameObject.GetComponent<BoxCollider>().enabled = false;

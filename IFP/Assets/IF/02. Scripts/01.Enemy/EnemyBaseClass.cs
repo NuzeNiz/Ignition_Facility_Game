@@ -435,15 +435,14 @@ namespace IFP
             if (collider.gameObject.tag == "WEAPON_TYPE02_FLAME")
             {
                 CurrentHealthPower -= BalanceManagement.instance.CalcPlayerStrkingPower(TagName, WeaponCtrl.instance.CurrentWeaponType);
+
+                SetHPHuD();
+
+                if (CurrentHealthPower <= 0.0d)
+                {
+                    EnemyKilled();
+                }
             }
-
-            SetHPHuD();
-
-            if (CurrentHealthPower <= 0.0d)
-            {
-                EnemyKilled();
-            }
-
         }
 
         /// <summary>
@@ -451,17 +450,18 @@ namespace IFP
         /// </summary>
         virtual protected void OnParticleCollision(GameObject other)
         {
-            //if (collision.gameObject.tag == "WEAPON_TYPE03_PROJECTILE")
+            if (other.gameObject.layer == 9)
             {
                 CurrentHealthPower -= BalanceManagement.instance.CalcPlayerStrkingPower(TagName, WeaponCtrl.instance.CurrentWeaponType); //damage per frame
+
+                SetHPHuD();
+
+                if (CurrentHealthPower <= 0.0d)
+                {
+                    EnemyKilled();
+                }
             }
 
-            SetHPHuD();
-
-            if (CurrentHealthPower <= 0.0d)
-            {
-                EnemyKilled();
-            }
         }
 
         /// <summary>

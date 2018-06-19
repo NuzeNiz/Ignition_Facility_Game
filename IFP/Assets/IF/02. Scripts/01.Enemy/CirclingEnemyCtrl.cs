@@ -62,12 +62,15 @@ namespace IFP
         /// </summary>
         private void OnParticleCollision(GameObject other)
         {
-            GameObject explosion = (GameObject)Instantiate(expEffectPrefab, this.gameObject.transform.position, Quaternion.identity);
-            GameManagement.instance.SoundEffect(transform.position, SoundFile);
-            GameManagement.instance.ActivateItem(transform);
-            Destroy(explosion, 2.0f);
+            if (other.gameObject.layer == 9)
+            {
+                GameObject explosion = (GameObject)Instantiate(expEffectPrefab, this.gameObject.transform.position, Quaternion.identity);
+                GameManagement.instance.SoundEffect(transform.position, SoundFile);
+                GameManagement.instance.ActivateItem(transform);
+                Destroy(explosion, 2.0f);
 
-            gameObject.SetActive(false);
+                gameObject.SetActive(false);
+            }
         }
 
     }

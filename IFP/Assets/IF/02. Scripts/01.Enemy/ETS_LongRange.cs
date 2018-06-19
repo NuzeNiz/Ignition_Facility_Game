@@ -60,7 +60,7 @@ namespace IFP
         /// <summary>
         /// 20180502 SangBin :  Enemy Type01 Moving Speed
         /// </summary>
-        private float movingSpeed = 5.0f;
+        private float movingSpeed = 2.0f;
 
         /// <summary>
         /// 20180418 SangBin :  Enemy Type01 Moving Speed
@@ -157,7 +157,7 @@ namespace IFP
         /// <summary>
         /// 20180430 SangBin : Projectile Shooting
         /// </summary>
-        IEnumerator ProjectileShooting(Vector3 directionVector_Normalized)
+        private IEnumerator ProjectileShooting(Vector3 directionVector_Normalized)
         {
             foreach (GameObject projectileObj in projectileObjectPool)
             {
@@ -177,7 +177,7 @@ namespace IFP
         /// <summary>
         /// 20180403 SangBin : Create bullet OP
         /// </summary>
-        void CreateProjectileObjectPool()
+        private void CreateProjectileObjectPool()
         {
             for (int i = 0; i < maxStinger; i++)
             {

@@ -72,7 +72,7 @@ GameObject:
   - component: {fileID: 4752427408344434}
   - component: {fileID: 198249446213784576}
   - component: {fileID: 199923811751803002}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Shoot_wind_v2
   m_TagString: Untagged
   m_Icon: {fileID: 0}

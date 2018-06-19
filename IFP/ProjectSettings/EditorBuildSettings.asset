@@ -7,9 +7,15 @@ EditorBuildSettings:
   m_Scenes:
   - enabled: 1
     path: Assets/IF/01. Scenes/GameScene 0.unity
-    guid: db03323d1102a814290a079b445ec9f8
+    guid: 11230b90e48a15041897587d4f124d32
   - enabled: 1
     path: Assets/IF/01. Scenes/GameScene 1.unity
+    guid: 9ac9f71973c176c43bc0287501f1f3e3
+  - enabled: 1
+    path: Assets/IF/01. Scenes/GameScene 2.unity
+    guid: db03323d1102a814290a079b445ec9f8
+  - enabled: 1
+    path: Assets/IF/01. Scenes/GameScene 3.unity
     guid: 684144eed404b4c418a972607e032f31
   - enabled: 1
     path: Assets/IF/01. Scenes/StartMenu.unity

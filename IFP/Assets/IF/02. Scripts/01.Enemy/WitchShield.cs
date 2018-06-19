@@ -61,16 +61,14 @@ namespace IFP
             if (collider.gameObject.tag == "WEAPON_TYPE02_FLAME")
             {
                 currentHealthPower -= BalanceManagement.instance.CalcPlayerStrkingPower(gameObject.tag, WeaponCtrl.instance.CurrentWeaponType);
+
+                SetHPHuD();
+
+                if (currentHealthPower <= 0.0d)
+                {
+                    gameObject.SetActive(false);
+                }
             }
-
-            SetHPHuD();
-
-            //임시로 넣음
-            if (currentHealthPower <= 0.0d)
-            {
-                gameObject.SetActive(false);
-            }
-
         }
 
         /// <summary>
@@ -78,18 +76,18 @@ namespace IFP
         /// </summary>
         private void OnParticleCollision(GameObject other)
         {
-            //if (collision.gameObject.tag == "WEAPON_TYPE03_PROJECTILE")
+            if (other.gameObject.layer == 9)
             {
                 currentHealthPower -= BalanceManagement.instance.CalcPlayerStrkingPower(gameObject.tag, WeaponCtrl.instance.CurrentWeaponType); //damage per frame
+
+                SetHPHuD();
+
+                if (currentHealthPower <= 0.0d)
+                {
+                    gameObject.SetActive(false);
+                }
             }
 
-            SetHPHuD();
-
-            //임시로 넣음
-            if (currentHealthPower <= 0.0d)
-            {
-                gameObject.SetActive(false);
-            }
         }
     }
 }
