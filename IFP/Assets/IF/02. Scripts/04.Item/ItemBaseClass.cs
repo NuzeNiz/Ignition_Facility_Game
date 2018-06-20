@@ -81,7 +81,7 @@ namespace IFP
         /// <summary>
         /// 20180418 SangBin :
         /// </summary>
-        protected void OnDisable()
+        virtual protected void OnDisable()
         {
             StopAllCoroutines();
             tag = itemTag;
@@ -148,8 +148,8 @@ namespace IFP
             StopCoroutine(TrackingPlayer());
             GetComponent<MeshRenderer>().enabled = false;
             GetComponent<SphereCollider>().enabled = false;
-            //transform.parent = PlayerCtrl.PlayerInstance.PlayerTr;
-            transform.position = (Vector3.back * 5.0f);
+            transform.position = PlayerCtrl.instance.PlayerTr.up * 5.0f;
+            //transform.position = (Vector3.back * 5.0f);
         }
     }
 }

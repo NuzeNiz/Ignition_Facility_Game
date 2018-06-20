@@ -196,7 +196,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   collsionSF: {fileID: 8300000, guid: ee7c248c9008a8e4fa33a713ceb357c8, type: 3}
   collEffectPrefab: {fileID: 153390, guid: 3c2d41265118fc14f8065fbfc45391d0, type: 2}
-  itemSoundFile: {fileID: 8300000, guid: 80ef809f0c6a5544cb240d8624200cb4, type: 3}
+  itemSoundFile: {fileID: 8300000, guid: 14e8c287785335a4392e974a5e6d3125, type: 3}
   itemEffectPrefab: {fileID: 1335284673395308, guid: cb501d6f4c6caf742b2a63436a4f7f36,
     type: 2}
 --- !u!135 &135344672730383730

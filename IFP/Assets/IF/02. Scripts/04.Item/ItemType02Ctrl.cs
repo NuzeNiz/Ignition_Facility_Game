@@ -83,6 +83,16 @@ namespace IFP
         }
 
         //---------------------------------------------------------------------------------------------------------
+
+        protected override void OnDisable()
+        {
+            base.OnDisable();
+
+            GetComponent<Rigidbody>().velocity = Vector3.zero;
+            GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
+
+        }
+
         /// <summary>
         /// 20180418 SangBin : Being Hit By Player
         /// </summary>
