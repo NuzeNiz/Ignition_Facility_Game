@@ -4,6 +4,9 @@ using System.Linq;
 using UnityEngine;
 using IFP;
 
+/// <summary>
+/// 20180620 SeongJun :
+/// </summary>
 public class ItemWindow : MonoBehaviour
 {
     public static ItemWindow Instance { get; private set; }

@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// 20180620 SeongJun :
+/// </summary>
 public class CollTrigger : MonoBehaviour {
     private Collider2D col2D;
 

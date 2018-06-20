@@ -4,6 +4,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using IFP;
 
+/// <summary>
+/// 20180620 SeongJun :
+/// </summary>
 public class ItemSubject : Subject
 {
     public int itemCount = 0;

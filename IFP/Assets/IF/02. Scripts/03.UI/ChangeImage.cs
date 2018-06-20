@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+/// <summary>
+/// 20180620 SeongJun :
+/// </summary>
 public class ChangeImage : MonoBehaviour {
     private void Awake()
     {

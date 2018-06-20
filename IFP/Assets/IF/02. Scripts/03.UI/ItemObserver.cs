@@ -1,5 +1,8 @@
 ﻿using System;
 
+/// <summary>
+/// 20180620 SeongJun :
+/// </summary>
 public class ItemObserver : Observer
 {
     public Action<ItemSubject> ObserverDelegate;

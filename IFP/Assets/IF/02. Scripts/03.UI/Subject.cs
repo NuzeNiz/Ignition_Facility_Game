@@ -1,5 +1,8 @@
 ﻿using System.Collections.Generic;
 
+/// <summary>
+/// 20180620 SeongJun :
+/// </summary>
 abstract public class Subject
 {
     protected List<Observer> Observers = new List<Observer>();
