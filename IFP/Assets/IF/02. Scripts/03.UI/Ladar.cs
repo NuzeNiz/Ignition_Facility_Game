@@ -3,6 +3,9 @@ using System.Linq;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// 20180620 SeongJun :
+/// </summary>
 public class Ladar : MonoBehaviour {
     public GameObject redDot;
     public float distance = 1.0f;

@@ -8,8 +8,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+/// <summary>
+/// 20180620 SeongJun :
+/// </summary>
 public class MyLocationChecker : MonoBehaviour
 {
+    private Compas compas;
 
     public bool isInLocation { get; private set; }
     public bool isInGroup { get; private set; }
@@ -19,14 +23,14 @@ public class MyLocationChecker : MonoBehaviour
     private readonly float groupDistance = 0.000872629430946f;
     private readonly float locationDistance = 0.00016814009039972156f;
 
-    private float[] myPosition = { 0.0f, 0.0f };
-
     private Thread locationChecker;
     private CancellationTokenSource cts;
 
 
     private void Awake()
     {
+        compas = gameObject.GetComponent<Compas>();
+
         var tAsset = Resources.Load("data") as TextAsset;
         var xDoc = XElement.Parse(tAsset.text);
 
@@ -46,7 +50,7 @@ public class MyLocationChecker : MonoBehaviour
                       var selected = xElement.Where(xe =>
                       {
                           float[] pos = { float.Parse(xe.Element("latitude").Value), float.Parse(xe.Element("longitude").Value) };
-                          var dis = DistanceCalc(myPosition, pos);
+                          var dis = DistanceCalc(compas.myPosition, pos);
                           var type = xe.Element("type").Value;
                           if (type == "group")
                           {
@@ -86,14 +90,9 @@ public class MyLocationChecker : MonoBehaviour
                   Debug.Log("stop!!");
               }
           });
+        locationChecker.Name = "LocationChecker";
         locationChecker.Start();
 
-    }
-
-    private void Update()
-    {
-        myPosition[0] = Input.location.lastData.latitude;
-        myPosition[1] = Input.location.lastData.longitude;
     }
 
     float DistanceCalc(float[] a, float[] b)

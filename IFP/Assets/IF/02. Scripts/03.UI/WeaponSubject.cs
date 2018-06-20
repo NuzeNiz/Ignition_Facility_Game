@@ -4,6 +4,9 @@ using UnityEngine;
 using UnityEngine.UI;
 using IFP;
 
+/// <summary>
+/// 20180620 SeongJun :
+/// </summary>
 public class WeaponSubject : Subject {
     private WeaponCtrl weaponCtrl = WeaponCtrl.instance;
 

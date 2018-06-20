@@ -4,6 +4,9 @@ using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
+/// <summary>
+/// 20180620 SeongJun :
+/// </summary>
 public class Dragable : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IDragHandler
 {
     private RectTransform parent;

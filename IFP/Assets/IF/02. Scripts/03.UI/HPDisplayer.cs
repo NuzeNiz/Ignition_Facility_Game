@@ -5,6 +5,9 @@ using UnityEngine.UI;
 
 namespace IFP
 {
+    /// <summary>
+    /// 20180620 SeongJun :
+    /// </summary>
     public class HPDisplayer : MonoBehaviour
     {
         [SerializeField]

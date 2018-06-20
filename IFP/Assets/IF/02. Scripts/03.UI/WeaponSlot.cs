@@ -4,6 +4,9 @@ using UnityEngine;
 using UnityEngine.UI;
 using IFP;
 
+/// <summary>
+/// 20180620 SeongJun :
+/// </summary>
 public class WeaponSlot : MonoBehaviour
 {
     public static List<WeaponSlot> weaponSlots = new List<WeaponSlot>();
