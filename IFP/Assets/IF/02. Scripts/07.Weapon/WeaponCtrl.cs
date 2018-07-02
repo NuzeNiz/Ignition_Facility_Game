@@ -159,6 +159,16 @@ namespace IFP
         private Texture weaponType04_04;
         #endregion
 
+        #region Fields : Ammunition
+        public int amm_wt01 = 0;
+        public float amm_wt02 = 30.0f;
+        public int amm_wt03 = 100;
+        public int amm_wt04 = 100;
+
+        public delegate void Weapon_EventHandler();
+        public static event Weapon_EventHandler Display_Ammu;
+        #endregion
+
         //----------------------------------------------------------------------------------
 
         /// <summary>
@@ -190,6 +200,25 @@ namespace IFP
  
             weaponSubject = ItemWindow.Instance.WeaponSubject;
             //weaponSubject.NotifyNewItem(WeaponTypeEnum.weaponType01);
+
+            GetAmmu();
+        }
+
+        private void OnApplicationQuit()
+        {
+            SetAmmu();
+        }
+
+        private void OnEnable()
+        {
+            EMS_LongRange.AbsorbAmmu += this.AbsorbAmmu;
+            EMS_ShortRange.AbsorbAmmu += this.AbsorbAmmu;
+        }
+
+        private void OnDisable()
+        {
+            EMS_LongRange.AbsorbAmmu -= this.AbsorbAmmu;
+            EMS_ShortRange.AbsorbAmmu -= this.AbsorbAmmu;
         }
 
         /// <summary>
@@ -240,17 +269,22 @@ namespace IFP
                     if (!transform.GetChild(3).gameObject.activeSelf)
                     {
                         transform.GetChild(3).gameObject.SetActive(true);
+                        //amm_wt02 -= Time.deltaTime;
                     }
                     break;
 
                 case WeaponTypeEnum.weaponType03:
                     StartCoroutine(ProjectileShot(weaponType03_shot_Effect));
+                    amm_wt03--;
                     break;
 
                 case WeaponTypeEnum.weaponType04:
                     StartCoroutine(ProjectileShot(weaponType04_shot_Effect));
+                    amm_wt04--;
                     break;
             }
+
+            Display_Ammu();
         }
 
         /// <summary>
@@ -311,12 +345,70 @@ namespace IFP
         }
 
         /// <summary>
+        /// 20180702 SangBin :
+        /// </summary>
+        private void GetAmmu()
+        {
+            //if (PlayerPrefs.HasKey("ammunition_wt01"))
+            //{
+            //    amm_wt01 = PlayerPrefs.GetInt("ammunition_wt01", 0);
+            //}
+
+            if (PlayerPrefs.HasKey("ammunition_wt02"))
+            {
+                amm_wt02 = PlayerPrefs.GetFloat("ammunition_wt02", 0.0f);
+            }
+
+            if (PlayerPrefs.HasKey("ammunition_wt03"))
+            {
+                amm_wt03 = PlayerPrefs.GetInt("ammunition_wt03", 0);
+            }
+
+            if (PlayerPrefs.HasKey("ammunition_wt04"))
+            {
+                amm_wt04 = PlayerPrefs.GetInt("ammunition_wt04", 0);
+            }
+
+            Display_Ammu();
+        }
+
+        /// <summary>
+        /// 20180702 SangBin :
+        /// </summary>
+        private void SetAmmu()
+        {
+            //PlayerPrefs.SetInt("ammunition_wt01", amm_wt01);
+            PlayerPrefs.SetFloat("ammunition_wt02", amm_wt02);
+            PlayerPrefs.SetInt("ammunition_wt03", amm_wt03);
+            PlayerPrefs.SetInt("ammunition_wt04", amm_wt04);
+        }
+
+        private void AbsorbAmmu()
+        {
+            switch (TempStageManagement.instance.CurrentStageLevel)
+            {
+                case 2:
+                    amm_wt02 += 30.0f;
+                    break;
+                case 3:
+                    amm_wt03 += 30;
+                    break;
+                case 4:
+                    amm_wt04 += 30;
+                    break;
+
+            }
+
+            Display_Ammu();
+        }
+
+        /// <summary>
         /// 20180515 SangBin : 
         /// 20180517 SeongJun : Item Add Routin
         /// </summary>
         private void GetWeapons()
         {
-            WeaponTypeEnum newType;
+            WeaponTypeEnum newType = currentWeaponType;
             if (PlayerPrefs.HasKey("weaponType02"))
             {
                 weaponDic.Add(1, newType = WeaponTypeEnum.weaponType02);
@@ -329,6 +421,8 @@ namespace IFP
             {
                 weaponDic.Add(3, newType = WeaponTypeEnum.weaponType04);
             }
+
+            currentWeaponType = newType;
         }
 
         /// <summary>
@@ -350,6 +444,7 @@ namespace IFP
             currentWeaponType = selectedWeapon;
             StartCoroutine(MakeSwitchingEffect());
             weaponSubject.Notify();
+            Display_Ammu();
         }
 
         /// <summary>

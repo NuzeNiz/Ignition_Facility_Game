@@ -159,37 +159,67 @@ namespace IFP
             {
                 if (WeaponCtrl.instance.CurrentWeaponType == WeaponCtrl.WeaponTypeEnum.weaponType02)
                 {
-                    myTouch = Input.GetTouch(0);
-                    if (myTouch.phase == TouchPhase.Stationary || myTouch.phase == TouchPhase.Moved)
+                    if (WeaponCtrl.instance.amm_wt02 > 0.0f)
                     {
-                        WeaponCtrl.instance.MakeWeaponShotEffect();
+                        myTouch = Input.GetTouch(0);
+                        if (myTouch.phase == TouchPhase.Stationary || myTouch.phase == TouchPhase.Moved)
+                        {
+                            WeaponCtrl.instance.MakeWeaponShotEffect();
 
-                        ////RaycastHit hitinfo;
+                            WeaponCtrl.instance.WeaponFunc();
 
-                        ////if (Physics.Raycast(playerTr.position, playerTr.forward, out hitinfo, rayMaxDistance))
-                        //if (Physics.SphereCast(playerTr.position, 0.2f, playerTr.forward, out hitinfo, rayMaxDistance))
-                        //{
-                        //    if (hitinfo.collider.gameObject.layer == 8)
-                        //    {
-                                WeaponCtrl.instance.WeaponFunc();
-                        //    }
-                        //}
+                            WeaponCtrl.instance.amm_wt02 -= Time.deltaTime;
+
+                            if (WeaponCtrl.instance.amm_wt02 < 0.0f)
+                                WeaponCtrl.instance.amm_wt02 = 0.0f;
+
+                        }
+                        else if (myTouch.phase == TouchPhase.Ended)
+                        {
+                            WeaponCtrl.instance.StopFlame();
+                        }
                     }
-                    else if (myTouch.phase == TouchPhase.Ended)
+                    else
                     {
                         WeaponCtrl.instance.StopFlame();
                     }
                 }
-                else if (WeaponCtrl.instance.CurrentWeaponType == WeaponCtrl.WeaponTypeEnum.weaponType03 || WeaponCtrl.instance.CurrentWeaponType == WeaponCtrl.WeaponTypeEnum.weaponType04)
+                else if (WeaponCtrl.instance.CurrentWeaponType == WeaponCtrl.WeaponTypeEnum.weaponType03)
                 {
-                    for (int i = 0; i < Input.touchCount; i++)
+                    if (WeaponCtrl.instance.amm_wt03 > 0)
                     {
-                        myTouch = Input.GetTouch(i);
-                        if (myTouch.phase == TouchPhase.Began)
+                        for (int i = 0; i < Input.touchCount; i++)
                         {
-                            //WeaponClass.instance.MakeWeaponShotEffect();
-                            WeaponCtrl.instance.WeaponFunc();
+                            myTouch = Input.GetTouch(i);
+                            if (myTouch.phase == TouchPhase.Began)
+                            {
+                                //WeaponClass.instance.MakeWeaponShotEffect();
+                                WeaponCtrl.instance.WeaponFunc();
+                            }
                         }
+                    }
+                    else
+                    {
+
+                    }
+                }
+                else if (WeaponCtrl.instance.CurrentWeaponType == WeaponCtrl.WeaponTypeEnum.weaponType04)
+                {
+                    if (WeaponCtrl.instance.amm_wt04 > 0)
+                    {
+                        for (int i = 0; i < Input.touchCount; i++)
+                        {
+                            myTouch = Input.GetTouch(i);
+                            if (myTouch.phase == TouchPhase.Began)
+                            {
+                                //WeaponClass.instance.MakeWeaponShotEffect();
+                                WeaponCtrl.instance.WeaponFunc();
+                            }
+                        }
+                    }
+                    else
+                    {
+
                     }
                 }
                 else

@@ -126,6 +126,10 @@ namespace IFP
         private EnemySkillState skill_03_State = EnemySkillState.available;
         private EnemySkillState skill_04_State = EnemySkillState.available;
         #endregion
+
+
+        public delegate void Enemy_EventHandler();
+        public static event Enemy_EventHandler AbsorbAmmu;
         //------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
         /// <summary>
@@ -175,6 +179,7 @@ namespace IFP
         /// </summary>
         protected override void EnemyKilled()
         {
+            AbsorbAmmu();
             //ETS_Killed();
             base.EnemyKilled();
             StartCoroutine(base.PushObjectPool());

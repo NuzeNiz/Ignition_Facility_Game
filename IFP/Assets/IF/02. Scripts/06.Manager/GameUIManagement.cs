@@ -58,6 +58,11 @@ namespace IFP
         /// </summary>
         public Image DefenseStation_Leaf_Energy_Bar;
 
+        /// <summary>
+        /// 20180702 SangBin : 
+        /// </summary>sss
+        public Text textAmmu;
+
         //-----------------------------------------------------------------------------------------------------------------------------
 
         void Awake()
@@ -89,6 +94,7 @@ namespace IFP
             DefenseStationCtrl.AbsorbExp += this.AbsorbExp;
             DefenseStationCtrl.WearEnergy += this.WearEnergy;
             DefenseStationCtrl.DS_Damaged += this.DS_Damaged;
+            WeaponCtrl.Display_Ammu += this.Display_Ammu;
         }
 
         /// <summary>
@@ -100,6 +106,7 @@ namespace IFP
             DefenseStationCtrl.AbsorbExp -= this.AbsorbExp;
             DefenseStationCtrl.WearEnergy -= this.WearEnergy;
             DefenseStationCtrl.DS_Damaged -= this.DS_Damaged;
+            WeaponCtrl.Display_Ammu -= this.Display_Ammu;
         }
 
         // Update is called once per frame
@@ -143,6 +150,28 @@ namespace IFP
         public void AddWeapon()
         {
 
+        }
+
+        private void Display_Ammu()
+        {
+            switch (WeaponCtrl.instance.CurrentWeaponType)
+            {
+                case WeaponCtrl.WeaponTypeEnum.weaponType01:
+                    textAmmu.text = "Infinity";
+                    break;
+
+                case WeaponCtrl.WeaponTypeEnum.weaponType02:
+                    textAmmu.text = WeaponCtrl.instance.amm_wt02.ToString();
+                    break;
+
+                case WeaponCtrl.WeaponTypeEnum.weaponType03:
+                    textAmmu.text = WeaponCtrl.instance.amm_wt03.ToString();
+                    break;
+
+                case WeaponCtrl.WeaponTypeEnum.weaponType04:
+                    textAmmu.text = WeaponCtrl.instance.amm_wt04.ToString();
+                    break;
+            }
         }
 
         /// <summary>
