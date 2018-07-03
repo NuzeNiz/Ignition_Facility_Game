@@ -189,9 +189,9 @@ namespace IFP
             //    DestroyImmediate(this);
             //}
             instance = this;
-            weaponDic.Add(0, WeaponTypeEnum.weaponType01);
+            //weaponDic.Add(0, WeaponTypeEnum.weaponType01);
             //currentWeaponType = weaponDic[0];
-            GetWeapons();
+            //GetWeapons();
             holeSparkPS = transform.GetChild(1).gameObject.GetComponent<ParticleSystem>();
 
             //test
@@ -202,11 +202,18 @@ namespace IFP
             //weaponSubject.NotifyNewItem(WeaponTypeEnum.weaponType01);
 
             GetAmmu();
+            StartCoroutine(SaveAmmuPerPeriod());
         }
 
         private void OnApplicationQuit()
         {
-            SetAmmu();
+            SaveAmmu();
+        }
+
+
+        private void OnDestroy()
+        {
+            SaveAmmu();
         }
 
         private void OnEnable()
@@ -217,8 +224,15 @@ namespace IFP
 
         private void OnDisable()
         {
+            StopAllCoroutines();
             EMS_LongRange.AbsorbAmmu -= this.AbsorbAmmu;
             EMS_ShortRange.AbsorbAmmu -= this.AbsorbAmmu;
+        }
+
+        IEnumerator SaveAmmuPerPeriod()
+        {
+            yield return new WaitForSeconds(15.0f);
+            SaveAmmu();
         }
 
         /// <summary>
@@ -375,7 +389,7 @@ namespace IFP
         /// <summary>
         /// 20180702 SangBin :
         /// </summary>
-        private void SetAmmu()
+        private void SaveAmmu()
         {
             //PlayerPrefs.SetInt("ammunition_wt01", amm_wt01);
             PlayerPrefs.SetFloat("ammunition_wt02", amm_wt02);
@@ -428,7 +442,7 @@ namespace IFP
         /// <summary>
         /// 20180515 SangBin : 
         /// </summary>
-        public void SetWeapons()
+        public void SaveWeapons()
         {
 
             //중간 보스 구현 후에 연동 예정

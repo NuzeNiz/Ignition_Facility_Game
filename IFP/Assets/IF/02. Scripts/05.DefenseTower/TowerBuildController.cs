@@ -171,6 +171,8 @@ namespace GoogleARCore.IF
                     // coordinates.
                     planeGridObject = Instantiate(TrackedPlanePrefab, Vector3.zero, Quaternion.identity,
                         transform);
+                    planeGridObject.GetComponent<MeshRenderer>().enabled = true;
+                    planeGridObject.GetComponent<TrackedPlaneVisualizer>().enabled = true;
                     planeGridObject.GetComponent<TrackedPlaneVisualizer>().Initialize(m_NewPlanes[i]); //아마 이 planeobject가 없어지면 설치 후 그릴 없엘 수 있겠
                 }
                 
@@ -227,12 +229,17 @@ namespace GoogleARCore.IF
                     //defenseStation_Tr = defenseStation.transform;
                     defenseStation_Anchor_Tr = defenseStation_Anchor.transform;
 
+                    //planeGridObject.GetComponent<MeshRenderer>().enabled = false;
+                    //planeGridObject.GetComponent<TrackedPlaneVisualizer>().enabled = false;
+
+                    //StartCoroutine(StartSceneB());
+                    IFP.LoadingManagement.instance.ShowLoadingBar();
+                    SceneManager.LoadScene("GameScene B", LoadSceneMode.Additive);
+
                     planeGridObject.GetComponent<MeshRenderer>().enabled = false;
                     planeGridObject.GetComponent<TrackedPlaneVisualizer>().enabled = false;
-
-                    StartCoroutine(StartSceneB());
                     //if (IFP.TempStageManagement.instance.CurrentStageLevel == 2)
-                        //SceneManager.LoadScene("GameScene B", LoadSceneMode.Additive);
+                    //SceneManager.LoadScene("GameScene B", LoadSceneMode.Additive);
                     //else if (IFP.TempStageManagement.instance.CurrentStageLevel == 5)
                     //{
                     //    defenseStation.GetComponent<MeshRenderer>().enabled = false;

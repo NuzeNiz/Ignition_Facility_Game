@@ -207,5 +207,6 @@ namespace IFP
         {
             DefenseStation_HP_Bar.fillAmount = (float)(DefenseStationCtrl.instance.DefenseStation_HP / 100.0d);
         }
+
     }
 }

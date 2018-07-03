@@ -186,6 +186,7 @@ namespace IFP
                 projectileObj.SetActive(false);
                 projectileObjectPool.Add(projectileObj);
             }
+            LoadingManagement.instance.FillLoadingGauge(3.3f);
         }
 
         /// <summary>

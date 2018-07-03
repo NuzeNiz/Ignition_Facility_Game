@@ -115,7 +115,7 @@ namespace IFP
                 switch (rint)
                 {
                     case 0:
-                        if(PlayerCtrl.instance.PlayerHP >= 30.0d)
+                        if(PlayerCtrl.instance.PlayerHP >= 70.0d)
                         {
                             PlayerCtrl.instance.PlayerHP = PlayerCtrl.instance.PlayerMaxHP;
                         }
@@ -127,10 +127,10 @@ namespace IFP
                     case 1:
                         if (DefenseStationCtrl.instance != null)
                         {
-                            GameObject itemEffect = (GameObject)Instantiate(ItemEffectPrefab, DefenseStationCtrl.instance.DefenseStationTR.position, Quaternion.identity);
-                            Destroy(itemEffect, 2.0f);
+                            //GameObject itemEffect = (GameObject)Instantiate(ItemEffectPrefab, DefenseStationCtrl.instance.DefenseStationTR.position, Quaternion.identity);
+                            //Destroy(itemEffect, 2.0f);
 
-                            if (DefenseStationCtrl.instance.DefenseStation_HP >= 30.0d)
+                            if (DefenseStationCtrl.instance.DefenseStation_HP >= 70.0d)
                             {
                                 DefenseStationCtrl.instance.DefenseStation_HP = DefenseStationCtrl.instance.DefenseStation_MAXHP;
                             }
@@ -141,6 +141,7 @@ namespace IFP
                         }
                         break;
                 }
+
                 gameObject.SetActive(false);
                 //ItemWindow.Instance.ItemSubject.CheakConsumedItem();
             }

@@ -228,6 +228,8 @@ namespace IFP
                 enemyObjectPool.Add(enemy_type02);
                 enemyObjectPool.Add(enemy_type03);
             }
+
+            LoadingManagement.instance.FillLoadingGauge(25.0f);
         }
 
         /// <summary>
@@ -357,6 +359,8 @@ namespace IFP
                 itemObjectPool.Add(Item_type02);
                 itemObjectPool.Add(Item_type03);
             }
+
+            LoadingManagement.instance.FillLoadingGauge(9.0f);
         }
 
         /// <summary>
@@ -371,6 +375,7 @@ namespace IFP
                 {
                     if (DefenseStationCtrl.instance != null && DefenseStationCtrl.instance.gameObject.activeSelf)
                         itemObjectPool[randIdex].transform.parent = GoogleARCore.IF.TowerBuildController.instance.DefenseStation_Anchor_Tr;
+
                     itemObjectPool[randIdex].transform.position = butterflyTransform.position;
                     itemObjectPool[randIdex].SetActive(true);
                     break;
@@ -392,6 +397,7 @@ namespace IFP
                 butterFly.SetActive(false);
                 butterFlyObjectPool.Add(butterFly);
             }
+            LoadingManagement.instance.FillLoadingGauge(1.0f);
         }
 
         /// <summary>
