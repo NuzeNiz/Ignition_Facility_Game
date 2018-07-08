@@ -9,7 +9,7 @@ namespace IFP {
         /// <summary>
         /// 20180403 SangBin : Start button event handler
         /// </summary>
-        public void OnclickStartBtn()
+        public void OnclickInfinityModeBtn()
         {
             TempStageManagement.instance.CurrentStageLevel = 10;
             SceneManager.LoadScene("GameScene A");
@@ -63,7 +63,7 @@ namespace IFP {
         /// </summary>
         public void OnClickChapter3()
         {
-            //TempStageManagement.instance.CurrentStageLevel = 5;
+            TempStageManagement.instance.CurrentStageLevel = 5;
             SceneManager.LoadScene("GameScene E");
             //SceneManager.LoadScene("GameScene A");
         }

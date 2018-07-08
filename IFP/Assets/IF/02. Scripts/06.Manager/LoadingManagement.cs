@@ -16,12 +16,16 @@ namespace IFP
         private void Awake()
         {
             instance = this;
+            loadingGauge = 0.0f;
         }
 
         private void Start()
         {
             //StartCoroutine(Loading());
-            loadingGauge = 0.0f;
+            if (TempStageManagement.instance.CurrentStageLevel == 5)
+            {
+                StartCoroutine(Loading());
+            }
         }
 
         public void ShowLoadingBar()
@@ -29,12 +33,12 @@ namespace IFP
             transform.GetChild(0).gameObject.SetActive(true);
         }
 
-        //private IEnumerator Loading()
-        //{
-        //    transform.GetChild(0).gameObject.SetActive(true);
-        //    yield return new WaitForSeconds(3.0f);
-        //    transform.GetChild(0).gameObject.SetActive(false);
-        //}
+        private IEnumerator Loading()
+        {
+            transform.GetChild(0).gameObject.SetActive(true);
+            yield return new WaitForSeconds(3.0f);
+            transform.GetChild(0).gameObject.SetActive(false);
+        }
 
         public void FillLoadingGauge(float value)
         {
@@ -52,6 +56,7 @@ namespace IFP
         private IEnumerator HideLoading()
         {
             yield return new WaitForSeconds(1.0f);
+            GameManagement.instance.StartGame();
             transform.GetChild(0).gameObject.SetActive(false);
         }
 

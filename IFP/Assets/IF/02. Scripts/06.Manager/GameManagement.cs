@@ -73,6 +73,10 @@ namespace IFP
         /// </summary>
         private List<GameObject> enemyObjectPool = new List<GameObject>();
 
+        private List<GameObject> et01ObjectPool = new List<GameObject>();
+        private List<GameObject> et02ObjectPool = new List<GameObject>();
+        private List<GameObject> et03ObjectPool = new List<GameObject>();
+
         /// <summary>
         /// 20180403 SangBin : Enemy Generation period
         /// </summary>
@@ -88,6 +92,8 @@ namespace IFP
         /// </summary>
         [HideInInspector]
         public bool ThisStageAlive = true;
+
+        private bool thisWaveAlive = true;
 
         /// <summary>
         /// 20180418 SangBin : Item Object Pool List
@@ -138,6 +144,20 @@ namespace IFP
         /// </summary>
         private int maxItem;
 
+
+        private int currentWaveLevel = 1;
+
+        private int[] wave01_et01_spawn_info = new int[] { 2, 5 };
+        private int[] wave01_et02_spawn_info = new int[] { 0, 3, 4, 7 };
+        private int[] wave01_et03_spawn_info = new int[] { 1, 6 };
+
+        private int[] wave02_et01_spawn_info = new int[] { 0, 1, 4, 7 };
+        private int[] wave02_et02_spawn_info = new int[] { 2, 5 };
+        private int[] wave02_et03_spawn_info = new int[] { 3, 6 };
+
+        private int[] wave03_et01_spawn_info = new int[] { 2, 4 };
+        private int[] wave03_et02_spawn_info = new int[] { 3, 6 };
+        private int[] wave03_et03_spawn_info = new int[] { 0, 1, 5, 7 };
         //-----------------------------------------------------------------------------------------------------------------------------
 
         /// <summary>
@@ -163,8 +183,7 @@ namespace IFP
         /// </summary>
         private void Start()
         {
-
-            if (DefenseStationCtrl.instance != null && DefenseStationCtrl.instance.gameObject.activeSelf)
+            if (TempStageManagement.instance.CurrentStageLevel == 10)
             {
                 CreateEnemyObjectPool();
 
@@ -172,17 +191,37 @@ namespace IFP
 
                 tempSpawnpoints = GameObject.Find("EnemySpawnPoints").GetComponentsInChildren<Transform>();
 
-                if (tempSpawnpoints.Length > 0)
+                //if (tempSpawnpoints.Length > 0)
+                //{
+                //    StartCoroutine(this.ActivateEnemy());
+                //}
+
+                CreateButterFlyObjectPool();
+                CreateItemObjectPool();
+
+                enemyGenerationPeriod = 10.0f;
+            }
+            else
+            {
+                if (DefenseStationCtrl.instance != null && DefenseStationCtrl.instance.gameObject.activeSelf)
                 {
-                    StartCoroutine(this.ActivateEnemy());
+                    CreateEnemyObjectPool();
+
+                    GameObject.Find("EnemySpawnPoints").gameObject.transform.SetPositionAndRotation(DefenseStationCtrl.instance.DefenseStationTR.position, DefenseStationCtrl.instance.DefenseStationTR.rotation);
+
+                    tempSpawnpoints = GameObject.Find("EnemySpawnPoints").GetComponentsInChildren<Transform>();
+
+                    //if (tempSpawnpoints.Length > 0)
+                    //{
+                    //    StartCoroutine(this.ActivateEnemy());
+                    //}
+
                 }
 
+                CreateButterFlyObjectPool();
+                CreateItemObjectPool();
+                //StartCoroutine(ActivateButterFly());
             }
-
-
-            CreateButterFlyObjectPool();
-            CreateItemObjectPool();
-            StartCoroutine(ActivateButterFly());
         }
 
         /// <summary>
@@ -200,34 +239,200 @@ namespace IFP
             }
         }
 
-        /// <summary>
-        /// 20180403 SangBin : Create enemy OP
-        /// </summary>
-        private void CreateEnemyObjectPool()
+        //private int[] GetSpawnInfo(int enemytype)
+        //{
+        //    switch (currentWaveLevel)
+        //    {
+        //        case 1:
+        //            switch (enemytype)
+        //            {
+        //                case 1:
+        //                    return wave01_et01_spawn_info;
+        //                case 2:
+        //                    return wave01_et02_spawn_info;
+        //                case 3:
+        //                    return wave01_et03_spawn_info;
+        //            }
+        //            break;
+        //        case 2:
+        //            switch (enemytype)
+        //            {
+        //                case 1:
+        //                    return wave02_et01_spawn_info;
+        //                case 2:
+        //                    return wave02_et02_spawn_info;
+        //                case 3:
+        //                    return wave02_et03_spawn_info;
+        //            }
+        //            break;
+        //        case 3:
+        //            switch (enemytype)
+        //            {
+        //                case 1:
+        //                    return wave03_et01_spawn_info;
+        //                case 2:
+        //                    return wave03_et02_spawn_info;
+        //                case 3:
+        //                    return wave03_et03_spawn_info;
+        //            }
+        //            break;
+        //        default:
+        //            return null;
+        //    }
+
+        //    return null;
+        //}
+
+
+        private int GetActivationNumConst(string keyWord, int enemytype)
         {
-            for (int i = 0; i < maxEnemy; i++)
+            switch (keyWord)
             {
-                GameObject enemy_type01 = (GameObject)Instantiate(enemyPrefab_type01);
-                enemy_type01.name = "Enemy_type01_" + i.ToString();
-                enemy_type01.SetActive(false);
+                case "APC":
+                    switch (currentWaveLevel)
+                    {
+                        case 1:
+                            switch (enemytype)
+                            {
+                                case 1:
+                                    return 2;
+                                case 2:
+                                    return 4;
+                                case 3:
+                                    return 2;
+                            }
+                            break;
+                        case 2:
+                            switch (enemytype)
+                            {
+                                case 1:
+                                    return 4;
+                                case 2:
+                                    return 2;
+                                case 3:
+                                    return 2;
+                            }
+                            break;
+                        case 3:
+                            switch (enemytype)
+                            {
+                                case 1:
+                                    return 2;
+                                case 2:
+                                    return 2;
+                                case 3:
+                                    return 4;
+                            }
+                            break;
+                        default:
+                            return 1;
+                    }
+                    break;
 
-                GameObject enemy_type02 = (GameObject)Instantiate(enemyPrefab_type02);
-                enemy_type02.name = "Enemy_type02_" + i.ToString();
-                enemy_type02.SetActive(false);
-
-                GameObject enemy_type03 = (GameObject)Instantiate(enemyPrefab_type03);
-                enemy_type03.name = "Enemy_type03_" + i.ToString();
-                enemy_type03.SetActive(false);
-
-                //GameObject Enemy_Moth = (GameObject)Instantiate(enemyPrefab_type02);
-                //Enemy_Moth.name = "Enemy_Moth_" + i.ToString();
-                //Enemy_Moth.transform.GetChild(0).gameObject.SetActive(false);
-                //Enemy_Moth.SetActive(false);
-
-                enemyObjectPool.Add(enemy_type01);
-                enemyObjectPool.Add(enemy_type02);
-                enemyObjectPool.Add(enemy_type03);
+                case "WholeEnemyCount":
+                    switch (currentWaveLevel)
+                    {
+                        case 1:
+                            switch (enemytype)
+                            {
+                                case 1:
+                                    return 10;
+                                case 2:
+                                    return 20;
+                                case 3:
+                                    return 10;
+                            }
+                            break;
+                        case 2:
+                            switch (enemytype)
+                            {
+                                case 1:
+                                    return 24;
+                                case 2:
+                                    return 14;
+                                case 3:
+                                    return 14;
+                            }
+                            break;
+                        case 3:
+                            switch (enemytype)
+                            {
+                                case 1:
+                                    return 16;
+                                case 2:
+                                    return 16;
+                                case 3:
+                                    return 28;
+                            }
+                            break;
+                        default:
+                            return 1;
+                    }
+                    break;
             }
+
+            return 1;
+        }
+
+            /// <summary>
+            /// 20180403 SangBin : Create enemy OP
+            /// </summary>
+            private void CreateEnemyObjectPool()
+        {
+            if (IFP.TempStageManagement.instance.CurrentStageLevel == 10)
+            {
+                for (int i = 0; i < 15; i++)
+                {
+                    GameObject enemy_type01 = (GameObject)Instantiate(enemyPrefab_type01);
+                    enemy_type01.name = "Enemy_type01_" + i.ToString();
+                    enemy_type01.SetActive(false);
+
+                    GameObject enemy_type02 = (GameObject)Instantiate(enemyPrefab_type02);
+                    enemy_type02.name = "Enemy_type02_" + i.ToString();
+                    enemy_type02.SetActive(false);
+
+                    GameObject enemy_type03 = (GameObject)Instantiate(enemyPrefab_type03);
+                    enemy_type03.name = "Enemy_type03_" + i.ToString();
+                    enemy_type03.SetActive(false);
+
+                    //GameObject Enemy_Moth = (GameObject)Instantiate(enemyPrefab_type02);
+                    //Enemy_Moth.name = "Enemy_Moth_" + i.ToString();
+                    //Enemy_Moth.transform.GetChild(0).gameObject.SetActive(false);
+                    //Enemy_Moth.SetActive(false);
+
+                    et01ObjectPool.Add(enemy_type01);
+                    et02ObjectPool.Add(enemy_type02);
+                    et03ObjectPool.Add(enemy_type03);
+                    //LoadingManagement.instance.FillLoadingGauge(2.5f);
+                }
+            }
+            else
+            {
+                for (int i = 0; i < maxEnemy; i++)
+                {
+                    GameObject enemy_type01 = (GameObject)Instantiate(enemyPrefab_type01);
+                    enemy_type01.name = "Enemy_type01_" + i.ToString();
+                    enemy_type01.SetActive(false);
+
+                    GameObject enemy_type02 = (GameObject)Instantiate(enemyPrefab_type02);
+                    enemy_type02.name = "Enemy_type02_" + i.ToString();
+                    enemy_type02.SetActive(false);
+
+                    GameObject enemy_type03 = (GameObject)Instantiate(enemyPrefab_type03);
+                    enemy_type03.name = "Enemy_type03_" + i.ToString();
+                    enemy_type03.SetActive(false);
+
+                    //GameObject Enemy_Moth = (GameObject)Instantiate(enemyPrefab_type02);
+                    //Enemy_Moth.name = "Enemy_Moth_" + i.ToString();
+                    //Enemy_Moth.transform.GetChild(0).gameObject.SetActive(false);
+                    //Enemy_Moth.SetActive(false);
+
+                    enemyObjectPool.Add(enemy_type01);
+                    enemyObjectPool.Add(enemy_type02);
+                    enemyObjectPool.Add(enemy_type03);
+                }
+            }
+
 
             LoadingManagement.instance.FillLoadingGauge(25.0f);
         }
@@ -259,40 +464,229 @@ namespace IFP
         /// </summary>
         private IEnumerator ActivateEnemy()
         {
-            while (ThisStageAlive)
+            //if (IFP.TempStageManagement.instance.CurrentStageLevel == 10)
+            //{
+            //    int activation_Count = 0;
+            //    //int Activate_Count_et02 = 0;
+            //    //int Activate_Count_et03 = 0;
+            //    int[] tempArr;
+
+            //    transform.GetChild(0).GetChild(currentWaveLevel).gameObject.SetActive(true);
+            //    yield return new WaitForSeconds(3.0f);
+            //    transform.GetChild(0).GetChild(currentWaveLevel).gameObject.SetActive(false);
+
+            //    transform.GetChild(0).GetChild(0).gameObject.SetActive(true);
+            //    yield return new WaitForSeconds(1.0f);
+            //    transform.GetChild(0).GetChild(0).gameObject.SetActive(false);
+
+
+            //    while (thisWaveAlive)
+            //    {
+            //        yield return new WaitForSeconds(enemyGenerationPeriod);
+
+            //        if (!thisWaveAlive)
+            //            yield break;
+
+            //        //요기서 위치배열 받아와서
+            //        tempArr = GetSpawnInfo(1);
+            //        foreach (GameObject enemy in et01ObjectPool)
+            //        {
+            //            if (!enemy.activeSelf)
+            //            {
+            //                enemy.transform.position = tempSpawnpoints[tempArr[activation_Count]].position;
+            //                StartCoroutine(OpenGate(tempSpawnpoints[tempArr[activation_Count]].GetChild(0).gameObject));
+            //                enemy.transform.parent = GoogleARCore.IF.TowerBuildController.instance.DefenseStation_Anchor_Tr;
+            //                enemy.SetActive(true);
+            //                activation_Count++;
+            //            }
+
+            //            if (activation_Count == tempArr.Length)
+            //            {
+            //                activation_Count = 0;
+            //                break;
+            //            }
+            //        }
+
+            //        tempArr = GetSpawnInfo(2);
+            //        foreach (GameObject enemy in et02ObjectPool)
+            //        {
+            //            if (!enemy.activeSelf)
+            //            {
+            //                enemy.transform.position = tempSpawnpoints[tempArr[activation_Count]].position;
+            //                StartCoroutine(OpenGate(tempSpawnpoints[tempArr[activation_Count]].GetChild(0).gameObject));
+            //                enemy.transform.parent = GoogleARCore.IF.TowerBuildController.instance.DefenseStation_Anchor_Tr;
+            //                enemy.SetActive(true);
+            //                activation_Count++;
+
+
+            //            }
+
+            //            if (activation_Count == tempArr.Length)
+            //            {
+            //                activation_Count = 0;
+            //                break;
+            //            }
+            //        }
+
+            //        tempArr = GetSpawnInfo(3);
+            //        foreach (GameObject enemy in et03ObjectPool)
+            //        {
+            //            if (!enemy.activeSelf)
+            //            {
+            //                enemy.transform.position = tempSpawnpoints[tempArr[activation_Count]].position;
+            //                StartCoroutine(OpenGate(tempSpawnpoints[tempArr[activation_Count]].GetChild(0).gameObject));
+            //                enemy.transform.parent = GoogleARCore.IF.TowerBuildController.instance.DefenseStation_Anchor_Tr;
+            //                enemy.SetActive(true);
+            //                activation_Count++;
+
+
+            //            }
+
+            //            if (activation_Count == tempArr.Length)
+            //            {
+            //                activation_Count = 0;
+            //                break;
+            //            }
+            //        }
+
+            //    }
+            //}
+            if (IFP.TempStageManagement.instance.CurrentStageLevel == 10)
             {
-                yield return new WaitForSeconds(enemyGenerationPeriod);
+                int activation_Count = 0;
 
-                if (!ThisStageAlive)
-                    yield break;
+                int et01_Current_Count = 0;
+                int et02_Current_Count = 0;
+                int et03_Current_Count = 0;
 
-                foreach (GameObject enemy in enemyObjectPool)
+                int et01_Max_Count = GetActivationNumConst("WholeEnemyCount", 1);
+                int et02_Max_Count = GetActivationNumConst("WholeEnemyCount", 2);
+                int et03_Max_Count = GetActivationNumConst("WholeEnemyCount", 3);
+
+                yield return new WaitForSeconds(1.0f);
+                transform.GetChild(0).GetChild(currentWaveLevel).gameObject.SetActive(true);
+                yield return new WaitForSeconds(4.0f);
+                transform.GetChild(0).GetChild(currentWaveLevel).gameObject.SetActive(false);
+
+                transform.GetChild(0).GetChild(0).gameObject.SetActive(true);
+                yield return new WaitForSeconds(1.0f);
+                transform.GetChild(0).GetChild(0).gameObject.SetActive(false);
+
+
+                while (thisWaveAlive)
                 {
-                    if (!enemy.activeSelf)
+                    if (!thisWaveAlive)
+                        yield break;
+
+                    if (et01_Current_Count < et01_Max_Count)
                     {
-                        int index = Random.Range(1, tempSpawnpoints.Length);
-                        enemy.transform.position = tempSpawnpoints[index].position;
-                        StartCoroutine(OpenGate(tempSpawnpoints[index].GetChild(0).gameObject));
-                        if (DefenseStationCtrl.instance != null && DefenseStationCtrl.instance.gameObject.activeSelf)
-                            enemy.transform.parent = GoogleARCore.IF.TowerBuildController.instance.DefenseStation_Anchor_Tr;
-                        enemy.SetActive(true);
-                        break;
+                        foreach (GameObject enemy in et01ObjectPool)
+                        {
+                            if (!enemy.activeSelf)
+                            {
+                                int index = Random.Range(0, tempSpawnpoints.Length);
+                                enemy.transform.position = tempSpawnpoints[index].position;
+                                StartCoroutine(OpenGate(tempSpawnpoints[index].GetChild(0).gameObject));
+                                enemy.transform.parent = GoogleARCore.IF.TowerBuildController.instance.DefenseStation_Anchor_Tr;
+                                enemy.SetActive(true);
+                                activation_Count++;
+                                et01_Current_Count++;
+                            }
+
+                            if (activation_Count == GetActivationNumConst("APC", 1))
+                            {
+                                activation_Count = 0;
+                                break;
+                            }
+                        }
                     }
+
+                    if (et02_Current_Count < et02_Max_Count)
+                    {
+                        foreach (GameObject enemy in et02ObjectPool)
+                        {
+                            if (!enemy.activeSelf)
+                            {
+                                int index = Random.Range(0, tempSpawnpoints.Length);
+                                enemy.transform.position = tempSpawnpoints[index].position;
+                                StartCoroutine(OpenGate(tempSpawnpoints[index].GetChild(0).gameObject));
+                                enemy.transform.parent = GoogleARCore.IF.TowerBuildController.instance.DefenseStation_Anchor_Tr;
+                                enemy.SetActive(true);
+                                activation_Count++;
+                                et02_Current_Count++;
+                            }
+
+                            if (activation_Count == GetActivationNumConst("APC", 2))
+                            {
+                                activation_Count = 0;
+                                break;
+                            }
+                        }
+                    }
+
+                    if (et03_Current_Count < et03_Max_Count)
+                    {
+                        foreach (GameObject enemy in et03ObjectPool)
+                        {
+                            if (!enemy.activeSelf)
+                            {
+                                int index = Random.Range(0, tempSpawnpoints.Length);
+                                enemy.transform.position = tempSpawnpoints[index].position;
+                                StartCoroutine(OpenGate(tempSpawnpoints[index].GetChild(0).gameObject));
+                                enemy.transform.parent = GoogleARCore.IF.TowerBuildController.instance.DefenseStation_Anchor_Tr;
+                                enemy.SetActive(true);
+                                activation_Count++;
+                                et03_Current_Count++;
+                            }
+
+                            if (activation_Count == GetActivationNumConst("APC", 3))
+                            {
+                                activation_Count = 0;
+                                break;
+                            }
+                        }
+                    }
+
+                    yield return new WaitForSeconds(enemyGenerationPeriod);
                 }
+            }
+            else
+            {
+                while (ThisStageAlive)
+                {
+                    yield return new WaitForSeconds(enemyGenerationPeriod);
 
-                //int enemyCount = (int)GameObject.FindGameObjectsWithTag("TESTENERMY").Length;
+                    if (!ThisStageAlive)
+                        yield break;
 
-                //if (enemyCount < maxEnemy)
-                //{
-                //    int index = Random.Range(1, points.Length);
-                //    Instantiate(enemyPrefabs, points[index].position, points[index].rotation);
+                    foreach (GameObject enemy in enemyObjectPool)
+                    {
+                        if (!enemy.activeSelf)
+                        {
+                            int index = Random.Range(1, tempSpawnpoints.Length);
+                            enemy.transform.position = tempSpawnpoints[index].position;
+                            StartCoroutine(OpenGate(tempSpawnpoints[index].GetChild(0).gameObject));
+                            if (DefenseStationCtrl.instance != null && DefenseStationCtrl.instance.gameObject.activeSelf)
+                                enemy.transform.parent = GoogleARCore.IF.TowerBuildController.instance.DefenseStation_Anchor_Tr;
+                            enemy.SetActive(true);
+                            break;
+                        }
+                    }
 
-                //    yield return new WaitForSeconds(enemygenerationPeriod);
-                //}
-                //else
-                //{
-                //    yield return null;
-                //}
+                    //int enemyCount = (int)GameObject.FindGameObjectsWithTag("TESTENERMY").Length;
+
+                    //if (enemyCount < maxEnemy)
+                    //{
+                    //    int index = Random.Range(1, points.Length);
+                    //    Instantiate(enemyPrefabs, points[index].position, points[index].rotation);
+
+                    //    yield return new WaitForSeconds(enemygenerationPeriod);
+                    //}
+                    //else
+                    //{
+                    //    yield return null;
+                    //}
+                }
             }
         }
         /// <summary>
@@ -444,6 +838,12 @@ namespace IFP
             {
                 GameObject Boss = Instantiate(enemyPrefab_type03Boss, (PlayerCtrl.instance.PlayerTr.position + tempV), Quaternion.identity);
             }
+        }
+
+        public void StartGame()
+        {
+            StartCoroutine(this.ActivateEnemy());
+            StartCoroutine(ActivateButterFly());
         }
     }
 }

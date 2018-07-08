@@ -234,7 +234,15 @@ namespace GoogleARCore.IF
 
                     //StartCoroutine(StartSceneB());
                     IFP.LoadingManagement.instance.ShowLoadingBar();
-                    SceneManager.LoadScene("GameScene B", LoadSceneMode.Additive);
+
+                    if (IFP.TempStageManagement.instance.CurrentStageLevel == 10)
+                    {
+                        SceneManager.LoadScene("GameScene F", LoadSceneMode.Additive);
+                    }
+                    else
+                    {
+                        SceneManager.LoadScene("GameScene B", LoadSceneMode.Additive);
+                    }
 
                     planeGridObject.GetComponent<MeshRenderer>().enabled = false;
                     planeGridObject.GetComponent<TrackedPlaneVisualizer>().enabled = false;
@@ -255,7 +263,15 @@ namespace GoogleARCore.IF
         /// </summary>
         private IEnumerator StartSceneB()
         {
-            SceneManager.LoadScene("GameScene B", LoadSceneMode.Additive);
+            if (IFP.TempStageManagement.instance.CurrentStageLevel == 10)
+            {
+                SceneManager.LoadScene("GameScene F", LoadSceneMode.Additive);
+            }
+            else
+            {
+                SceneManager.LoadScene("GameScene B", LoadSceneMode.Additive);
+            }
+
             transform.GetChild(0).gameObject.SetActive(true);
             yield return new WaitForSeconds(3.0f);
             transform.GetChild(0).gameObject.SetActive(false);
