@@ -23,76 +23,119 @@ public class MyLocationChecker : MonoBehaviour
     private readonly float groupDistance = 0.000872629430946f;
     private readonly float locationDistance = 0.00016814009039972156f;
 
-    private Thread locationChecker;
-    private CancellationTokenSource cts;
+    //private Thread locationChecker;
+    //private CancellationTokenSource cts;
 
+    private XElement xDoc;
+    private IEnumerable<XElement> xElement;
 
     private void Awake()
     {
         compas = gameObject.GetComponent<Compas>();
 
         var tAsset = Resources.Load("data") as TextAsset;
-        var xDoc = XElement.Parse(tAsset.text);
+        xDoc = XElement.Parse(tAsset.text);
+        xElement = xDoc.Elements("pin");
 
         Input.location.Start();
+        #region old_Ver
+        //cts = new CancellationTokenSource();
 
-        cts = new CancellationTokenSource();
+        //locationChecker = new Thread(() =>
+        //  {
+        //      xElement = xDoc.Elements("pin");
 
-        locationChecker = new Thread(() =>
-          {
-              IEnumerable<XElement> xElement = xDoc.Elements("pin");
+        //      try
+        //      {
+        //          while (true)
+        //          {
+        //              cts.Token.ThrowIfCancellationRequested();
+        //              var selected = xElement.Where(xe =>
+        //              {
+        //                  float[] pos = { float.Parse(xe.Element("latitude").Value), float.Parse(xe.Element("longitude").Value) };
+        //                  var dis = DistanceCalc(compas.myPosition, pos);
+        //                  var type = xe.Element("type").Value;
+        //                  if (type == "group")
+        //                  {
+        //                      return dis <= groupDistance;
+        //                  }
+        //                  else
+        //                  {
+        //                      return dis <= locationDistance;
+        //                  }
+        //              }).FirstOrDefault();
 
-              try
-              {
-                  while (true)
-                  {
-                      cts.Token.ThrowIfCancellationRequested();
-                      var selected = xElement.Where(xe =>
-                      {
-                          float[] pos = { float.Parse(xe.Element("latitude").Value), float.Parse(xe.Element("longitude").Value) };
-                          var dis = DistanceCalc(compas.myPosition, pos);
-                          var type = xe.Element("type").Value;
-                          if (type == "group")
-                          {
-                              return dis <= groupDistance;
-                          }
-                          else
-                          {
-                              return dis <= locationDistance;
-                          }
-                      }).FirstOrDefault();
+        //              if (selected != null)
+        //              {
+        //                  var type = selected.Element("type").Value;
+        //                  if (type == "group")
+        //                  {
+        //                      xElement = selected.Elements("childs");
+        //                      isInGroup = true;
+        //                  }
+        //                  else if (type == "location")
+        //                  {
+        //                      isInLocation = true;
+        //                  }
+        //                  contents = selected.Element("contents").Value;
+        //              }
+        //              else
+        //              {
+        //                  xElement = xDoc.Elements("pin");
+        //                  isInGroup = false;
+        //                  isInLocation = false;
+        //                  contents = "none";
+        //              }
+        //          }
+        //      }
+        //      catch
+        //      {
+        //          Debug.Log("stop!!");
+        //      }
+        //  });
+        //locationChecker.Name = "LocationChecker";
+        //locationChecker.Start();
+        #endregion
+    }
 
-                      if (selected != null)
-                      {
-                          var type = selected.Element("type").Value;
-                          if (type == "group")
-                          {
-                              xElement = selected.Elements("childs");
-                              isInGroup = true;
-                          }
-                          else if (type == "location")
-                          {
-                              isInLocation = true;
-                          }
-                          contents = selected.Element("contents").Value;
-                      }
-                      else
-                      {
-                          xElement = xDoc.Elements("pin");
-                          isInGroup = false;
-                          isInLocation = false;
-                          contents = "none";
-                      }
-                  }
-              }
-              catch
-              {
-                  Debug.Log("stop!!");
-              }
-          });
-        locationChecker.Name = "LocationChecker";
-        locationChecker.Start();
+    private void Update()
+    {
+        var selected = xElement.Where(xe =>
+        {
+            float[] pos = { float.Parse(xe.Element("latitude").Value), float.Parse(xe.Element("longitude").Value) };
+            var dis = DistanceCalc(compas.myPosition, pos);
+            var type = xe.Element("type").Value;
+            if (type == "group")
+            {
+                return dis <= groupDistance;
+            }
+            else
+            {
+                return dis <= locationDistance;
+            }
+        }).FirstOrDefault();
 
+        if (selected != null)
+        {
+            var type = selected.Element("type").Value;
+            if (type == "group")
+            {
+                xElement = selected.Element("childs").Elements("pin");
+                isInGroup = true;
+            }
+            else if (type == "location")
+            {
+                isInLocation = true;
+            }
+            contents = selected.Element("contents").Value;
+        }
+        else
+        {
+            xElement = xDoc.Elements("pin");
+            isInGroup = false;
+            isInLocation = false;
+            contents = "none";
+        }
     }
 
     float DistanceCalc(float[] a, float[] b)
@@ -106,8 +149,8 @@ public class MyLocationChecker : MonoBehaviour
     private void OnDisable()
     {
         Input.location.Stop();
-        cts.Cancel();
-        cts.Dispose();
-        locationChecker.Join();
+        //cts.Cancel();
+        //cts.Dispose();
+        //locationChecker.Join();
     }
 }

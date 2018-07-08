@@ -1,0 +1,17 @@
+<scene>
+    <id>8</id>
+    <characters>
+        <name cn="1">요정</name>
+        <name cn="2">에멘</name>
+    </characters>
+    <script>
+        <text cn="2">첫번째 나무가 성장을 마치고! 게다가 상급정령의 기운 덕에 총에 새로운 타입의 무기를 쓸 수 있을거야!</text>
+        <text cn="1">그렇다면 어서 다음 씨앗을 심죠!</text>
+        <text cn="2">그럴 생각이야! 그런데 아까처럼 상급 정령이 다시 씨앗을 공격하러 올까?</text>
+        <text cn="1">아마 그럴거예요. 마녀는 각 속성의 상급 정령들을 다루니까요!</text>
+        <text cn="2">그건 그거 나름대로 큰일이네…</text>
+        <text cn="1">그렇다고 지금 이대로 멈춰있을 수는 없어요.</text>
+        <text cn="2">맞아. 이대로 멈춰있을 수는 없어!</text>
+        <text cn="2">가자!</text>
+    </script>
+</scene>
