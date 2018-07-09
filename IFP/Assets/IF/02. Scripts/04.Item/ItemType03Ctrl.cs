@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace IFP
 {
-    public class ItemType02Ctrl : ItemBaseClass
+    public class ItemType03Ctrl : ItemBaseClass
     {
 
 
@@ -12,7 +12,7 @@ namespace IFP
         /// 20180418 SangBin : Item Type
         /// </summary>
         [HideInInspector]
-        override public ItemTypeEnum ItemType { get { return ItemTypeEnum.playerPotion; } }
+        override public ItemTypeEnum ItemType { get { return ItemTypeEnum.treePotion; } }
 
         /// <summary>
         /// 20180418 SangBin : Sound File when item is collided
@@ -110,17 +110,16 @@ namespace IFP
             {
                 GameManagement.instance.SoundEffect(transform.position, ItemSoundFile);
 
-                if (PlayerCtrl.instance.PlayerHP >= 70.0d)
+                if (DefenseStationCtrl.instance.DefenseStation_HP >= 70.0d)
                 {
-                    PlayerCtrl.instance.PlayerHP = PlayerCtrl.instance.PlayerMaxHP;
+                    DefenseStationCtrl.instance.DefenseStation_HP = DefenseStationCtrl.instance.DefenseStation_MAXHP;
                 }
                 else
                 {
-                    PlayerCtrl.instance.PlayerHP += 30.0d;
+                    DefenseStationCtrl.instance.DefenseStation_HP += 30.0d;
                 }
 
-                GameUIManagement.instance.PlayerDamaged();
-
+                GameUIManagement.instance.DS_Damaged();
                 gameObject.SetActive(false);
                 //ItemWindow.Instance.ItemSubject.CheakConsumedItem();
             }

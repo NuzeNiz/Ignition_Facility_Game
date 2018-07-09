@@ -113,7 +113,7 @@ namespace IFP
         private void Start()
         {
             if (IFP.TempStageManagement.instance.CurrentStageLevel == 10)
-                transform.parent.transform.localScale *= 5.0f;
+                transform.parent.transform.localScale *= 3.0f;
 
             if (IFP.TempStageManagement.instance.CurrentStageLevel != 10)
                 StartCoroutine(OnWearEnergy());

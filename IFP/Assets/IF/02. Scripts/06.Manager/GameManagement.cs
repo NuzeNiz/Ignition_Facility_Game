@@ -163,6 +163,8 @@ namespace IFP
 
         public delegate void Wave_EventHandler();
         public static event Wave_EventHandler Display_enemyDeathCount;
+
+        private bool isWaveClear = false;
         //-----------------------------------------------------------------------------------------------------------------------------
 
         /// <summary>
@@ -292,17 +294,21 @@ namespace IFP
 
         public void AddDeathCount()
         {
-            currentWaveDeathEnemCount++;
-
-            if(currentWaveDeathEnemCount == GetTotalEnemyCountConst())
+            if (!isWaveClear)
             {
-                StopCoroutine(ActivateEnemy());
-                currentWaveDeathEnemCount = 0;
+                currentWaveDeathEnemCount++;
 
-                StartCoroutine(LevelUpWave());
+                if (currentWaveDeathEnemCount == GetTotalEnemyCountConst())
+                {
+                    isWaveClear = true;
+                    StopCoroutine(ActivateEnemy());
+                    currentWaveDeathEnemCount = 0;
+
+                    StartCoroutine(LevelUpWave());
+                }
+
+                Display_enemyDeathCount();
             }
-
-            Display_enemyDeathCount();
         }
 
         private IEnumerator LevelUpWave()
@@ -619,6 +625,8 @@ namespace IFP
             //}
             if (IFP.TempStageManagement.instance.CurrentStageLevel == 10)
             {
+                isWaveClear = false;
+                currentWaveDeathEnemCount = 0;
                 Display_enemyDeathCount();
 
                 int activation_Count = 0;

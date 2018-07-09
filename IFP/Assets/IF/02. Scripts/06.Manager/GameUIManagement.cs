@@ -192,7 +192,7 @@ namespace IFP
         /// <summary>
         /// 20180529 SangBin : 
         /// </summary>
-        private void PlayerDamaged()
+        public void PlayerDamaged()
         {
             playerHP_Bar.fillAmount = (float)(PlayerCtrl.instance.PlayerHP / PlayerCtrl.instance.PlayerMaxHP);
         }
@@ -218,7 +218,7 @@ namespace IFP
         /// <summary>
         /// 20180529 SangBin : 
         /// </summary>
-        private void DS_Damaged()
+        public void DS_Damaged()
         {
             DefenseStation_HP_Bar.fillAmount = (float)(DefenseStationCtrl.instance.DefenseStation_HP / 100.0d);
         }

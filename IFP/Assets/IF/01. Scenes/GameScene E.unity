@@ -19448,7 +19448,7 @@ MonoBehaviour:
     type: 2}
   itemPrefab_type02: {fileID: 1187290002588102, guid: 41b478cc189e6b44bb92dbe200e78840,
     type: 2}
-  itemPrefab_type03: {fileID: 1185642529807098, guid: 217976abe42283549b7beb074f9e1b4c,
+  itemPrefab_type03: {fileID: 1187290002588102, guid: 41b478cc189e6b44bb92dbe200e78840,
     type: 2}
   butterFlyPrefab_type01: {fileID: 1084856015718916, guid: 1fc0b404b7871684a9593d609315cf99,
     type: 2}
