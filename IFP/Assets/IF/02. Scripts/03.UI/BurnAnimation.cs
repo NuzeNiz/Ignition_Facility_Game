@@ -2,11 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class BurnAnimation : MonoBehaviour {
 
     public List<Sprite> animateSprites;
     public float speed = 0.0f;
+    public string nextSceneName = "none";
 
     private Image myImage;
 
@@ -23,5 +25,7 @@ public class BurnAnimation : MonoBehaviour {
             myImage.sprite = s;
             yield return new WaitForSeconds(speed);
         }
+        yield return new WaitForSeconds(0.25f);
+        SceneManager.LoadScene(nextSceneName);
     }
 }

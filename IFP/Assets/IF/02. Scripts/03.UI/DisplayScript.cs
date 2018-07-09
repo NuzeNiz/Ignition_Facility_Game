@@ -15,8 +15,7 @@ public class DisplayScript : MonoBehaviour {
     private Text nameText;
     [SerializeField]
     private Text scriptText;
-
-    private XElement xDoc;
+    
     private List<XElement> xElements;
     private IEnumerator<XElement> it;
 
@@ -24,10 +23,17 @@ public class DisplayScript : MonoBehaviour {
 
     private void Awake()
     {
+        DoSet();
+
+        DoDisplay();
+    }
+
+    public void DoSet()
+    {
         characters = new Dictionary<string, string>();
 
         var tAsset = Resources.Load(string.Format("talking_script{0}", sceneId)) as TextAsset;
-        xDoc = XElement.Parse(tAsset.text);
+        var xDoc = XElement.Parse(tAsset.text);
 
         xDoc.Element("characters").Elements("name").ToList().ForEach(e =>
         {
@@ -36,8 +42,6 @@ public class DisplayScript : MonoBehaviour {
 
         xElements = xDoc.Element("script").Elements("text").ToList();
         it = xElements.GetEnumerator();
-
-        DoDisplay();
     }
 
     public void DoDisplay()

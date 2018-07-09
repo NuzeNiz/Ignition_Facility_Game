@@ -6,6 +6,9 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/IF/01. Scenes/BurnAnimation.unity
+    guid: 1fed0c83941c3b3448dc98f5d8432691
+  - enabled: 0
     path: Assets/IF/01. Scenes/GameScene 0.unity
     guid: 11230b90e48a15041897587d4f124d32
   - enabled: 1
