@@ -147,17 +147,22 @@ namespace IFP
 
         private int currentWaveLevel = 1;
 
-        private int[] wave01_et01_spawn_info = new int[] { 2, 5 };
-        private int[] wave01_et02_spawn_info = new int[] { 0, 3, 4, 7 };
-        private int[] wave01_et03_spawn_info = new int[] { 1, 6 };
+        //private int[] wave01_et01_spawn_info = new int[] { 2, 5 };
+        //private int[] wave01_et02_spawn_info = new int[] { 0, 3, 4, 7 };
+        //private int[] wave01_et03_spawn_info = new int[] { 1, 6 };
 
-        private int[] wave02_et01_spawn_info = new int[] { 0, 1, 4, 7 };
-        private int[] wave02_et02_spawn_info = new int[] { 2, 5 };
-        private int[] wave02_et03_spawn_info = new int[] { 3, 6 };
+        //private int[] wave02_et01_spawn_info = new int[] { 0, 1, 4, 7 };
+        //private int[] wave02_et02_spawn_info = new int[] { 2, 5 };
+        //private int[] wave02_et03_spawn_info = new int[] { 3, 6 };
 
-        private int[] wave03_et01_spawn_info = new int[] { 2, 4 };
-        private int[] wave03_et02_spawn_info = new int[] { 3, 6 };
-        private int[] wave03_et03_spawn_info = new int[] { 0, 1, 5, 7 };
+        //private int[] wave03_et01_spawn_info = new int[] { 2, 4 };
+        //private int[] wave03_et02_spawn_info = new int[] { 3, 6 };
+        //private int[] wave03_et03_spawn_info = new int[] { 0, 1, 5, 7 };
+
+        public int currentWaveDeathEnemCount = 0;
+
+        public delegate void Wave_EventHandler();
+        public static event Wave_EventHandler Display_enemyDeathCount;
         //-----------------------------------------------------------------------------------------------------------------------------
 
         /// <summary>
@@ -198,6 +203,8 @@ namespace IFP
 
                 CreateButterFlyObjectPool();
                 CreateItemObjectPool();
+
+                Display_enemyDeathCount();
 
                 enemyGenerationPeriod = 10.0f;
             }
@@ -283,6 +290,62 @@ namespace IFP
         //    return null;
         //}
 
+        public void AddDeathCount()
+        {
+            currentWaveDeathEnemCount++;
+
+            if(currentWaveDeathEnemCount == GetTotalEnemyCountConst())
+            {
+                StopCoroutine(ActivateEnemy());
+                currentWaveDeathEnemCount = 0;
+
+                StartCoroutine(LevelUpWave());
+            }
+
+            Display_enemyDeathCount();
+        }
+
+        private IEnumerator LevelUpWave()
+        {
+            currentWaveLevel++;
+
+            if (currentWaveLevel == 4)
+            {
+                GameUIManagement.instance.timerState = false;
+                
+                //이 시점에서 게임 플레이 시간을 랭킹 서버에 저장!!
+
+                transform.GetChild(0).GetChild(4).gameObject.SetActive(true);
+                yield return new WaitForSeconds(5.0f);
+                transform.GetChild(0).GetChild(4).gameObject.SetActive(false);
+
+                GameClear();
+            }
+            else
+            {
+                transform.GetChild(0).GetChild(4).gameObject.SetActive(true);
+                yield return new WaitForSeconds(5.0f);
+                transform.GetChild(0).GetChild(4).gameObject.SetActive(false);
+
+                StartCoroutine(ActivateEnemy());
+            }
+        }
+
+        public int GetTotalEnemyCountConst()
+        {
+            switch (currentWaveLevel)
+            {
+                case 1:
+                    return 40;
+                case 2:
+                    return 52;
+                case 3:
+                    return 60;
+
+                default:
+                    return 1;
+            }
+        }
 
         private int GetActivationNumConst(string keyWord, int enemytype)
         {
@@ -329,7 +392,7 @@ namespace IFP
                     }
                     break;
 
-                case "WholeEnemyCount":
+                case "EachEnemyCountConst":
                     switch (currentWaveLevel)
                     {
                         case 1:
@@ -403,7 +466,8 @@ namespace IFP
                     et01ObjectPool.Add(enemy_type01);
                     et02ObjectPool.Add(enemy_type02);
                     et03ObjectPool.Add(enemy_type03);
-                    //LoadingManagement.instance.FillLoadingGauge(2.5f);
+
+                    LoadingManagement.instance.FillLoadingGauge(1.5f);
                 }
             }
             else
@@ -430,11 +494,13 @@ namespace IFP
                     enemyObjectPool.Add(enemy_type01);
                     enemyObjectPool.Add(enemy_type02);
                     enemyObjectPool.Add(enemy_type03);
+
+                    LoadingManagement.instance.FillLoadingGauge(2.5f);
                 }
             }
 
 
-            LoadingManagement.instance.FillLoadingGauge(25.0f);
+            //LoadingManagement.instance.FillLoadingGauge(25.0f);
         }
 
         /// <summary>
@@ -553,15 +619,17 @@ namespace IFP
             //}
             if (IFP.TempStageManagement.instance.CurrentStageLevel == 10)
             {
+                Display_enemyDeathCount();
+
                 int activation_Count = 0;
 
                 int et01_Current_Count = 0;
                 int et02_Current_Count = 0;
                 int et03_Current_Count = 0;
 
-                int et01_Max_Count = GetActivationNumConst("WholeEnemyCount", 1);
-                int et02_Max_Count = GetActivationNumConst("WholeEnemyCount", 2);
-                int et03_Max_Count = GetActivationNumConst("WholeEnemyCount", 3);
+                int et01_Max_Count = GetActivationNumConst("EachEnemyCountConst", 1);
+                int et02_Max_Count = GetActivationNumConst("EachEnemyCountConst", 2);
+                int et03_Max_Count = GetActivationNumConst("EachEnemyCountConst", 3);
 
                 yield return new WaitForSeconds(1.0f);
                 transform.GetChild(0).GetChild(currentWaveLevel).gameObject.SetActive(true);
@@ -791,7 +859,7 @@ namespace IFP
                 butterFly.SetActive(false);
                 butterFlyObjectPool.Add(butterFly);
             }
-            LoadingManagement.instance.FillLoadingGauge(1.0f);
+            LoadingManagement.instance.FillLoadingGauge(2.0f);
         }
 
         /// <summary>

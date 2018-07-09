@@ -231,8 +231,11 @@ namespace IFP
 
         IEnumerator SaveAmmuPerPeriod()
         {
-            yield return new WaitForSeconds(15.0f);
-            SaveAmmu();
+            while (true)
+            {
+                yield return new WaitForSeconds(15.0f);
+                SaveAmmu();
+            }
         }
 
         /// <summary>

@@ -398,8 +398,16 @@ namespace IFP
             GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
             animator.SetTrigger("IsDie");
             GameUIManagement.instance.DisplayScore(50);
-            if(defenseStation != null)
-                defenseStation.OnAbsorbEnergy(TagName);
+
+            if (IFP.TempStageManagement.instance.CurrentStageLevel == 10)
+            {
+                GameManagement.instance.AddDeathCount();
+            }
+            else
+            {
+                if (defenseStation != null)
+                    defenseStation.OnAbsorbEnergy(TagName);
+            }
 
             //StartCoroutine(PushObjectPool());
             Destroy(explosion, 2.0f);

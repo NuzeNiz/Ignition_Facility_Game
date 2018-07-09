@@ -142,7 +142,7 @@ namespace IFP
         /// <summary>
         /// 20180427 SangBin : Obtaining Item
         /// </summary>
-        void ObtainingItem()
+        virtual protected void ObtainingItem()
         {
             tag = "Untagged";
             StopCoroutine(TrackingPlayer());

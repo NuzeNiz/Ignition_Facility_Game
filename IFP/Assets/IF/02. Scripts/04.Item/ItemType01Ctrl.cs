@@ -96,6 +96,8 @@ namespace IFP
 
             GetComponent<Rigidbody>().velocity = Vector3.zero;
             GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
+            transform.GetChild(0).gameObject.GetComponent<MeshRenderer>().enabled = true;
+            transform.GetChild(1).gameObject.GetComponent<MeshRenderer>().enabled = true;
 
         }
 
@@ -171,6 +173,16 @@ namespace IFP
 
             return speed * motionDir.normalized; //속도값 리턴
 
+        }
+
+        protected override void ObtainingItem()
+        {
+            tag = "Untagged";
+            StopCoroutine(TrackingPlayer());
+            transform.GetChild(0).gameObject.GetComponent<MeshRenderer>().enabled = false;
+            transform.GetChild(1).gameObject.GetComponent<MeshRenderer>().enabled = false;
+            GetComponent<SphereCollider>().enabled = false;
+            transform.position = PlayerCtrl.instance.PlayerTr.up * 5.0f;
         }
     }
 }
