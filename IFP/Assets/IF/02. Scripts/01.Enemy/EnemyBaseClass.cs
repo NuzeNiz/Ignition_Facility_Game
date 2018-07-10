@@ -397,20 +397,40 @@ namespace IFP
             GetComponent<Rigidbody>().velocity = Vector3.zero;
             GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
             animator.SetTrigger("IsDie");
-            GameUIManagement.instance.DisplayScore(50);
+            //GameUIManagement.instance.DisplayScore(50);
 
-            if (IFP.TempStageManagement.instance.CurrentStageLevel == 10)
+            Func1();
+
+            if (IFP.TempStageManagement.instance.CurrentStageLevel != 10)
             {
-                GameManagement.instance.AddDeathCount();
-            }
-            else
-            {
+                GameUIManagement.instance.DisplayScore(50);
+
                 if (defenseStation != null)
                     defenseStation.OnAbsorbEnergy(TagName);
             }
 
             //StartCoroutine(PushObjectPool());
             Destroy(explosion, 2.0f);
+        }
+
+        private void Func1()
+        {
+            if (IFP.TempStageManagement.instance.CurrentStageLevel == 10)
+            {
+                GameManagement.instance.AddDeathCount();
+                //if (!GameManagement.instance.waveBoss)
+                //{
+                //    GameManagement.instance.AddDeathCount();
+                //}
+                //else
+                //{
+                //    if (TagName == "ENEMY_TYPE01_BOSS" || TagName == "ENEMY_TYPE02_BOSS" || TagName == "ENEMY_TYPE03_BOSS")
+                //    {
+                //        GameManagement.instance.WaveBossDied();
+                //    }
+                //    //GameManagement.instance.waveBoss = true;
+                //}
+            }
         }
 
         /// <summary>

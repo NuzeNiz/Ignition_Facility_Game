@@ -135,8 +135,9 @@ namespace IFP
         private EnemySkillState skill_04_State = EnemySkillState.available;
         #endregion
 
-        public delegate void Enemy_EventHandler();
-        public static event Enemy_EventHandler AbsorbAmmu;
+        public delegate void EnemyMiddleBoss_EventHandler();
+        public static event EnemyMiddleBoss_EventHandler AbsorbAmmu;
+        public static event EnemyMiddleBoss_EventHandler WaveBossDied;
         //------------------------------------------------------------------------------------------------------------------------
 
         /// <summary>
@@ -166,9 +167,16 @@ namespace IFP
         /// </summary>
         override protected void OnEnable()
         {
-            transform.GetChild(4).gameObject.SetActive(true);
+
             base.OnEnable();
-            StartCoroutine(TurnOffCanvas());
+            if (IFP.TempStageManagement.instance.CurrentStageLevel != 10)
+                StartCoroutine(TurnOffCanvas());
+        }
+
+        protected override void OnDisable()
+        {
+            base.OnDisable();
+            Destroy(gameObject);
         }
 
         /// <summary>
@@ -177,6 +185,7 @@ namespace IFP
         private IEnumerator TurnOffCanvas()
         {
             yield return new WaitForSeconds(2.5f);
+            transform.GetChild(4).gameObject.SetActive(true);
             transform.GetChild(4).gameObject.SetActive(false);
         }
 
@@ -185,9 +194,14 @@ namespace IFP
         /// </summary>
         protected override void EnemyKilled()
         {
-            AbsorbAmmu();
             //ETS_Killed();
             base.EnemyKilled();
+            if (IFP.TempStageManagement.instance.CurrentStageLevel == 10)
+                WaveBossDied();
+            else
+            {
+                AbsorbAmmu();
+            }
             StartCoroutine(base.PushObjectPool());
             //if (DefenseStationCtrl.instance != null)
             //    StartCoroutine(base.PushObjectPool());

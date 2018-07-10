@@ -247,7 +247,7 @@ namespace IFP
 
                 if(treeState == 2)
                 {
-                    GameManagement.instance.ActivateChapter2Boss();
+                    GameManagement.instance.ActivateMiddleBoss();
                 }
 
                 //일단 4단계

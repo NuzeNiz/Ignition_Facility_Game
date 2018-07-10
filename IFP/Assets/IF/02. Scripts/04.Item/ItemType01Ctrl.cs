@@ -138,7 +138,12 @@ namespace IFP
                         Rigidbody rbody = coll.GetComponent<Rigidbody>();
                         if (rbody != null)
                         {
-                            coll.SendMessage("EnemyKilled", SendMessageOptions.DontRequireReceiver);
+                            //coll.SendMessage("EnemyKilled", SendMessageOptions.DontRequireReceiver);
+
+                            object[] parameters = new object[2];
+                            parameters[0] = 100.0d;
+                            parameters[1] = false;
+                            coll.SendMessage("OnDamaged", parameters, SendMessageOptions.DontRequireReceiver);
                         }
                     }
                 }

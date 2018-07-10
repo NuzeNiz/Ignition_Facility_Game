@@ -165,6 +165,9 @@ namespace IFP
         public static event Wave_EventHandler Display_enemyDeathCount;
 
         private bool isWaveClear = false;
+
+        //[HideInInspector]
+        //public bool waveBoss = false;
         //-----------------------------------------------------------------------------------------------------------------------------
 
         /// <summary>
@@ -183,6 +186,18 @@ namespace IFP
             //}
             instance = this;
             maxItem = maxEachItem * itemSort;
+        }
+
+        private void OnEnable()
+        {
+            EMS_LongRange.WaveBossDied += this.WaveBossDied;
+            EMS_ShortRange.WaveBossDied += this.WaveBossDied;
+        }
+
+        private void OnDisable()
+        {
+            EMS_LongRange.WaveBossDied -= this.WaveBossDied;
+            EMS_ShortRange.WaveBossDied -= this.WaveBossDied;
         }
 
         /// <summary>
@@ -292,6 +307,26 @@ namespace IFP
         //    return null;
         //}
 
+        //public void AddDeathCount()
+        //{
+        //    if (!isWaveClear)
+        //    {
+        //        currentWaveDeathEnemCount++;
+
+        //        if (currentWaveDeathEnemCount == GetTotalEnemyCountConst())
+        //        {
+        //            isWaveClear = true;
+        //            StopCoroutine(ActivateEnemy());
+        //            currentWaveDeathEnemCount = 0;
+
+        //            StartCoroutine(LevelUpWave());
+        //        }
+
+        //        Display_enemyDeathCount();
+        //    }
+        //}
+
+
         public void AddDeathCount()
         {
             if (!isWaveClear)
@@ -302,13 +337,20 @@ namespace IFP
                 {
                     isWaveClear = true;
                     StopCoroutine(ActivateEnemy());
-                    currentWaveDeathEnemCount = 0;
-
-                    StartCoroutine(LevelUpWave());
+                    //currentWaveDeathEnemCount = 0;
+                    //waveBoss = true;
+                    StartCoroutine(NoticeWaveBossAppearance());
+                    ActivateMiddleBoss();
                 }
 
                 Display_enemyDeathCount();
             }
+        }
+
+        public void WaveBossDied()
+        {
+            //waveBoss = false;
+            StartCoroutine(LevelUpWave());
         }
 
         private IEnumerator LevelUpWave()
@@ -335,6 +377,13 @@ namespace IFP
 
                 StartCoroutine(ActivateEnemy());
             }
+        }
+
+        private IEnumerator NoticeWaveBossAppearance()
+        {
+            transform.GetChild(0).GetChild(5).gameObject.SetActive(true);
+            yield return new WaitForSeconds(3.0f);
+            transform.GetChild(0).GetChild(5).gameObject.SetActive(false);
         }
 
         public int GetTotalEnemyCountConst()
@@ -896,24 +945,61 @@ namespace IFP
         /// <summary>
         /// 20180617 SangBin : 
         /// </summary>
-        public void ActivateChapter2Boss()
+        public void ActivateMiddleBoss()
         {
-            Vector3 tempV = PlayerCtrl.instance.PlayerTr.forward;
-            tempV.y = 0.0f;
-            tempV *= 10.0f;
+            if (IFP.TempStageManagement.instance.CurrentStageLevel == 10)
+            {
+                Vector3 tempV = DefenseStationCtrl.instance.DefenseStationTR.forward * 10.0f;
 
-            if (TempStageManagement.instance.CurrentStageLevel == 2)
-            {
-                GameObject Boss = Instantiate(enemyPrefab_type01Boss, (PlayerCtrl.instance.PlayerTr.position + tempV), Quaternion.identity);
+                //switch (currentWaveLevel)
+                //{
+                //    case 1:
+                //        GameObject Boss2 = Instantiate(enemyPrefab_type02Boss, (DefenseStationCtrl.instance.DefenseStationTR.position + tempV), Quaternion.identity);
+                //        break;
+
+                //    case 2:
+                //        GameObject Boss1 = Instantiate(enemyPrefab_type01Boss, (DefenseStationCtrl.instance.DefenseStationTR.position + tempV), Quaternion.identity);
+                //        break;
+
+                //    case 3:
+                //        GameObject Boss3 = Instantiate(enemyPrefab_type03Boss, (DefenseStationCtrl.instance.DefenseStationTR.position + tempV), Quaternion.identity);
+                //        break;
+                //}
+
+                if (currentWaveLevel == 1)
+                {
+                    GameObject Boss = Instantiate(enemyPrefab_type02Boss, (DefenseStationCtrl.instance.DefenseStationTR.position + tempV), Quaternion.identity);
+                }
+                else if (currentWaveLevel == 2)
+                {
+                    GameObject Boss = Instantiate(enemyPrefab_type01Boss, (DefenseStationCtrl.instance.DefenseStationTR.position + tempV), Quaternion.identity);
+                }
+                else if (currentWaveLevel == 3)
+                {
+                    GameObject Boss = Instantiate(enemyPrefab_type03Boss, (DefenseStationCtrl.instance.DefenseStationTR.position + tempV), Quaternion.identity);
+                }
+
             }
-            else if (TempStageManagement.instance.CurrentStageLevel == 3)
+            else
             {
-                GameObject Boss = Instantiate(enemyPrefab_type02Boss, (PlayerCtrl.instance.PlayerTr.position + tempV), Quaternion.identity);
+                Vector3 tempV = PlayerCtrl.instance.PlayerTr.forward;
+                tempV.y = 0.0f;
+                tempV *= 10.0f;
+
+                if (TempStageManagement.instance.CurrentStageLevel == 2)
+                {
+                    GameObject Boss = Instantiate(enemyPrefab_type01Boss, (PlayerCtrl.instance.PlayerTr.position + tempV), Quaternion.identity);
+                }
+                else if (TempStageManagement.instance.CurrentStageLevel == 3)
+                {
+                    GameObject Boss = Instantiate(enemyPrefab_type02Boss, (PlayerCtrl.instance.PlayerTr.position + tempV), Quaternion.identity);
+                }
+                else if (TempStageManagement.instance.CurrentStageLevel == 4)
+                {
+                    GameObject Boss = Instantiate(enemyPrefab_type03Boss, (PlayerCtrl.instance.PlayerTr.position + tempV), Quaternion.identity);
+                }
             }
-            else if (TempStageManagement.instance.CurrentStageLevel == 4)
-            {
-                GameObject Boss = Instantiate(enemyPrefab_type03Boss, (PlayerCtrl.instance.PlayerTr.position + tempV), Quaternion.identity);
-            }
+
         }
 
         public void StartGame()
