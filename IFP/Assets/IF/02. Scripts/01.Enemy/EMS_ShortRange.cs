@@ -34,7 +34,7 @@ namespace IFP
         /// <summary>
         /// 20180502 SangBin :  Enemy Type01 Current Health Power
         /// </summary>
-        private double currentHP = 800.0d;
+        private double currentHP = 1200.0d;
 
         /// <summary>
         /// 20180403 SangBin : Enemy Current Health Power

@@ -80,7 +80,7 @@ namespace IFP
         /// <summary>
         /// 20180403 SangBin : Enemy Generation period
         /// </summary>
-        private float enemyGenerationPeriod = 2.0f;
+        private float enemyGenerationPeriod = 3.5f;
 
         /// <summary>
         /// 20180403 SangBin : Contraints of the number of Enemy
@@ -938,7 +938,7 @@ namespace IFP
                         break;
                     }
                 }
-                yield return new WaitForSeconds(5.0f);
+                yield return new WaitForSeconds(30.0f);
             }
         }
 
@@ -949,7 +949,7 @@ namespace IFP
         {
             if (IFP.TempStageManagement.instance.CurrentStageLevel == 10)
             {
-                Vector3 tempV = DefenseStationCtrl.instance.DefenseStationTR.forward * 10.0f;
+                Vector3 tempV = DefenseStationCtrl.instance.DefenseStationTR.forward * 15.0f;
 
                 //switch (currentWaveLevel)
                 //{

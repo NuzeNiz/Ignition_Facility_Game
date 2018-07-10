@@ -52,7 +52,7 @@ namespace IFP
         /// <summary>
         /// 20180501 SangBin : Defense Station's Current Health Power
         /// </summary>
-        private double defenseStation_HP = 100.0d;
+        private double defenseStation_HP;
 
         /// <summary>
         /// 20180501 SangBin : Defense Station's Current Health Power Property
@@ -104,6 +104,15 @@ namespace IFP
             //}
             instance = this;
             defenseStationTR = this.gameObject.transform;
+
+            if (IFP.TempStageManagement.instance.CurrentStageLevel == 10)
+            {
+                defenseStation_HP = 3000.0d;
+            }
+            else
+            {
+                defenseStation_HP = 1000.0d;
+            }
             defenseStation_MAXHP = defenseStation_HP;
         }
 
@@ -297,8 +306,8 @@ namespace IFP
             {
                 StartCoroutine(TreeShake());
 
-                defenseStation_HP -= BalanceManagement.instance.EnemyProjectile01damage;
-                //defenseStation_HP -= 10.0d;
+                //defenseStation_HP -= BalanceManagement.instance.EnemyProjectile01damage;
+                defenseStation_HP -= 12.0d;
                 DS_Damaged();
 
                 if (defenseStation_HP <= 0.0d)

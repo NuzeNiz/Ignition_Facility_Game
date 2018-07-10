@@ -110,13 +110,13 @@ namespace IFP
             {
                 GameManagement.instance.SoundEffect(transform.position, ItemSoundFile);
 
-                if (PlayerCtrl.instance.PlayerHP >= 70.0d)
+                if (PlayerCtrl.instance.PlayerHP >= (PlayerCtrl.instance.PlayerMaxHP - 200.0d ))
                 {
                     PlayerCtrl.instance.PlayerHP = PlayerCtrl.instance.PlayerMaxHP;
                 }
                 else
                 {
-                    PlayerCtrl.instance.PlayerHP += 30.0d;
+                    PlayerCtrl.instance.PlayerHP += 200.0d;
                 }
 
                 GameUIManagement.instance.PlayerDamaged();
