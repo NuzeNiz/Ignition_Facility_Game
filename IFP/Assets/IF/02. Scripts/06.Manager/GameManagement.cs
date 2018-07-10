@@ -487,6 +487,47 @@ namespace IFP
                             return 1;
                     }
                     break;
+
+                case "HealthPowerUP":
+                    switch (currentWaveLevel)
+                    {
+                        case 1:
+                            switch (enemytype)
+                            {
+                                case 1:
+                                    return 100;
+                                case 2:
+                                    return 100;
+                                case 3:
+                                    return 100;
+                            }
+                            break;
+                        case 2:
+                            switch (enemytype)
+                            {
+                                case 1:
+                                    return 120;
+                                case 2:
+                                    return 120;
+                                case 3:
+                                    return 120;
+                            }
+                            break;
+                        case 3:
+                            switch (enemytype)
+                            {
+                                case 1:
+                                    return 140;
+                                case 2:
+                                    return 140;
+                                case 3:
+                                    return 140;
+                            }
+                            break;
+                        default:
+                            return 1;
+                    }
+                    break;
             }
 
             return 1;
@@ -713,6 +754,9 @@ namespace IFP
                                 enemy.transform.position = tempSpawnpoints[index].position;
                                 StartCoroutine(OpenGate(tempSpawnpoints[index].GetChild(0).gameObject));
                                 enemy.transform.parent = GoogleARCore.IF.TowerBuildController.instance.DefenseStation_Anchor_Tr;
+
+                                enemy.GetComponent<ETS_LongRange>().CurrentHealthPower = enemy.GetComponent<ETS_LongRange>().maxHealthPower = GetActivationNumConst("HealthPowerUP", 1);
+
                                 enemy.SetActive(true);
                                 activation_Count++;
                                 et01_Current_Count++;
@@ -736,6 +780,9 @@ namespace IFP
                                 enemy.transform.position = tempSpawnpoints[index].position;
                                 StartCoroutine(OpenGate(tempSpawnpoints[index].GetChild(0).gameObject));
                                 enemy.transform.parent = GoogleARCore.IF.TowerBuildController.instance.DefenseStation_Anchor_Tr;
+
+                                enemy.GetComponent<ETS_LongRange>().CurrentHealthPower = enemy.GetComponent<ETS_LongRange>().maxHealthPower = GetActivationNumConst("HealthPowerUP", 2);
+
                                 enemy.SetActive(true);
                                 activation_Count++;
                                 et02_Current_Count++;
@@ -759,6 +806,9 @@ namespace IFP
                                 enemy.transform.position = tempSpawnpoints[index].position;
                                 StartCoroutine(OpenGate(tempSpawnpoints[index].GetChild(0).gameObject));
                                 enemy.transform.parent = GoogleARCore.IF.TowerBuildController.instance.DefenseStation_Anchor_Tr;
+
+                                enemy.GetComponent<ETS_ShortRange>().CurrentHealthPower = enemy.GetComponent<ETS_ShortRange>().maxHealthPower = GetActivationNumConst("HealthPowerUP", 3);
+
                                 enemy.SetActive(true);
                                 activation_Count++;
                                 et03_Current_Count++;

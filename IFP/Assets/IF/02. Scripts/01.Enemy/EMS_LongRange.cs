@@ -44,7 +44,7 @@ namespace IFP
         /// <summary>
         /// 20180403 SangBin : Enemy Current Health Power
         /// </summary>
-        override protected double CurrentHealthPower
+        override public double CurrentHealthPower
         {
             get
             {

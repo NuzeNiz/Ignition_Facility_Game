@@ -21,12 +21,12 @@ namespace IFP
         /// <summary>
         /// 20180403 SangBin : Enemy Current Health Power
         /// </summary>
-        abstract protected double CurrentHealthPower { get; set; }
+        abstract public double CurrentHealthPower { get; set; }
 
         /// <summary>
         /// 20180502 SangBin : 
         /// </summary>
-        protected double maxHealthPower;
+        public double maxHealthPower;
 
         /// <summary>
         /// 20180502 SangBin : 
