@@ -121,7 +121,7 @@ namespace IFP
             instance = this;
             //muzzleFlash.enabled = false;
             if (IFP.TempStageManagement.instance.CurrentStageLevel == 10)
-                playerHP = 1000.0d;
+                playerHP = 2000.0d;
             else
                 playerHP = 500.0d;
 

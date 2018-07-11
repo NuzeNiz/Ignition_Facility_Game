@@ -107,7 +107,7 @@ namespace IFP
 
             if (IFP.TempStageManagement.instance.CurrentStageLevel == 10)
             {
-                defenseStation_HP = 3000.0d;
+                defenseStation_HP = 6000.0d;
             }
             else
             {

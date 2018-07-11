@@ -495,33 +495,33 @@ namespace IFP
                             switch (enemytype)
                             {
                                 case 1:
-                                    return 30;
+                                    return 20;
                                 case 2:
-                                    return 30;
+                                    return 20;
                                 case 3:
-                                    return 30;
+                                    return 20;
                             }
                             break;
                         case 2:
                             switch (enemytype)
                             {
                                 case 1:
-                                    return 60;
+                                    return 30;
                                 case 2:
-                                    return 60;
+                                    return 30;
                                 case 3:
-                                    return 60;
+                                    return 30;
                             }
                             break;
                         case 3:
                             switch (enemytype)
                             {
                                 case 1:
-                                    return 80;
+                                    return 40;
                                 case 2:
-                                    return 80;
+                                    return 40;
                                 case 3:
-                                    return 80;
+                                    return 40;
                             }
                             break;
                         default:
