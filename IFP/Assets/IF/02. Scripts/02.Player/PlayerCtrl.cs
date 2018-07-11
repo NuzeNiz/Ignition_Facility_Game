@@ -45,7 +45,7 @@ namespace IFP
         /// <summary>
         /// 20180403 SangBin : Shooting Ray Max Distance
         /// </summary>
-        private float rayMaxDistance = 10.0f;
+        private float rayMaxDistance = 6.0f;
 
         /// <summary>
         /// 20180403 SangBin : Player's Striking Power

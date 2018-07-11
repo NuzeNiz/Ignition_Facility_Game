@@ -12,7 +12,7 @@ namespace IFP
         /// 20180418 SangBin : Item Type Enum
         /// </summary>
         [HideInInspector]
-        public enum ItemTypeEnum { boom, potion, itemType03, itemType04 };
+        public enum ItemTypeEnum { boom, playerPotion, treePotion, itemType04 };
 
         /// <summary>
         /// 20180418 SangBin : Item Type
@@ -142,7 +142,7 @@ namespace IFP
         /// <summary>
         /// 20180427 SangBin : Obtaining Item
         /// </summary>
-        void ObtainingItem()
+        virtual protected void ObtainingItem()
         {
             tag = "Untagged";
             StopCoroutine(TrackingPlayer());

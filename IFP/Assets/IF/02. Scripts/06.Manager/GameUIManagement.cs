@@ -63,6 +63,14 @@ namespace IFP
         /// </summary>sss
         public Text textAmmu;
 
+        public Text textWaveQuest;
+
+        public Text textTimer;
+
+        private float timer;
+
+        [HideInInspector]
+        public bool timerState = true;
         //-----------------------------------------------------------------------------------------------------------------------------
 
         void Awake()
@@ -95,6 +103,7 @@ namespace IFP
             DefenseStationCtrl.WearEnergy += this.WearEnergy;
             DefenseStationCtrl.DS_Damaged += this.DS_Damaged;
             WeaponCtrl.Display_Ammu += this.Display_Ammu;
+            GameManagement.Display_enemyDeathCount += this.Display_enemyDeathCount;
         }
 
         /// <summary>
@@ -107,13 +116,19 @@ namespace IFP
             DefenseStationCtrl.WearEnergy -= this.WearEnergy;
             DefenseStationCtrl.DS_Damaged -= this.DS_Damaged;
             WeaponCtrl.Display_Ammu -= this.Display_Ammu;
+            GameManagement.Display_enemyDeathCount -= this.Display_enemyDeathCount;
         }
 
         // Update is called once per frame
         void Update()
         {
-
             //DisplayDebug();
+
+            if (timerState)
+            {
+                timer += Time.deltaTime;
+            }
+
         }
 
         /// <summary>
@@ -177,7 +192,7 @@ namespace IFP
         /// <summary>
         /// 20180529 SangBin : 
         /// </summary>
-        private void PlayerDamaged()
+        public void PlayerDamaged()
         {
             playerHP_Bar.fillAmount = (float)(PlayerCtrl.instance.PlayerHP / PlayerCtrl.instance.PlayerMaxHP);
         }
@@ -203,9 +218,25 @@ namespace IFP
         /// <summary>
         /// 20180529 SangBin : 
         /// </summary>
-        private void DS_Damaged()
+        public void DS_Damaged()
         {
             DefenseStation_HP_Bar.fillAmount = (float)(DefenseStationCtrl.instance.DefenseStation_HP / 100.0d);
+        }
+
+        private void Display_enemyDeathCount()
+        {
+            textWaveQuest.text = GameManagement.instance.currentWaveDeathEnemCount.ToString() + " / " + GameManagement.instance.GetTotalEnemyCountConst().ToString() + " 처치 !";
+        }
+
+        private void OnGUI()
+        {
+            int minutes = Mathf.FloorToInt(timer / 60.0f);
+            int seconds = Mathf.FloorToInt(timer - minutes * 60.0f);
+
+            string strTime = string.Format("{0:00}:{1:00}", minutes, seconds);
+
+            textTimer.text = strTime;
+
         }
 
     }

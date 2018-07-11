@@ -186,7 +186,15 @@ namespace IFP
                 projectileObj.SetActive(false);
                 projectileObjectPool.Add(projectileObj);
             }
-            LoadingManagement.instance.FillLoadingGauge(3.3f);
+
+            if (IFP.TempStageManagement.instance.CurrentStageLevel == 10)
+            {
+                LoadingManagement.instance.FillLoadingGauge(2.58f);
+            }
+            else
+            {
+                LoadingManagement.instance.FillLoadingGauge(3.3f);
+            }
         }
 
         /// <summary>

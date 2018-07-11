@@ -16,11 +16,12 @@ namespace IFP
         private void Awake()
         {
             instance = this;
-            loadingGauge = 0.0f;
         }
 
         private void Start()
         {
+            loadingGauge = 0.0f;
+
             //StartCoroutine(Loading());
             if (TempStageManagement.instance.CurrentStageLevel == 5)
             {
