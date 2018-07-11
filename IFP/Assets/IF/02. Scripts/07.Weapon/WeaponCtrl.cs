@@ -403,21 +403,24 @@ namespace IFP
 
         private void AbsorbAmmu()
         {
-            switch (TempStageManagement.instance.CurrentStageLevel)
+            if (TempStageManagement.instance.CurrentStageLevel != 10)
             {
-                case 2:
-                    amm_wt02 += 30.0f;
-                    break;
-                case 3:
-                    amm_wt03 += 30;
-                    break;
-                case 4:
-                    amm_wt04 += 30;
-                    break;
+                switch (TempStageManagement.instance.CurrentStageLevel)
+                {
+                    case 2:
+                        amm_wt02 += 30.0f;
+                        break;
+                    case 3:
+                        amm_wt03 += 30;
+                        break;
+                    case 4:
+                        amm_wt04 += 30;
+                        break;
+                    default:break;
+                }
 
+                Display_Ammu();
             }
-
-            Display_Ammu();
         }
 
         /// <summary>

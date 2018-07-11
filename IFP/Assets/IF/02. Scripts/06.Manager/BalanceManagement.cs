@@ -67,12 +67,12 @@ namespace IFP
         /// <summary>
         /// 20180529 SangBin :
         /// </summary>
-        public float EnemyProjectile01Speed { get{ return 50.0f; } }
+        public float EnemyProjectile01Speed { get{ return 60.0f; } }
 
         /// <summary>
         /// 20180529 SangBin :
         /// </summary>
-        public double EnemyProjectile01damage { get { return 0.1d; } }
+        public double EnemyProjectile01damage { get { return 10.0d; } }
         #endregion
 
         #region Fields : Defense Station Energy

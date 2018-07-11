@@ -60,6 +60,8 @@ namespace IFP
         /// 20180418 SangBin : Item Tag
         /// </summary>
         string itemTag;
+
+        private bool isColl = false;
         //-----------------------------------------------------------------------------------------------------------------
 
         /// <summary>
@@ -118,6 +120,8 @@ namespace IFP
         {
             if (collision.gameObject.tag == "Player")
             {
+                isColl = true;
+                StopCoroutine(TrackingPlayer());
                 GameManagement.instance.SoundEffect(transform.position, CollsionSF);
                 GameObject itemCollEffect = (GameObject)Instantiate(CollEffectPrefab, transform.position, Quaternion.identity);
                 Destroy(itemCollEffect, 2.0f);
@@ -133,10 +137,17 @@ namespace IFP
         /// </summary>
         protected IEnumerator TrackingPlayer()
         {
-            directionVector_Normalized = Vector3.Normalize(PlayerCtrl.instance.PlayerTr.position - transform.position);
-            transform.LookAt(PlayerCtrl.instance.PlayerTr);
-            GetComponent<Rigidbody>().AddForce(directionVector_Normalized * movingSpeed, ForceMode.Force);
-            yield return new WaitForSeconds(0.1f);
+            while (!isColl)
+            {
+                directionVector_Normalized = Vector3.Normalize(PlayerCtrl.instance.PlayerTr.position - transform.position);
+                transform.LookAt(PlayerCtrl.instance.PlayerTr);
+
+                GetComponent<Rigidbody>().velocity = Vector3.zero;
+                GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
+
+                GetComponent<Rigidbody>().AddForce(directionVector_Normalized * movingSpeed, ForceMode.Force);
+                yield return new WaitForSeconds(0.5f);
+            }
         }
 
         /// <summary>

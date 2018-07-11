@@ -110,13 +110,13 @@ namespace IFP
             {
                 GameManagement.instance.SoundEffect(transform.position, ItemSoundFile);
 
-                if (DefenseStationCtrl.instance.DefenseStation_HP >= 70.0d)
+                if (DefenseStationCtrl.instance.DefenseStation_HP >= (DefenseStationCtrl.instance.DefenseStation_MAXHP - 200.0d))
                 {
                     DefenseStationCtrl.instance.DefenseStation_HP = DefenseStationCtrl.instance.DefenseStation_MAXHP;
                 }
                 else
                 {
-                    DefenseStationCtrl.instance.DefenseStation_HP += 30.0d;
+                    DefenseStationCtrl.instance.DefenseStation_HP += 200.0d;
                 }
 
                 GameUIManagement.instance.DS_Damaged();

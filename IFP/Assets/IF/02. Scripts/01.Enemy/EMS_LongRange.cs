@@ -39,12 +39,12 @@ namespace IFP
         /// <summary>
         /// 20180502 SangBin :  Enemy Type01 Current Health Power
         /// </summary>
-        private double currentHP = 800.0d;
+        private double currentHP = 1000.0d;
 
         /// <summary>
         /// 20180403 SangBin : Enemy Current Health Power
         /// </summary>
-        override protected double CurrentHealthPower
+        override public double CurrentHealthPower
         {
             get
             {
@@ -128,8 +128,9 @@ namespace IFP
         #endregion
 
 
-        public delegate void Enemy_EventHandler();
-        public static event Enemy_EventHandler AbsorbAmmu;
+        public delegate void EnemyMiddleBoss_EventHandler();
+        public static event EnemyMiddleBoss_EventHandler AbsorbAmmu;
+        public static event EnemyMiddleBoss_EventHandler WaveBossDied;
         //------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
         /// <summary>
@@ -160,9 +161,15 @@ namespace IFP
         /// </summary>
         override protected void OnEnable()
         {
-            transform.GetChild(4).gameObject.SetActive(true);
             base.OnEnable();
-            StartCoroutine(TurnOffCanvas());
+            if (IFP.TempStageManagement.instance.CurrentStageLevel != 10)
+                StartCoroutine(TurnOffCanvas());
+        }
+
+        protected override void OnDisable()
+        {
+            base.OnDisable();
+            Destroy(gameObject);
         }
 
         /// <summary>
@@ -170,6 +177,7 @@ namespace IFP
         /// </summary>
         private IEnumerator TurnOffCanvas()
         {
+            transform.GetChild(4).gameObject.SetActive(true);
             yield return new WaitForSeconds(2.5f);
             transform.GetChild(4).gameObject.SetActive(false);
         }
@@ -179,9 +187,20 @@ namespace IFP
         /// </summary>
         protected override void EnemyKilled()
         {
-            AbsorbAmmu();
+            //if (IFP.TempStageManagement.instance.CurrentStageLevel == 10)
+            //    WaveBossDied();
+            //else
+            //{
+            //    AbsorbAmmu();
+            //}
             //ETS_Killed();
             base.EnemyKilled();
+            if (IFP.TempStageManagement.instance.CurrentStageLevel == 10)
+                WaveBossDied();
+            else
+            {
+                AbsorbAmmu();
+            }
             StartCoroutine(base.PushObjectPool());
             //if (DefenseStationCtrl.instance != null)
             //    StartCoroutine(base.PushObjectPool());
@@ -200,7 +219,7 @@ namespace IFP
             {
                 if (!projectileObj.activeSelf)
                 {
-                    projectileObj.transform.SetPositionAndRotation(this.gameObject.transform.position + (gameObject.transform.up * 1.0f), this.gameObject.transform.rotation);
+                    projectileObj.transform.SetPositionAndRotation(this.gameObject.transform.position + (gameObject.transform.up * 0.5f), this.gameObject.transform.rotation);
                     yield return null;
                     GameManagement.instance.SoundEffect(transform.position, shootingSoundFile);
                     projectileObj.SetActive(true);
@@ -218,7 +237,7 @@ namespace IFP
         {
             for (int i = 0; i < maxStinger; i++)
             {
-                GameObject projectileObj = Instantiate(projectilePrefab, gameObject.transform.position + (gameObject.transform.up * 1.0f), gameObject.transform.rotation);
+                GameObject projectileObj = Instantiate(projectilePrefab, gameObject.transform.position + (gameObject.transform.up * 0.5f), gameObject.transform.rotation);
                 //GameObject projectileObj = Instantiate(projectilePrefab, gameObject.transform.position, gameObject.transform.rotation);
                 projectileObj.name = this.gameObject.name + projectileObj.tag + "_" + i.ToString();
                 projectileObj.SetActive(false);

@@ -130,7 +130,7 @@ namespace IFP
                 GameObject itemEffect = (GameObject)Instantiate(ItemEffectPrefab, transform.position, Quaternion.identity);
                 Destroy(itemEffect, 2.0f);
 
-                Collider[] colls = Physics.OverlapSphere(transform.position, 10.0f);
+                Collider[] colls = Physics.OverlapSphere(transform.position, 3.0f);
                 foreach (Collider coll in colls)
                 {
                     if (coll.gameObject.layer == 8)
@@ -138,7 +138,12 @@ namespace IFP
                         Rigidbody rbody = coll.GetComponent<Rigidbody>();
                         if (rbody != null)
                         {
-                            coll.SendMessage("EnemyKilled", SendMessageOptions.DontRequireReceiver);
+                            //coll.SendMessage("EnemyKilled", SendMessageOptions.DontRequireReceiver);
+
+                            object[] parameters = new object[2];
+                            parameters[0] = 50.0d;
+                            parameters[1] = false;
+                            coll.SendMessage("OnDamaged", parameters, SendMessageOptions.DontRequireReceiver);
                         }
                     }
                 }
