@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -12,6 +13,7 @@ public class Curtain : MonoBehaviour {
     private float waitSecond = 0.0f;
 
     private Image myCurtain;
+    private Action callback = () => { };
 
     private void Awake()
     {
@@ -38,6 +40,20 @@ public class Curtain : MonoBehaviour {
         }
     }
 
+    public void PlayAnimationWithCallBack(Action action)
+    {
+        if (isFadeOut)
+        {
+            callback = action;
+            StartCoroutine(CurtainOpen());
+        }
+        else
+        {
+            callback = action;
+            StartCoroutine(CurtaionOff());
+        }
+    }
+
     private IEnumerator CurtainOpen()
     {
         while (myCurtain.color.a > 0.0f)
@@ -46,6 +62,7 @@ public class Curtain : MonoBehaviour {
             yield return new WaitForSeconds(waitSecond);
         }
         gameObject.SetActive(false);
+        callback();
     }
 
     private IEnumerator CurtaionOff()
@@ -56,5 +73,6 @@ public class Curtain : MonoBehaviour {
             myCurtain.color = new Color(myCurtain.color.r, myCurtain.color.g, myCurtain.color.b, myCurtain.color.a + 0.01f);
             yield return new WaitForSeconds(waitSecond);
         }
+        callback();
     }
 }

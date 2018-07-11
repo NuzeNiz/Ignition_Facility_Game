@@ -6,6 +6,8 @@ using UnityEngine.SceneManagement;
 namespace IFP {
     public class StartMenuManagement : MonoBehaviour
     {
+        [SerializeField]
+        private Curtain curtain;
         /// <summary>
         /// 20180403 SangBin : Start button event handler
         /// </summary>
@@ -37,7 +39,10 @@ namespace IFP {
         public void OnClickChpater2_1()
         {
             TempStageManagement.instance.CurrentStageLevel = 2;
-            SceneManager.LoadScene("GameScene A");
+            TempStageManagement.instance.talkSceneMeta.nextSceneName = "GameScene A";
+            TempStageManagement.instance.talkSceneMeta.scriptNumber = 1;
+            //SceneManager.LoadScene("GameScene A");
+            curtain.PlayAnimationWithCallBack(() => SceneManager.LoadScene("Talking_Scene"));
         }
 
         /// <summary>

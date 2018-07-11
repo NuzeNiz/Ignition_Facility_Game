@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using IFP;
 
 public class DisplayScript : MonoBehaviour {
     
@@ -23,6 +24,9 @@ public class DisplayScript : MonoBehaviour {
 
     private void Awake()
     {
+        sceneId = TempStageManagement.instance.talkSceneMeta.scriptNumber;
+        nextSceneName = TempStageManagement.instance.talkSceneMeta.nextSceneName;
+
         DoSet();
 
         DoDisplay();

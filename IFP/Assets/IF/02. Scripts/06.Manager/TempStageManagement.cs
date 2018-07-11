@@ -4,6 +4,12 @@ using UnityEngine;
 
 namespace IFP
 {
+    public class TalkSceneMetaData
+    {
+        public string nextSceneName = "none";
+        public int scriptNumber = 0;
+    }
+
     public class TempStageManagement : MonoBehaviour
     {
         /// <summary>
@@ -20,6 +26,11 @@ namespace IFP
         /// 20180614 SangBin :
         /// </summary>
         public int CurrentStageLevel { get { return currentStageLevel; } set { currentStageLevel = value; } }
+
+        /// <summary>
+        /// 20180711 SeongJun :
+        /// </summary>
+        public TalkSceneMetaData talkSceneMeta = new TalkSceneMetaData();
 
         /// <summary>
         /// 20180614 SangBin :
