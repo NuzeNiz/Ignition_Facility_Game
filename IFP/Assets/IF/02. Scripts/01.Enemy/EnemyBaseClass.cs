@@ -123,7 +123,7 @@ namespace IFP
         /// 20180430 SangBin : Enemy's Enable Tracing Distance
         /// </summary>
         //private float traceDistEtoDS = 10.0f;
-        virtual protected float TraceDistEtoDS { get { return 20.0f; } }
+        virtual protected float TraceDistEtoDS { get { return 30.0f; } }
 
         /// <summary>
         /// 20180430 SangBin : Enemy's Enable attack Distance
@@ -165,6 +165,8 @@ namespace IFP
             StartCoroutine(EnemyAction()); //Finite State Machine (or Finite Automaton)
             StartCoroutine(CheckEnemyState());
             isDamaged = false;
+
+            StartCoroutine(CheckMovility());
         }
 
         /// <summary>
@@ -220,6 +222,16 @@ namespace IFP
         public void BDamaged()
         {
             isDamaged = true;
+        }
+
+        private IEnumerator CheckMovility()
+        {
+            yield return new WaitForSeconds(10.0f);
+            StopCoroutine(EnemyAction());
+            GetComponent<Rigidbody>().velocity = Vector3.zero;
+            GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
+            StartCoroutine(EnemyAction());
+
         }
 
         /// <summary>
