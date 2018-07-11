@@ -120,7 +120,11 @@ namespace IFP
             //}
             instance = this;
             //muzzleFlash.enabled = false;
-            playerHP = 100.0d;
+            if (IFP.TempStageManagement.instance.CurrentStageLevel == 10)
+                playerHP = 1000.0d;
+            else
+                playerHP = 500.0d;
+
             playerMaxHP = playerHP;
 
         }
@@ -361,8 +365,8 @@ namespace IFP
             {
                 StartCoroutine(CameraShake());
 
-                playerHP -= BalanceManagement.instance.EnemyProjectile01damage;
-                //playerHP -= 10.0d;
+                //playerHP -= BalanceManagement.instance.EnemyProjectile01damage;
+                playerHP -= 12.0d;
                 PlayerDamaged();
 
                 if (playerHP <= 0.0d)

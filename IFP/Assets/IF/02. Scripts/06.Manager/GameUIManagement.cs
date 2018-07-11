@@ -220,7 +220,8 @@ namespace IFP
         /// </summary>
         public void DS_Damaged()
         {
-            DefenseStation_HP_Bar.fillAmount = (float)(DefenseStationCtrl.instance.DefenseStation_HP / 100.0d);
+            DefenseStation_HP_Bar.fillAmount = (float)(DefenseStationCtrl.instance.DefenseStation_HP / (DefenseStationCtrl.instance.DefenseStation_MAXHP));
+
         }
 
         private void Display_enemyDeathCount()
