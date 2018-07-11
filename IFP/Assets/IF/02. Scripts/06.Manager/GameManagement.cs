@@ -223,7 +223,7 @@ namespace IFP
 
                 Display_enemyDeathCount();
 
-                enemyGenerationPeriod = 10.0f;
+                enemyGenerationPeriod = 13.0f;
             }
             else
             {

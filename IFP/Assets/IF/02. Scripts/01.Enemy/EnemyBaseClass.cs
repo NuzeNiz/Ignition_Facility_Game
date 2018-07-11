@@ -174,6 +174,7 @@ namespace IFP
         /// </summary>
         virtual protected void OnDisable()
         {
+            StopAllCoroutines();
             ResetTag(TagName);
         }
 
@@ -226,12 +227,18 @@ namespace IFP
 
         private IEnumerator CheckMovility()
         {
-            yield return new WaitForSeconds(10.0f);
-            StopCoroutine(EnemyAction());
-            GetComponent<Rigidbody>().velocity = Vector3.zero;
-            GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
-            StartCoroutine(EnemyAction());
+            while (!isDie)
+            {
+                yield return new WaitForSeconds(10.0f);
 
+                if (isDie)
+                    yield break;
+
+                StopCoroutine(EnemyAction());
+                GetComponent<Rigidbody>().velocity = Vector3.zero;
+                GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
+                StartCoroutine(EnemyAction());
+            }
         }
 
         /// <summary>
