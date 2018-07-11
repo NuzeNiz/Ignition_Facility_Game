@@ -1,23 +1,24 @@
-<scene>
+﻿<scene>
     <id>1</id>
     <characters>
         <name cn="1">요정</name>
-        <name cn="2">에멘</name>
+	<name cn="2">에멘</name>
     </characters>
     <script>
         <text cn="1">에멘님! 에멘님! 정신차려요!</text>
-        <text cn="2">……</text>
-        <text cn="1">에멘님?</text>
-        <text cn="2">화가 나…</text>
-        <text cn="2">아버지가 만든 정원에서 마녀와 싸워야 한다니… 정말 화가 치밀어…</text>
-        <text cn="1">하지만 어쩔 수 없어요. 대처하지 않으면 마녀에 의해 정원 자체가 사라져 버릴 거예요.</text>
-        <text cn="2">후…</text>
-        <text cn="2">이곳에서 씨앗이 담긴 상자를 찾아야 하는 거야?</text>
-        <text cn="1">마녀를 막으려면 씨앗을 얻고 나무로 성장시켜야 해요. 나무로 성장시키기만 하면 마녀의 힘은 크게 약화 될 거예요. 그 다음 마녀를 처치를 하면...</text>
-        <text cn="2">알았어.</text>
-        <text cn="2">일단 상자를 찾자.</text>
-        <text cn="2">......!</text>
-        <text cn="1">마녀가 정령을 먼저 보내서 수색하고 있어요!</text>
-        <text cn="2">...어쩔 수 없어! 정령들을 처치하면서 찾아야 해! 가자!</text>
+	<text cn="2">......</text>
+	<text cn="1">에멘님?</text>
+	<text cn="2">화가 나...</text>
+	<text cn="2">아버지가 만든 정원에서 마녀와 싸워야 한다니... 정말 화가 치밀어...</text>
+	<text cn="1">하지만 어쩔 수 없어요. 대처하지 않으면 마녀에 의해 정원 자체가 사라져 버릴 거예요.</text>
+	<text cn="2">후...</text>
+	<text cn="2">이곳에서 씨앗이 담긴 상자를 찾아야 하는 거야?</text>
+	<text cn="1">마녀를 막으려면 씨앗을 얻고 나무로 성장시켜야 해요. 나무로 성장시키기만 하면 마녀의 힘은 크게 약화 될 거예요. 그 다음 마녀를 처치를 하면...</text>
+	<text cn="2">알았어.</text>
+	<text cn="2">일단 상자를 찾자.</text>
+	<text cn="2">앗......!</text>
+	<text cn="1">정령 이예요!</text>
+	<text cn="1">마녀가 정령을 먼저 보내서 수색하고 있어요!</text>
+	<text cn="2">어쩔 수 없어! 정령들을 처치하면서 찾아야해! 가자!</text>
     </script>
 </scene>

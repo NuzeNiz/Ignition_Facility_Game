@@ -1,13 +1,16 @@
-<scene>
-    <id>11</id>
+﻿<scene>
+    <id>1</id>
     <characters>
         <name cn="1">요정</name>
-        <name cn="2">에멘</name>
+	<name cn="2">에멘</name>
     </characters>
     <script>
         <text cn="2">두번째 나무도 무사히 성장했어. 게다가 다른 속성의 에너지 까지 흡수했다!</text>
-        <text cn="1">이제 마지막 씨앗만 남았어요. 힘내요!</text>
-        <text cn="2">이번 씨앗만 심으면 마녀는 약해지고… 처치 할 수 있을거야.</text>
-        <text cn="2">…그래 힘내자.</text>
+	<text cn="1">이제 마지막 씨앗만 남았어요. 힘내요!</text>
+	<text cn="2">그래. 이번 씨앗만 심으면 마녀는 약해진다 그렇지?</text>
+	<text cn="1">맞아요. 하지만 마녀가 약화 되어도 마녀는 강해요.</text>
+	<text cn="2">......</text>
+	<text cn="1">왜… 왜 그런 눈으로 보시죠?</text>
+	<text cn="2">너 정말 누구 편이냐?</text>
     </script>
 </scene>

@@ -1,14 +1,14 @@
-<scene>
-    <id>4</id>
+﻿<scene>
+    <id>1</id>
     <characters>
         <name cn="1">요정</name>
-        <name cn="2">에멘</name>
+	<name cn="2">에멘</name>
     </characters>
     <script>
-        <text cn ="2">하아…하아… 이제 더 이상 쫒아오지 않으니 안심이네! 이제 슬슬 마녀를 약화시키기 위한 준비를 해볼까?</text>
-        <text cn ="1">일단 정령들이 없는 곳으로 이동하죠! 어디가 좋을까요?</text>
-        <text cn ="2">글쌔… 일단 돌아다니면서 심을 장소를 찾아야해!</text>
-        <text cn ="1">빠르게 찾아야 해요! 지금 이 시간에도 마녀는 이곳으로 오고 있을 거예요!</text>
-        <text cn ="2">가자!</text>
+        <text cn="2">이제 더 이상 쫒아오지 않으니 안심이네! 이제 슬슬 마녀를 약화시키기 위한 준비를 해볼까?</text>
+	<text cn="1">일단 정령들이 없는 곳으로 이동하죠! 어디가 좋을까요?</text>
+	<text cn="2">글쎄… 일단 움직이면서 심을 장소를 찾아야해!</text>
+	<text cn="1">빠르게 찾아야 해요! 지금 이 시간에도 마녀는 이곳으로 오고 있을 거예요!</text>
+	<text cn="2">가자!</text>
     </script>
 </scene>

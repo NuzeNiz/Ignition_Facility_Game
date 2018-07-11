@@ -1,12 +1,12 @@
-<scene>
-    <id>3</id>
+﻿<scene>
+    <id>1</id>
     <characters>
         <name cn="1">요정</name>
-        <name cn="2">에멘</name>
+	<name cn="2">에멘</name>
     </characters>
     <script>
-        <text cn ="2">씨앗을 얻었어!</text>
-        <text cn ="1">정령들이 몰려들고 있어요! 도망가야해요!</text>
-        <text cn ="2">일단 달려!</text>
+        <text cn="2">씨앗을 얻었어!</text>
+	<text cn="1">정령들이 몰려들고 있어요! 도망가야해요!</text>
+	<text cn="2">일단 달려!</text>
     </script>
 </scene>
