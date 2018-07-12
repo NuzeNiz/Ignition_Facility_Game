@@ -49,6 +49,7 @@ public class Curtain : MonoBehaviour {
         }
         else
         {
+            gameObject.SetActive(true);
             callback = action;
             StartCoroutine(CurtaionOff());
         }
@@ -67,7 +68,6 @@ public class Curtain : MonoBehaviour {
 
     private IEnumerator CurtaionOff()
     {
-        gameObject.SetActive(true);
         while (myCurtain.color.a < 1.0f)
         {
             myCurtain.color = new Color(myCurtain.color.r, myCurtain.color.g, myCurtain.color.b, myCurtain.color.a + 0.01f);
