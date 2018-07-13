@@ -42,7 +42,7 @@ namespace IFP {
             TempStageManagement.instance.talkSceneMeta.nextSceneName = "GameScene A";
             TempStageManagement.instance.talkSceneMeta.scriptNumber = 1;
             //SceneManager.LoadScene("GameScene A");
-            curtain.PlayAnimationWithCallBack(() => SceneManager.LoadScene("Talking_Scene"));
+            curtain.PlayAnimationWithCallBack(() => SceneManager.LoadScene("IntoScene"));
         }
 
         /// <summary>

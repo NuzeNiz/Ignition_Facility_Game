@@ -44,3 +44,6 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/IF/01. Scenes/Talking_Scene.unity
     guid: e6c86247914fc644f92ed95da47779c5
+  - enabled: 1
+    path: Assets/IF/01. Scenes/IntoScene.unity
+    guid: 997de7cef4590d54aa05c189a59311c6
